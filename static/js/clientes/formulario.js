@@ -351,3 +351,8 @@ resultado.innerText = /* "RFC: " + rfc
                "RFC " + valido;
 }
 }
+
+function rfcGenerico(){
+    let rfc = document.getElementById("rfc");
+    rfc.value = "XAXX010101000"
+}

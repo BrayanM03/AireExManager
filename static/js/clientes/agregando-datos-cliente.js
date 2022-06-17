@@ -40,7 +40,7 @@ function agregarDireccion(){
     function appendList(){
         lista_direcciones.append(`
         <li class="list-group-item d-flex justify-content-between"
-         
+        id="${id_li}" 
         code="${id_li}"
         calle="${calle}"
         exterior = "${num_ext}"
@@ -53,11 +53,15 @@ function agregarDireccion(){
         ciudad="${ciudad}"
         pais="${pais}"
         value="1">
-        <span class="badge badge-primary badge-pill" style="height:23px">${count_click}</span>
-        <span class="ml-3">${calle} ${num_ext} ${colonia} ${municipio} ${estado}</span>
+        <span class="badge bg-primary" style="height:23px">${count_click}</span>
+        <span class="ml-3">${calle} ${num_ext} ${colonia} ${cp} ${municipio} ${estado} ${pais}</span>
         <div class="btn btn-sm btn-danger" onclick="eliminarDirList(${id_li}, 'Sin direcciones agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
         </li>
     `)
+
+    $("#"+ id_li).on("hover", function(){
+      $("this").addClass("hover-list")
+    })
     }
 };
 

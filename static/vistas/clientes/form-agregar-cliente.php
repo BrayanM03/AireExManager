@@ -20,7 +20,7 @@
                                         <span style="font-size: 19px; color: Gray;"> <i class="fas fa-envelope"></i></span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item d-none">
                                     <a class="nav-link" href="#precios-tab" id="precios" href="#precios-tab" data-toggle="tab" role="tab" aria-controls="precios-tab" aria-selected="true">
                                         <span style="font-size: 19px; color: Gray;"><i class="fas fa-money-bill-wave"></i></span>
                                     </a>
@@ -49,20 +49,20 @@
                                                         <label for="razon-social">RFC</label>
                                                         <input type="text" id="rfc" oninput="validarInput(this)" class="form-control" placeholder="RFC">
                                                     </div>
-                                                    <div class="col-12 col-md-4" style="margin-top:30px">
-                                                        <div class="btn btn-info">Generico</div>
+                                                    <div class="col-12 col-md-4" style="margin-top:20px">
+                                                        <div class="btn btn-info" onclick="rfcGenerico()">Generico</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-12 col-md-12">
+                                        <div class="row justify-content-center">
+                                            <div class="col-12 col-md-11">
                                             <pre id="resultado" class="mt-4"></pre>
                                             </div>
                                         </div>
 
-                                        <div class="row mt-3 justify-content-center">
+                                        <div class="row justify-content-center">
 
                                            <!--  <div class="col-12 col-md-11">
                                                 <label for="cfdi">CFDI</label>
