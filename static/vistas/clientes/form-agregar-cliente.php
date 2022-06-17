@@ -237,7 +237,7 @@
                                         </div>
 
                                         <div class="row mt-3">
-                                            <div class="col-12 col-md-12 text-center">
+                                            <div class="col-12 col-md-12 text-center" id="area-btn-add-direction">
 
                                                 <div class="btn btn-primary" onclick="agregarDireccion();">Agregar dirección</div>
 
@@ -423,6 +423,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-12 text-center">
                                         <b>Direcciones agregadas</b>
+                                        <p style="font-size:12px;">Selecciona una dirección para editarla o agrega una nueva</p>
                                     </div>
                                 </div>
                                 <div class="row mt-3 justify-content-center">
@@ -440,6 +441,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-12 text-center">
                                         <b>Correos electronicos</b>
+                                        <p style="font-size:12px;">Selecciona un correo para editarlo o agrega uno nuevo</p>
                                     </div>
                                 </div>
                                 <div class="row mt-3 justify-content-center">
@@ -457,6 +459,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-12 text-center">
                                         <b>Cuentas agregadas</b>
+                                        <p style="font-size:12px;">Selecciona una cuenta para editarla o agrega una nueva</p>
                                     </div>
                                 </div>
                                 <div class="row mt-3 justify-content-center">

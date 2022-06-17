@@ -105,7 +105,6 @@ if (empty($_SESSION["id"])) {
 	<!-- Librerias -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
     <script src="https://kit.fontawesome.com/31a28ea63e.js" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     
