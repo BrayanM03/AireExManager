@@ -423,7 +423,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-12 text-center">
                                         <b>Direcciones agregadas</b>
-                                        <p style="font-size:12px;">Selecciona una dirección para editarla o agrega una nueva</p>
+                                        <p style="font-size:12px;" id="instrucciones-dir">Selecciona una dirección para editarla o agrega una nueva</p>
                                     </div>
                                 </div>
                                 <div class="row mt-3 justify-content-center">

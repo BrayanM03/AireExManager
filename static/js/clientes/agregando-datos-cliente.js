@@ -69,7 +69,18 @@ function agregarDireccion(type) {
         let  id_cicle_direccion = element.getAttribute("code");
      
         if(id_actual_direction == id_cicle_direccion){
-          console.log(element.getAttribute("cp"));
+          element.setAttribute("id", id_actual_direction) 
+          element.setAttribute("code", id_actual_direction);
+          element.setAttribute("calle", calle);
+          element.setAttribute("exterior", num_ext);
+          element.setAttribute("interior", num_int); 
+          element.setAttribute("colonia", colonia);
+          element.setAttribute("municipio", municipio); 
+          element.setAttribute("estado ", estado);
+          element.setAttribute("cp", cp);
+          element.setAttribute("ciudad", ciudad);
+          element.setAttribute("pais", pais);
+          element.setAttribute("cp", cp);
         }
         
       });
@@ -79,60 +90,7 @@ function agregarDireccion(type) {
 
 }
 
-function editarListDireccion(id_list_item) {
-  let container = $("li[code='" + id_list_item + "']");
-  let actual_index_positition = $("li[code='" + id_list_item + "']").attr("index_badge");
-  let code_actual = $("li[code='" + id_list_item + "']").attr("code");
-  let calle_actual = $("li[code='" + id_list_item + "']").attr("calle");
-  let exterior_actual = $("li[code='" + id_list_item + "']").attr("exterior");
-  let interior_actual = $("li[code='" + id_list_item + "']").attr("interior");
-  let colonia_actual = $("li[code='" + id_list_item + "']").attr("colonia");
-  let municipio_actual = $("li[code='" + id_list_item + "']").attr("municipio");
-  let estado_actual = $("li[code='" + id_list_item + "']").attr("estado");
-  let cp_actual = $("li[code='" + id_list_item + "']").attr("cp");
-  let ciudad_actual = $("li[code='" + id_list_item + "']").attr("ciudad");
-  let pais_actual = $("li[code='" + id_list_item + "']").attr("pais");
-
-  $("li[code='" + id_list_item + "']").toggleClass("item_seleccionado");
-  if ($("li[code='" + id_list_item + "']").hasClass("item_seleccionado")) {
-    $("#calle").val(calle_actual);
-    $("#exterior").val(exterior_actual);
-    $("#interior").val(interior_actual);
-    $("#zip").val(cp_actual);
-    $("#colonia").val(colonia_actual);
-    $("#ciudad").val(ciudad_actual);
-    $("#municipio").val(municipio_actual);
-    $("#estado").val(estado_actual);
-    $("#pais").val(pais_actual);
-    $("#area-btn-add-direction").empty().append(`
-    <div class="btn btn-info" id_li="${id_list_item}" onclick="agregarDireccion(2);" id="btn-update-dir" estatus_click="${actual_index_positition}">Actualizar dirección</div>
-    `)
-  } else {
-    $("#calle").val("");
-    $("#exterior").val("");
-    $("#interior").val("");
-    $("#zip").val("");
-    $("#colonia").val("");
-    $("#ciudad").val("");
-    $("#municipio").val("");
-    $("#estado").val("TAM");
-    $("#area-btn-add-direction").empty().append(`
-    <div class="btn btn-primary" onclick="agregarDireccion(1);">Agregar dirección</div>
-    `)
-  }
-  
-
-  $("#direcciones-list").on("click", function (e) {
-    if (!container.is(e.target) && container.has(e.target).length === 0) {
-      $("li[code='" + id_list_item + "']").removeClass("item_seleccionado"); 
-     
-      
-    }
-  });
-}
-
-
-
+//Agregar dato a la lista
 function agregarCorreo() {
   var correo = $("#email").val();
   var etiqueta = $("#etiqueta").val();
@@ -262,8 +220,69 @@ function agregarCategoriaList() {
   }
 }
 
+//Funciones de edición
+function editarListDireccion(id_list_item) {
+  let container = $("li[code='" + id_list_item + "']");
+  let actual_index_positition = $("li[code='" + id_list_item + "']").attr("index_badge");
+  let code_actual = $("li[code='" + id_list_item + "']").attr("code");
+  let calle_actual = $("li[code='" + id_list_item + "']").attr("calle");
+  let exterior_actual = $("li[code='" + id_list_item + "']").attr("exterior");
+  let interior_actual = $("li[code='" + id_list_item + "']").attr("interior");
+  let colonia_actual = $("li[code='" + id_list_item + "']").attr("colonia");
+  let municipio_actual = $("li[code='" + id_list_item + "']").attr("municipio");
+  let estado_actual = $("li[code='" + id_list_item + "']").attr("estado");
+  let cp_actual = $("li[code='" + id_list_item + "']").attr("cp");
+  let ciudad_actual = $("li[code='" + id_list_item + "']").attr("ciudad");
+  let pais_actual = $("li[code='" + id_list_item + "']").attr("pais");
+
+  $("li[code='" + id_list_item + "']").toggleClass("item_seleccionado");
+  if ($("li[code='" + id_list_item + "']").hasClass("item_seleccionado")) {
+    $("#instrucciones-dir").text("Vuelve a hacer click sobre la direccion para cancelar");
+    $("#calle").val(calle_actual);
+    $("#exterior").val(exterior_actual);
+    $("#interior").val(interior_actual);
+    $("#zip").val(cp_actual);
+    $("#colonia").val(colonia_actual);
+    $("#ciudad").val(ciudad_actual);
+    $("#municipio").val(municipio_actual);
+    $("#estado").val(estado_actual);
+    $("#pais").val(pais_actual);
+    $("#area-btn-add-direction").empty().append(`
+    <div class="btn btn-info" id_li="${id_list_item}" onclick="agregarDireccion(2);" id="btn-update-dir" estatus_click="${actual_index_positition}">Actualizar dirección</div>
+    `)
+  } else {
+    $("#instrucciones-dir").text("Selecciona una dirección para editarla o agrega una nueva")
+    $("#calle").val("");
+    $("#exterior").val("");
+    $("#interior").val("");
+    $("#zip").val("");
+    $("#colonia").val("");
+    $("#ciudad").val("");
+    $("#municipio").val("");
+    $("#estado").val("TAM");
+    $("#area-btn-add-direction").empty().append(`
+    <div class="btn btn-primary" onclick="agregarDireccion(1);">Agregar dirección</div>
+    `)
+  }
+  
+
+  $("#direcciones-list").on("click", function (e) {
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+      $("li[code='" + id_list_item + "']").removeClass("item_seleccionado"); 
+     
+      
+    }
+  });
+}
+
+//Funciones de eliminacion
+
 function eliminarDirList(identificador, mensaje) {
   window.event.stopPropagation();
+  let id_actual_direction = $("#btn-update-dir").attr("id_li");
+  if(id_actual_direction !== undefined){
+    $("li[code='" + id_actual_direction + "']").removeClass("item_seleccionado")
+  }
   $("li[code='" + identificador + "']").remove();
   $("#calle").val("");
   $("#exterior").val("");
@@ -278,8 +297,9 @@ function eliminarDirList(identificador, mensaje) {
   `)
   let lista = $("#direcciones-list");
   let lista_direcciones = $("#direcciones-list").children();
-  elementos = lista_direcciones.length;
+  let elementos = lista_direcciones.length;
 
+  
   if (elementos == 0) {
     lista.append(`
         <li class="list-group-item text-center" id="list-empty-dir" value="0">${mensaje}</li>
@@ -334,6 +354,8 @@ function eliminarCatList(identificador, mensaje) {
   }
   count_click4 -= 1;
 }
+
+//Funciones de validación
 
 const validateEmail = (email) => {
   return email.match(
