@@ -60,11 +60,18 @@ function agregarDireccion(type) {
       <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarDirList(${id_li}, 'Sin direcciones agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
       </li>
   `);
+
     }else if(type == 2){
       
       let list = document.querySelector('#direcciones-list').getElementsByTagName('li');
+      let id_actual_direction = $("#btn-update-dir").attr("id_li");
       [].forEach.call(list, element => {
-        console.log(element);
+        let  id_cicle_direccion = element.getAttribute("code");
+     
+        if(id_actual_direction == id_cicle_direccion){
+          console.log(element.getAttribute("cp"));
+        }
+        
       });
     }
    
@@ -98,7 +105,7 @@ function editarListDireccion(id_list_item) {
     $("#estado").val(estado_actual);
     $("#pais").val(pais_actual);
     $("#area-btn-add-direction").empty().append(`
-    <div class="btn btn-info" onclick="agregarDireccion(2);" id="btn-update-dir" estatus_click="${actual_index_positition}">Actualizar dirección</div>
+    <div class="btn btn-info" id_li="${id_list_item}" onclick="agregarDireccion(2);" id="btn-update-dir" estatus_click="${actual_index_positition}">Actualizar dirección</div>
     `)
   } else {
     $("#calle").val("");
