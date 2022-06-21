@@ -3,7 +3,7 @@ var count_click2 = 0;
 var count_click3 = 0;
 var count_click4 = 0;
 
-function agregarDireccion() {
+function agregarDireccion(type) {
   var calle = $("#calle").val();
   var num_ext = $("#exterior").val();
   var num_int = $("#interior").val();
@@ -14,7 +14,7 @@ function agregarDireccion() {
   var estado = $("#estado").val();
   var pais = $("#pais").val();
 
-  count_click += 1;
+  
 
   let lista_direcciones = $("#direcciones-list");
 
@@ -24,41 +24,57 @@ function agregarDireccion() {
   if (cp == 0 || cp == "") {
     alert("Agrega codigo postal");
   } else {
+    
     if (lista_empty == 0) {
       lista_direcciones.empty();
-      appendList();
+
+      appendList(type);
     } else {
-      appendList();
+     
+      appendList(type);
     }
   }
 
-  function appendList() {
-    lista_direcciones.append(`
-        <li class="list-group-item d-flex justify-content-between hover-list"
-        id="${id_li}" 
-        code="${id_li}"
-        calle="${calle}"
-        exterior = "${num_ext}"
-        interior = "${num_int}" 
-        colonia="${colonia}" 
-        municipio="${municipio}" 
-        estado ="${estado}"
-        cp="${cp}"
-        ciudad="${ciudad}"
-        pais="${pais}"
-        onclick="editarListDireccion(${id_li})"
-        value="1">
-        <span class="badge bg-primary" style="height:23px; margin-right:7px;">${count_click}</span>
-        <span class="ml-3">${calle} ${num_ext} ${colonia} ${cp} ${municipio} ${estado} ${pais}</span>
-        <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarDirList(${id_li}, 'Sin direcciones agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
-        </li>
-    `);
+  function appendList(type) {
+    //Type == 1 -> Agregar direccion en list -- type == 2 -> Actualizar direccion 
+    if(type == 1){
+      count_click += 1;
+      lista_direcciones.append(`
+      <li class="list-group-item d-flex justify-content-between hover-list"
+      id="${id_li}" 
+      code="${id_li}"
+      calle="${calle}"
+      exterior = "${num_ext}"
+      interior = "${num_int}" 
+      colonia="${colonia}" 
+      municipio="${municipio}" 
+      estado ="${estado}"
+      cp="${cp}"
+      ciudad="${ciudad}"
+      pais="${pais}"
+      onclick="editarListDireccion(${id_li})"
+      index_badge="${count_click}"
+      value="1">
+      <span class="badge bg-primary" style="height:23px; margin-right:7px;">${count_click}</span>
+      <span class="ml-3">${calle} ${num_ext} ${colonia} ${cp} ${municipio} ${estado} ${pais}</span>
+      <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarDirList(${id_li}, 'Sin direcciones agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
+      </li>
+  `);
+    }else if(type == 2){
+      
+      let list = document.querySelector('#direcciones-list').getElementsByTagName('li');
+      [].forEach.call(list, element => {
+        console.log(element);
+      });
+    }
+   
   }
+
 }
 
 function editarListDireccion(id_list_item) {
   let container = $("li[code='" + id_list_item + "']");
-
+  let actual_index_positition = $("li[code='" + id_list_item + "']").attr("index_badge");
   let code_actual = $("li[code='" + id_list_item + "']").attr("code");
   let calle_actual = $("li[code='" + id_list_item + "']").attr("calle");
   let exterior_actual = $("li[code='" + id_list_item + "']").attr("exterior");
@@ -82,7 +98,7 @@ function editarListDireccion(id_list_item) {
     $("#estado").val(estado_actual);
     $("#pais").val(pais_actual);
     $("#area-btn-add-direction").empty().append(`
-    <div class="btn btn-info" onclick="actualizarDireccion();">Actualizar dirección</div>
+    <div class="btn btn-info" onclick="agregarDireccion(2);" id="btn-update-dir" estatus_click="${actual_index_positition}">Actualizar dirección</div>
     `)
   } else {
     $("#calle").val("");
@@ -94,19 +110,21 @@ function editarListDireccion(id_list_item) {
     $("#municipio").val("");
     $("#estado").val("TAM");
     $("#area-btn-add-direction").empty().append(`
-    <div class="btn btn-primary" onclick="agregarDireccion();">Agregar dirección</div>
+    <div class="btn btn-primary" onclick="agregarDireccion(1);">Agregar dirección</div>
     `)
   }
   
 
   $("#direcciones-list").on("click", function (e) {
     if (!container.is(e.target) && container.has(e.target).length === 0) {
-      $("li[code='" + id_list_item + "']").removeClass("item_seleccionado");
+      $("li[code='" + id_list_item + "']").removeClass("item_seleccionado"); 
+     
       
-
     }
   });
 }
+
+
 
 function agregarCorreo() {
   var correo = $("#email").val();
@@ -240,6 +258,17 @@ function agregarCategoriaList() {
 function eliminarDirList(identificador, mensaje) {
   window.event.stopPropagation();
   $("li[code='" + identificador + "']").remove();
+  $("#calle").val("");
+  $("#exterior").val("");
+  $("#interior").val("");
+  $("#zip").val("");
+  $("#colonia").val("");
+  $("#ciudad").val("");
+  $("#municipio").val("");
+  $("#estado").val("TAM");
+  $("#area-btn-add-direction").empty().append(`
+  <div class="btn btn-primary" onclick="agregarDireccion(1);">Agregar dirección</div>
+  `)
   let lista = $("#direcciones-list");
   let lista_direcciones = $("#direcciones-list").children();
   elementos = lista_direcciones.length;
@@ -248,6 +277,7 @@ function eliminarDirList(identificador, mensaje) {
     lista.append(`
         <li class="list-group-item text-center" id="list-empty-dir" value="0">${mensaje}</li>
         `);
+
     count_click = 1;
   }
   count_click -= 1;

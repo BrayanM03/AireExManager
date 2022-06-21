@@ -239,7 +239,7 @@
                                         <div class="row mt-3">
                                             <div class="col-12 col-md-12 text-center" id="area-btn-add-direction">
 
-                                                <div class="btn btn-primary" onclick="agregarDireccion();">Agregar dirección</div>
+                                                <div class="btn btn-primary" onclick="agregarDireccion(1);">Agregar dirección</div>
 
                                             </div>
                                         </div>
