@@ -298,7 +298,7 @@
 
                                         <div class="row mt-3 justify-content-center">
                                             <div class="col-12 col-md-11 text-center">
-                                                <div class="btn btn-primary" onclick="agregarCuentaList();">Agregar cuenta</div>
+                                                <div class="btn btn-primary" onclick="agregarCuentaList(1);">Agregar cuenta</div>
                                             </div>
                                         </div>
 
@@ -331,7 +331,7 @@
 
                                         <div class="row mt-3 justify-content-center">
                                             <div class="col-12 col-md-11 text-center">
-                                                <div class="btn btn-primary" onclick="agregarCorreo();">Agregar correo</div>
+                                                <div class="btn btn-primary" onclick="agregarCorreo(1);">Agregar correo</div>
                                             </div>
                                         </div>
                                     </div>
@@ -441,7 +441,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-12 text-center">
                                         <b>Correos electronicos</b>
-                                        <p style="font-size:12px;">Selecciona un correo para editarlo o agrega uno nuevo</p>
+                                        <p style="font-size:12px;" id="instrucciones-correo">Selecciona un correo para editarlo o agrega uno nuevo</p>
                                     </div>
                                 </div>
                                 <div class="row mt-3 justify-content-center">
@@ -459,7 +459,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-12 text-center">
                                         <b>Cuentas agregadas</b>
-                                        <p style="font-size:12px;">Selecciona una cuenta para editarla o agrega una nueva</p>
+                                        <p style="font-size:12px;" id="instrucciones-cuenta">Selecciona una cuenta para editarla o agrega una nueva</p>
                                     </div>
                                 </div>
                                 <div class="row mt-3 justify-content-center">

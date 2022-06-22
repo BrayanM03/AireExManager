@@ -18,8 +18,8 @@ function agregarDireccion(type) {
 
   let lista_direcciones = $("#direcciones-list");
 
-  id_li = Math.random() * (9999 - 1000) + 1;
-  id_trash = Math.random() * (9999 - 1000) + 1;
+  let id_li = Math.random() * (9999 - 1000) + 1;
+  let id_trash = Math.random() * (9999 - 1000) + 1;
   lista_empty = $("#list-empty-dir").val();
   if (cp == 0 || cp == "") {
     alert("Agrega codigo postal");
@@ -65,6 +65,7 @@ function agregarDireccion(type) {
       
       let list = document.querySelector('#direcciones-list').getElementsByTagName('li');
       let id_actual_direction = $("#btn-update-dir").attr("id_li");
+      let index_badge = $("#btn-update-dir").attr("estatus_click"); 
       [].forEach.call(list, element => {
         let  id_cicle_direccion = element.getAttribute("code");
      
@@ -76,11 +77,20 @@ function agregarDireccion(type) {
           element.setAttribute("interior", num_int); 
           element.setAttribute("colonia", colonia);
           element.setAttribute("municipio", municipio); 
-          element.setAttribute("estado ", estado);
+          element.setAttribute("estado", estado);
           element.setAttribute("cp", cp);
           element.setAttribute("ciudad", ciudad);
           element.setAttribute("pais", pais);
           element.setAttribute("cp", cp);
+          element.setAttribute("index_badge", index_badge);
+
+          element.innerHTML = `
+          <span class="badge bg-primary" style="height:23px; margin-right:7px;">${index_badge}</span>
+          <span class="ml-3">${calle} ${num_ext} ${colonia} ${cp} ${municipio} ${estado} ${pais}</span>
+          <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarDirList(${ id_actual_direction }, 'Sin direcciones agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
+          
+          `;
+        
         }
         
       });
@@ -91,7 +101,7 @@ function agregarDireccion(type) {
 }
 
 //Agregar dato a la lista
-function agregarCorreo() {
+function agregarCorreo(type) {
   var correo = $("#email").val();
   var etiqueta = $("#etiqueta").val();
   if (etiqueta == "") {
@@ -104,37 +114,73 @@ function agregarCorreo() {
 
     var lista_correos = $("#correos-list");
 
-    id_li = Math.random() * (9999 - 1000) + 1;
-    lista_empty = $("#list-empty-email").val();
+    id_list = Math.random() * (9999 - 1000) + 1;
+    id_trash = Math.random() * (9999 - 1000) + 1;
+    let lista_empty = $("#list-empty-email").val();
     if (lista_empty == 0) {
       lista_correos.empty();
-      appendListCorreo();
+      appendListCorreo(type);
     } else {
-      appendListCorreo();
+      appendListCorreo(type);
     }
   } else {
     animateCSS("#email", "headShake");
   }
 
-  function appendListCorreo() {
-    lista_correos.append(`
-        <li class="list-group-item d-flex justify-content-between hover-list"
-        id=${id_list}
-        onclick="eliminarEmailList(${id_li}, 'Sin correos agregados')" 
-        code="${id_li}"
-        correo="${correo}"
-        etiqueta="${etiqueta}"
-        value="1"
-        >
-        <span class="badge badge-primary badge-pill" style="height:23px">${count_click2}</span>
-        <span class="ml-3">${correo}</span>
-        <div class="btn btn-sm btn-danger" style="height:30px"><i class="fas fa-trash"></i></div>
-        </li>
-    `);
+
+  function appendListCorreo(type) {
+    
+    if(type == 1){
+      lista_correos.append(`
+      <li class="list-group-item d-flex justify-content-between hover-list"
+      id=${id_list}
+      onclick="editarListEmail(${id_list})" 
+      code="${id_list}"
+      correo="${correo}"
+      etiqueta="${etiqueta}"
+      value="1"
+      index_badge="${count_click2}"
+      >
+      <span class="badge bg-primary" style="height:23px; margin-right:7px;">${count_click2}</span>
+      <span class="ml-3"><b>${etiqueta}:</b> ${correo}</span>
+      <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarEmailList(${id_list}, 'Sin correos agregados')" style="height:30px"><i class="fas fa-trash"></i></div>
+      </li>
+  `);
+
+  
+
+    }else if(type == 2){
+
+      let list = document.querySelector('#correos-list').getElementsByTagName('li');
+      let id_actual_correo = $("#btn-update-correo").attr("id_li");
+      let index_badge = $("#btn-update-correo").attr("estatus_click"); 
+      [].forEach.call(list, element => {
+        let  id_cicle_correo = element.getAttribute("code");
+     
+        if(id_actual_correo == id_cicle_correo){
+          element.setAttribute("id", id_actual_correo) 
+          element.setAttribute("code", id_actual_correo);
+          element.setAttribute("correo", correo);
+          element.setAttribute("etiqueta", etiqueta);
+          element.setAttribute("index_badge", index_badge);
+
+          element.innerHTML = `
+          <span class="badge bg-primary" style="height:23px; margin-right:7px;">${index_badge}</span>
+          <span class="ml-3"><b>${etiqueta}:</b> ${correo}</span>
+          <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarDirList(${ id_actual_direction }, 'Sin direcciones agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
+          
+          `;
+        
+        }
+        
+      });
+
+    }
+    
   }
 }
 
-function agregarCuentaList() {
+function agregarCuentaList(type) {
   var nombre_cuenta = $("#nombre-cuenta").val();
   var cuenta = $("#cuenta").val();
   var rfc_banco = $("#banco").val();
@@ -152,9 +198,9 @@ function agregarCuentaList() {
     lista_empty = $("#list-empty-count").val();
     if (lista_empty == 0) {
       lista_cuentas.empty();
-      appendListCuenta();
+      appendListCuenta(type);
     } else {
-      appendListCuenta();
+      appendListCuenta(type);
     }
   } else {
     animateCSS("#cuenta", "headShake");
@@ -172,7 +218,7 @@ function agregarCuentaList() {
         rfc="${rfc_banco}"
         value="1"
         >
-        <span class="badge badge-primary badge-pill" style="height:23px">${count_click3}</span>
+        <span class="badge bg-primary badge-pill" style="height:23px">${count_click3}</span>
         <span class="ml-3">${cuenta}</span>
         <div class="btn btn-sm btn-danger" style="height:30px"><i class="fas fa-trash"></i></div>
         </li>
@@ -275,6 +321,39 @@ function editarListDireccion(id_list_item) {
   });
 }
 
+function editarListEmail(id_list_item) {
+  let container = $("li[code='" + id_list_item + "']");
+  let actual_index_positition = $("li[code='" + id_list_item + "']").attr("index_badge");
+  let code_actual = $("li[code='" + id_list_item + "']").attr("code");
+ let etiqueta_actual = $("li[code='" + id_list_item+"']").attr("etiqueta");
+ let correo_actual = $("li[code='" + id_list_item+"']").attr("correo");
+
+  $("li[code='" + id_list_item + "']").toggleClass("item_seleccionado");
+  if ($("li[code='" + id_list_item + "']").hasClass("item_seleccionado")) {
+    $("#instrucciones-correo").text("Vuelve a hacer click sobre la direccion para cancelar");
+    $("#etiqueta").val(etiqueta_actual);
+    $("#email").val(calle_actual);
+  
+    $("#area-btn-add-correo").empty().append(`
+    <div class="btn btn-info" id_li="${id_list_item}" onclick="agregarCorreo(2);" id="btn-update-correo" estatus_click="${actual_index_positition}">Actualizar correo</div>
+    `)
+  } else {
+    $("#instrucciones-correo").text("Selecciona un correo para editarlo o agrega una nueva")
+    $("#etiqueta").val("");
+    $("#correo").val("");
+    $("#area-btn-add-correo").empty().append(`
+    <div class="btn btn-primary" onclick="agregarCorreo(1);">Agregar correo</div>
+    `)
+  }
+  
+
+  $("#correos-list").on("click", function (e) {
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+      $("li[code='" + id_list_item + "']").removeClass("item_seleccionado"); 
+    
+    }
+  });
+}
 //Funciones de eliminacion
 
 function eliminarDirList(identificador, mensaje) {
@@ -296,14 +375,16 @@ function eliminarDirList(identificador, mensaje) {
   <div class="btn btn-primary" onclick="agregarDireccion(1);">Agregar dirección</div>
   `)
   let lista = $("#direcciones-list");
+  let badges = $("#direcciones-list li");
   let lista_direcciones = $("#direcciones-list").children();
   let elementos = lista_direcciones.length;
-
   
   if (elementos == 0) {
     lista.append(`
         <li class="list-group-item text-center" id="list-empty-dir" value="0">${mensaje}</li>
         `);
+
+
 
     count_click = 1;
   }
