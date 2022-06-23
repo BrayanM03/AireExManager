@@ -110,7 +110,7 @@ function agregarCorreo(type) {
 
   var result = $("#result").attr("value");
   if (result == "valid") {
-    count_click2 += 1;
+   
 
     var lista_correos = $("#correos-list");
 
@@ -131,6 +131,8 @@ function agregarCorreo(type) {
   function appendListCorreo(type) {
     
     if(type == 1){
+      
+      count_click2 += 1;
       lista_correos.append(`
       <li class="list-group-item d-flex justify-content-between hover-list"
       id=${id_list}
@@ -150,7 +152,8 @@ function agregarCorreo(type) {
   
 
     }else if(type == 2){
-
+      
+      
       let list = document.querySelector('#correos-list').getElementsByTagName('li');
       let id_actual_correo = $("#btn-update-correo").attr("id_li");
       let index_badge = $("#btn-update-correo").attr("estatus_click"); 
@@ -167,7 +170,7 @@ function agregarCorreo(type) {
           element.innerHTML = `
           <span class="badge bg-primary" style="height:23px; margin-right:7px;">${index_badge}</span>
           <span class="ml-3"><b>${etiqueta}:</b> ${correo}</span>
-          <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarDirList(${ id_actual_direction }, 'Sin direcciones agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
+          <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarEmailList(${ id_actual_correo }, 'Sin correos')" style="height:30px"><i class="fas fa-trash"></i></div>
           
           `;
         
@@ -194,7 +197,8 @@ function agregarCuentaList(type) {
     count_click3 += 1;
     var lista_cuentas = $("#count-list");
 
-    id_li = Math.random() * (9999 - 1000) + 1;
+    id_list = Math.random() * (9999 - 1000) + 1;
+    id_trash = Math.random() * (9999 - 1000) + 1;
     lista_empty = $("#list-empty-count").val();
     if (lista_empty == 0) {
       lista_cuentas.empty();
@@ -206,23 +210,58 @@ function agregarCuentaList(type) {
     animateCSS("#cuenta", "headShake");
   }
 
-  function appendListCuenta() {
-    lista_cuentas.append(`
-        <li class="list-group-item d-flex justify-content-between hover-list"
-        id="${id_li}"
-        onclick="eliminarCountList(${id_li}, 'Sin cuentas agregadas')" 
-        code="${id_li}"
-        cuenta="${cuenta}"
-        nombre_cuenta="${nombre_cuenta}"
-        banco="${banco}"
-        rfc="${rfc_banco}"
-        value="1"
-        >
-        <span class="badge bg-primary badge-pill" style="height:23px">${count_click3}</span>
-        <span class="ml-3">${cuenta}</span>
-        <div class="btn btn-sm btn-danger" style="height:30px"><i class="fas fa-trash"></i></div>
-        </li>
+  function appendListCuenta(type) {
+    if(type == 1){
+      lista_cuentas.append(`
+      <li class="list-group-item d-flex justify-content-between hover-list"
+      id="${id_list}"
+      onclick="editarListCuenta(${id_list})"
+      code="${id_list}"
+      cuenta="${cuenta}"
+      nombre_cuenta="${nombre_cuenta}"
+      banco="${banco}"
+      rfc="${rfc_banco}"
+      index_badge="${count_click3}"
+      value="1"
+      >
+      <span class="badge bg-primary badge-pill" style="height:23px; margin-right:10px">${count_click3}</span>
+      <span class="ml-3"><div class="row">
+                         <div class="col-12"><b>${nombre_cuenta}:</b> ${cuenta}</div>
+                         <div class="col-12" style="font-size: 10px"><b>${banco}:</b> ${rfc_banco}</div></div></span>
+      <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarCountList(${id_list}, 'Sin cuentas agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
+      </li>
     `);
+    }else if(type == 2){
+       
+      let list = document.querySelector('#count-list').getElementsByTagName('li');
+      let id_actual_cuenta = $("#btn-update-cuentas").attr("id_li");
+      let index_badge = $("#btn-update-cuentas").attr("estatus_click"); 
+      [].forEach.call(list, element => {
+        let  id_cicle_cuenta = element.getAttribute("code");
+     
+        if(id_actual_cuenta == id_cicle_cuenta){
+          element.setAttribute("id", id_actual_cuenta) 
+          element.setAttribute("code", id_actual_cuenta);
+          element.setAttribute("cuenta", cuenta);
+          element.setAttribute("nombre_cuenta", nombre_cuenta);
+          element.setAttribute("banco", banco);
+          element.setAttribute("rfc_banco", rfc_banco);
+          element.setAttribute("index_badge", index_badge);
+
+          element.innerHTML = `
+          <span class="badge bg-primary" style="height:23px; margin-right:7px;">${index_badge}</span>
+          <span class="ml-3"><div class="row">
+          <div class="col-12"><b>${nombre_cuenta}:</b> ${cuenta}</div>
+          <div class="col-12" style="font-size: 10px"><b>${banco}:</b> ${rfc_banco}</div></div></span>
+          <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarCountList(${ id_actual_cuenta }, 'Sin cuentas agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
+          
+          `;
+        
+        }
+        
+      });
+    }
+   
   }
 }
 
@@ -325,22 +364,23 @@ function editarListEmail(id_list_item) {
   let container = $("li[code='" + id_list_item + "']");
   let actual_index_positition = $("li[code='" + id_list_item + "']").attr("index_badge");
   let code_actual = $("li[code='" + id_list_item + "']").attr("code");
- let etiqueta_actual = $("li[code='" + id_list_item+"']").attr("etiqueta");
- let correo_actual = $("li[code='" + id_list_item+"']").attr("correo");
+  let etiqueta_actual = $("li[code='" + id_list_item+"']").attr("etiqueta");
+  let correo_actual = $("li[code='" + id_list_item+"']").attr("correo");
 
   $("li[code='" + id_list_item + "']").toggleClass("item_seleccionado");
   if ($("li[code='" + id_list_item + "']").hasClass("item_seleccionado")) {
+  
     $("#instrucciones-correo").text("Vuelve a hacer click sobre la direccion para cancelar");
     $("#etiqueta").val(etiqueta_actual);
-    $("#email").val(calle_actual);
+    $("#email").val(correo_actual);
   
     $("#area-btn-add-correo").empty().append(`
     <div class="btn btn-info" id_li="${id_list_item}" onclick="agregarCorreo(2);" id="btn-update-correo" estatus_click="${actual_index_positition}">Actualizar correo</div>
     `)
   } else {
-    $("#instrucciones-correo").text("Selecciona un correo para editarlo o agrega una nueva")
+    $("#instrucciones-correo").text("Selecciona un correo para editarlo o agrega uno nuevo")
     $("#etiqueta").val("");
-    $("#correo").val("");
+    $("#email").val("");
     $("#area-btn-add-correo").empty().append(`
     <div class="btn btn-primary" onclick="agregarCorreo(1);">Agregar correo</div>
     `)
@@ -354,6 +394,44 @@ function editarListEmail(id_list_item) {
     }
   });
 }
+
+function editarListCuenta(id_list_item) {
+  let container = $("li[code='" + id_list_item + "']");
+  let actual_index_positition = $("li[code='" + id_list_item + "']").attr("index_badge");
+  let code_actual = $("li[code='" + id_list_item + "']").attr("code");
+  let nombre_actual = $("li[code='" + id_list_item+"']").attr("nombre_cuenta");
+  let cuenta_actual = $("li[code='" + id_list_item+"']").attr("cuenta");
+  let banco_actual = $("li[code='" + id_list_item+"']").attr("banco");
+  let rfc_banco_actual = $("li[code='" + id_list_item+"']").attr("rfc_banco");
+
+  $("li[code='" + id_list_item + "']").toggleClass("item_seleccionado");
+  if ($("li[code='" + id_list_item + "']").hasClass("item_seleccionado")) {
+  
+    $("#instrucciones-cuenta").text("Vuelve a hacer click sobre la cuenta para cancelar");
+    $("#nombre-cuenta").val(nombre_actual);
+    $("#cuenta").val(cuenta_actual);
+  
+    $("#area-btn-add-cuentas").empty().append(`
+    <div class="btn btn-info" id_li="${id_list_item}" onclick="agregarCuentaList(2);" id="btn-update-cuentas" estatus_click="${actual_index_positition}">Actualizar cuenta</div>
+    `)
+  } else {
+    $("#instrucciones-correo").text("Selecciona una cuenta para editarla o agrega una nueva")
+    $("#nombre-cuenta").val("");
+    $("#cuenta").val("");
+    $("#area-btn-add-cuentas").empty().append(`
+    <div class="btn btn-primary" onclick="agregarCuentaList(1);">Agregar cuenta</div>
+    `)
+  }
+  
+
+  $("#count-list").on("click", function (e) {
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+      $("li[code='" + id_list_item + "']").removeClass("item_seleccionado"); 
+    
+    }
+  });
+}
+
 //Funciones de eliminacion
 
 function eliminarDirList(identificador, mensaje) {
@@ -375,7 +453,6 @@ function eliminarDirList(identificador, mensaje) {
   <div class="btn btn-primary" onclick="agregarDireccion(1);">Agregar dirección</div>
   `)
   let lista = $("#direcciones-list");
-  let badges = $("#direcciones-list li");
   let lista_direcciones = $("#direcciones-list").children();
   let elementos = lista_direcciones.length;
   
@@ -383,9 +460,6 @@ function eliminarDirList(identificador, mensaje) {
     lista.append(`
         <li class="list-group-item text-center" id="list-empty-dir" value="0">${mensaje}</li>
         `);
-
-
-
     count_click = 1;
   }
   count_click -= 1;
@@ -465,7 +539,7 @@ $("#email").on("input", validate);
 
 $("#banco").select2({
   placeholder: "Busca un banco...",
-  theme: "bootstrap",
+  theme: "bootstrap-5",
   minimumInputLength: 0,
 
   language: {
@@ -491,7 +565,7 @@ function formatState(state) {
 
   $state = $(
     '<div class="row justify-content-center">' +
-      '<div class="col-md-3"><img src="../../vistas/dist/img/ERP/bancos/' +
+      '<div class="col-md-3"><img src="./img/bancos/' +
       state.id +
       '.jpg" style="width:50px"></div>' +
       '<div class="col-md-9">' +

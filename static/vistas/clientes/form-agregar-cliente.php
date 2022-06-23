@@ -297,7 +297,7 @@
 
 
                                         <div class="row mt-3 justify-content-center">
-                                            <div class="col-12 col-md-11 text-center">
+                                            <div class="col-12 col-md-11 text-center"  id="area-btn-add-cuentas">
                                                 <div class="btn btn-primary" onclick="agregarCuentaList(1);">Agregar cuenta</div>
                                             </div>
                                         </div>
@@ -330,7 +330,7 @@
                                         </div>
 
                                         <div class="row mt-3 justify-content-center">
-                                            <div class="col-12 col-md-11 text-center">
+                                            <div class="col-12 col-md-11 text-center"  id="area-btn-add-correo">
                                                 <div class="btn btn-primary" onclick="agregarCorreo(1);">Agregar correo</div>
                                             </div>
                                         </div>

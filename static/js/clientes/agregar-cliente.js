@@ -24,15 +24,12 @@ function registrarClienteNuevo(){
     razon_social = $("#razon-social").val();
     rfc = $("#rfc").val();
     rfc_invalido = $("#resultado").hasClass("nel");
-    cfdi = $("#cfdi").val();
     telefono = $("#telefono").val();
     contacto = $("#contacto").val();
-    regimen_fiscal = $("#tax_system").val();
     tipo_cliente = $("#bnt-reg-cliente").attr("tipo_cliente");
 
     contacto == "" || contacto == " " ? contacto = "Sin definir": contacto =contacto;
     telefono == "" || telefono == " " ? telefono = "Sin definir": telefono =telefono;
-    console.log(rfc_invalido)
    
 
     //Validamos los campos
@@ -156,10 +153,8 @@ function registrarClienteNuevo(){
           url: "../servidor/clientes/agregar-nuevo-cliente.php",
           data: {"razon_social": razon_social,
                  "rfc": rfc,
-                 "cfdi": cfdi,
                  "telefono": telefono,
                  "contacto": contacto,
-                 "regimen_fiscal": regimen_fiscal,
                  "tipo_cliente": tipo_cliente,
                  "direcciones": JSON.stringify(direcciones),
                  "cuentas": JSON.stringify(cuentas),
