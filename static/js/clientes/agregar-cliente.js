@@ -172,7 +172,7 @@ function registrarClienteNuevo(){
                             <div class="card p-5 animate__animated animate__bounceIn">
                                 <div class="row justify-content-center">
                                     <div class="col-12 col-md-12 mb-3 text-center">
-                                        <img src="../../vistas/dist/img/ERP/check-correct.gif" style="width:100px;">
+                                        <img src="./img/check-correct.gif" style="width:100px;">
                                     </div>
                                 </div>
                                 <div class="row">

@@ -409,6 +409,9 @@
 
 
                                 <div class="row justify-content-center">
+                                <div class="col-12 col-md-4">
+                                        <a href="clientes.php"><div class="btn btn-warning"><i class="fa-solid fa-angle-left"></i> Regresar</div></a>
+                                    </div>
                                     <div class="col-12 col-md-3">
                                         <div class="btn btn-success" tipo_cliente="empresa" onclick="registrarClienteNuevo();" id="bnt-reg-cliente">Registrar</div>
                                     </div>

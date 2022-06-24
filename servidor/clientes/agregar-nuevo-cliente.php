@@ -77,13 +77,13 @@
                 $result->execute();
               }
 
-              foreach ($correos as $index => $element){
+              foreach ($cuentas as $index => $element){
 
                 $insert_detail_customer = "INSERT INTO detalle_cuenta_bancaria(id, nombre, cuenta, banco, rfc_banco, id_usuario) VALUES(null,?,?,?,?,?)";
-              
+               
                 $result = $con->prepare($insert_detail_customer);
                 $result->bindParam(1,$element["nombre_cuenta"]);
-                $result->bindParam(2,$element["cuenta"]);
+                $result->bindParam(2,$element["no_cuenta"]);
                 $result->bindParam(3,$element["banco"]);
                 $result->bindParam(4,$element["rfc_banco"]);
                 $result->bindParam(5,$id_cliente);

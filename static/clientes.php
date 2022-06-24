@@ -25,6 +25,8 @@ if (empty($_SESSION["id"])) {
     <link href="css/app.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
 
 </head>
 
@@ -44,7 +46,7 @@ if (empty($_SESSION["id"])) {
 
                     <div class="row mb-2">
                         <div class="col-12 col-md-6">
-                            <h1 class="h3 mb-3">Clientes</h1>
+                            <h1 class="h3 mb-3">Area de clientes</h1>
                         </div>
                         <div class="col-12 col-md-6 text-end">
                             <a href="agregar-cliente.php"><div class="btn btn-success">Agregar nuevo</div></a>
@@ -57,9 +59,23 @@ if (empty($_SESSION["id"])) {
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Empty card</h5>
+                                    <h5 class="card-title mb-0">Clientes agregados</h5>
                                 </div>
                                 <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <table id="example" class="table table-hover nowrap" style="width:100%">
+                                            <!-- <thead>
+                                                <tr>
+                                                    <th>Subscriber ID</th>
+                                                    <th>Install Location</th>
+                                                    <th>Subscriber Name</th>
+                                                    <th>some data</th>
+                                                </tr>
+                                            </thead> -->
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -102,14 +118,13 @@ if (empty($_SESSION["id"])) {
     <script src="js/app.js"></script>
 
     <!-- Librerias -->
+    <script src="https://kit.fontawesome.com/31a28ea63e.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/usuarios/registrar.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+
+    <!-- Mis scripts -->
+    <script src="js/clientes/traer-lista.js"></script>
 
 </body>
 
