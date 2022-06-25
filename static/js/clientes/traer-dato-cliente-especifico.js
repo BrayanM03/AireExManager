@@ -55,66 +55,47 @@ fetch('../servidor/database/traer-un-solo-dato.php', {
 
     if($direcciones.length > 0) {
 
+        var lista_direcciones = $("#direcciones-list");
+            lista_direcciones.empty()
+
         Object.keys($direcciones).forEach(direccion => {
             let direccion_item = $direcciones[direccion];
             console.log(direccion_item);
-            var lista_correos = $("#correos-list");
-            id_list = Math.random() * (9999 - 1000) + 1;
-            id_trash = Math.random() * (9999 - 1000) + 1;
-            appendListCorreo(1);
-            function appendListCorreo(type) {
-    
-                if(type == 1){
-                  
-                  count_click2 += 1;
-                  lista_correos.append(`
-                  <li class="list-group-item d-flex justify-content-between hover-list"
-                  id=${id_list}
-                  onclick="editarListEmail(${id_list})" 
-                  code="${id_list}"
-                  correo="${correo}"
-                  etiqueta="${etiqueta}"
-                  value="1"
-                  index_badge="${count_click2}"
-                  >
-                  <span class="badge bg-primary" style="height:23px; margin-right:7px;">${count_click2}</span>
-                  <span class="ml-3"><b>${etiqueta}:</b> ${correo}</span>
-                  <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarEmailList(${id_list}, 'Sin correos agregados')" style="height:30px"><i class="fas fa-trash"></i></div>
-                  </li>
-              `);
             
-              
-            
-                }else if(type == 2){
-                  
-                  
-                  let list = document.querySelector('#correos-list').getElementsByTagName('li');
-                  let id_actual_correo = $("#btn-update-correo").attr("id_li");
-                  let index_badge = $("#btn-update-correo").attr("estatus_click"); 
-                  [].forEach.call(list, element => {
-                    let  id_cicle_correo = element.getAttribute("code");
-                 
-                    if(id_actual_correo == id_cicle_correo){
-                      element.setAttribute("id", id_actual_correo) 
-                      element.setAttribute("code", id_actual_correo);
-                      element.setAttribute("correo", correo);
-                      element.setAttribute("etiqueta", etiqueta);
-                      element.setAttribute("index_badge", index_badge);
-            
-                      element.innerHTML = `
-                      <span class="badge bg-primary" style="height:23px; margin-right:7px;">${index_badge}</span>
-                      <span class="ml-3"><b>${etiqueta}:</b> ${correo}</span>
-                      <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarEmailList(${ id_actual_correo }, 'Sin correos')" style="height:30px"><i class="fas fa-trash"></i></div>
-                      
-                      `;
-                    
-                    }
-                    
-                  });
-            
-                }
-                
+            let id_li = Math.random() * (9999 - 1000) + 1;
+            let id_trash = Math.random() * (9999 - 1000) + 1;
+            lista_empty = $("#list-empty-dir").val();
+            appendList(1);
+          
+            function appendList(type) {
+              //Type == 1 -> Agregar direccion en list -- type == 2 -> Actualizar direccion 
+              if(type == 1){
+                count_click += 1;
+                lista_direcciones.append(`
+                <li class="list-group-item d-flex justify-content-between hover-list"
+                id="${id_li}" 
+                code="${id_li}"
+                calle="${direccion_item.calle}"
+                exterior = "${direccion_item.numero_ext}"
+                interior = "${direccion_item.numero_int}" 
+                colonia="${direccion_item.colonia}" 
+                municipio="${direccion_item.municipio}" 
+                estado ="${direccion_item.estado}"
+                cp="${direccion_item.cp}"
+                ciudad="${direccion_item.ciudad}"
+                pais="${direccion_item.pais}"
+                onclick="editarListDireccion(${id_li})"
+                index_badge="${count_click}"
+                value="1">
+                <span class="badge bg-primary" style="height:23px; margin-right:7px;">${count_click}</span>
+                <span class="ml-3">${direccion_item.calle} ${direccion_item.numero_ext} ${direccion_item.colonia} ${direccion_item.cp} ${direccion_item.municipio} ${direccion_item.estado} ${direccion_item.pais}</span>
+                <div class="btn btn-sm btn-danger" id="I${id_trash}" onclick="eliminarDirList(${id_li}, 'Sin direcciones agregadas')" style="height:30px"><i class="fas fa-trash"></i></div>
+                </li>
+            `);
+          
               }
+             
+            }
         });
 
     }
@@ -138,5 +119,11 @@ function obtenerParametroGet(name) {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
     results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function cambiandoDatos(){
+    $("#area-btn-cliente-nuevo").empty().append(`
+    <div class="btn btn-success" tipo_cliente="empresa" onclick="ActualizarCliente();" id="bnt-reg-cliente">Actualizar</div>
+    `);
 }
 

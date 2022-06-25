@@ -46,7 +46,7 @@ if (empty($_SESSION["id"])) {
 			<main class="content">
 				<div class="container-fluid p-0" id="main-content">
 
-					<h1 class="h3 mb-3 text-center">Agregar</h1>
+					<h1 class="h3 mb-3 text-center">Actualizar cliente</h1>
 
 					<div class="row">
 						<div class="col-12">
