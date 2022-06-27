@@ -366,6 +366,7 @@ function editarListEmail(id_list_item) {
   let code_actual = $("li[code='" + id_list_item + "']").attr("code");
   let etiqueta_actual = $("li[code='" + id_list_item+"']").attr("etiqueta");
   let correo_actual = $("li[code='" + id_list_item+"']").attr("correo");
+  $("#result").attr("value", "valid");
 
   $("li[code='" + id_list_item + "']").toggleClass("item_seleccionado");
   if ($("li[code='" + id_list_item + "']").hasClass("item_seleccionado")) {
@@ -381,6 +382,7 @@ function editarListEmail(id_list_item) {
     $("#instrucciones-correo").text("Selecciona un correo para editarlo o agrega uno nuevo")
     $("#etiqueta").val("");
     $("#email").val("");
+    $("#result").attr("value", "invalid").text("");
     $("#area-btn-add-correo").empty().append(`
     <div class="btn btn-primary" onclick="agregarCorreo(1);">Agregar correo</div>
     `)
