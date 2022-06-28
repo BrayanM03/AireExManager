@@ -245,7 +245,7 @@ function agregarCuentaList(type) {
           element.setAttribute("cuenta", cuenta);
           element.setAttribute("nombre_cuenta", nombre_cuenta);
           element.setAttribute("banco", banco);
-          element.setAttribute("rfc_banco", rfc_banco);
+          element.setAttribute("rfc", rfc_banco);
           element.setAttribute("index_badge", index_badge);
 
           element.innerHTML = `

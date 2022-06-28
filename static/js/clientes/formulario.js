@@ -316,7 +316,6 @@ var rfc         = input.value.trim().toUpperCase(),
 resultado   = document.getElementById("resultado"),
 valido;
 if(rfc==""){
-    console.log("rfc vacio");
     hasclass = resultado.classList.contains('nel');
 if(hasclass ==true){
   resultado.classList.remove('nel')
