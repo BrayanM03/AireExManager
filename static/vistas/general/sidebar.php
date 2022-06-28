@@ -77,7 +77,7 @@
                             <div id="collapse<?php echo $row["id"] ?>" class="accordion-collapse collapse" style="margin-left:13px;" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                 <li class="sidebar-item">
-                                    <a class="sidebar-link" href="#">
+                                    <a class="sidebar-link" href="inventario.php?store_id=<?php echo $row['id'] ?>&name=<?php echo $row['nombre'] ?>">
                                         <i class="align-middle" data-feather="cloud-snow"></i> <span class="align-middle">Aires</span>
                                     </a>
                                 </li>
