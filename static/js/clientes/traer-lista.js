@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#example').DataTable({
+    tabla = $('#example').DataTable({
         processing: true,
         serverSide: true,
         ajax:{

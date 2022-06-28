@@ -44,39 +44,68 @@
             </li>
 
             
+            <?php
+
+                            include './../servidor/database/conexion.php';
+
+                            $consultar_sucu = "SELECT COUNT(*) FROM sucursal";
+                            $res = $con->prepare($consultar_sucu);
+                            $res->execute();
+                            $total_sucu = $res->fetchColumn();
+                            $res->closeCursor();
+                            
+                            if ($total_sucu > 0) {
+
+                                $consultar = $con->prepare("SELECT * FROM sucursal");
+                                $consultar->execute();
+                                while ($row = $consultar->fetch()) {
+                                    
+                                    ?>
 
             <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
+                     <div class="accordion-item">
+
+                                <li class="sidebar-item accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $row["id"] ?>" aria-expanded="true" aria-controls="collapse<?php echo $row["id"] ?>">
+                                    <a class="sidebar-link" href="#">
+                                        <i class="align-middle" data-feather="map-pin"></i> <span class="align-middle"><?php echo $row["nombre"] ?></span>
+                                    </a>
+                                </li>
                 
-                        <li class="sidebar-item accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <a class="sidebar-link" href="#">
-                                <i class="align-middle" data-feather="map-pin"></i> <span class="align-middle">AireExpress</span>
-                            </a>
-                        </li>
+                        
                        
             
-                    <div id="collapseOne" class="accordion-collapse collapse" style="margin-left:13px;" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">
-                                <i class="align-middle" data-feather="cloud-snow"></i> <span class="align-middle">Aires</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">
-                                <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Refacciones</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">
-                                <i class="align-middle" data-feather="truck"></i> <span class="align-middle">Servicios</span>
-                            </a>
-                        </li>
-                        </div>
-                    </div>
-                </div>
+                            <div id="collapse<?php echo $row["id"] ?>" class="accordion-collapse collapse" style="margin-left:13px;" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="#">
+                                        <i class="align-middle" data-feather="cloud-snow"></i> <span class="align-middle">Aires</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="#">
+                                        <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Refacciones</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="#">
+                                        <i class="align-middle" data-feather="truck"></i> <span class="align-middle">Servicios</span>
+                                    </a>
+                                </li>
+                                </div>
+                            </div>
 
+                    </div>
             </div>
+
+
+
+                                    <?php
+                                }
+                            }
+            ?>
+
+
+            
 
 
            

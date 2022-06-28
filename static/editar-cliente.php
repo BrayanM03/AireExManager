@@ -117,6 +117,8 @@ if (empty($_SESSION["id"])) {
 
 	<script src="js/clientes/traer-dato-cliente-especifico.js"></script>
 	<script src="js/clientes/actualizar-cliente.js"></script>
+	
+
     
 
 

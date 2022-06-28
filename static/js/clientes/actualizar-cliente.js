@@ -166,7 +166,7 @@ function actualizarCliente(id){
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-md-12 text-center" style="font-family:'Bahnschrift Extrabold'; font-size:19px;">
-                                        <p>¡Cliente agregado con exito!</p>
+                                        <p>¡Cliente actualizado con exito!</p>
                                     </div>
                                 </div>
                                 <div class="row">
