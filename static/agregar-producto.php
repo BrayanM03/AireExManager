@@ -52,6 +52,9 @@ if (empty($_SESSION["id"])) {
                     
 
                 </div>
+
+                
+                
             </main>
 
             <footer class="footer">
@@ -98,6 +101,7 @@ if (empty($_SESSION["id"])) {
     <script src="js/inventario/agregar-producto.js"></script>
     <script src="js/inventario/nueva-series.js"></script>
 
+  
     <script>
         
 $( "#card-aire" ).hover(

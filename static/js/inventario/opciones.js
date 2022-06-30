@@ -17,8 +17,13 @@ function clickNuevoProducto(){
 
 function clickagregarSeries(){
    
-    main_content.empty().load(`vistas/inventario/ingresar-producto-existente.php`)
-    agregarEventos();
+    main_content.empty().load(`vistas/inventario/ingresar-producto-existente.php`, function() {
+        
+        agregarEventos()
+      });
+    
+    
+   
 
 }
 

@@ -16,7 +16,7 @@
                    
                     </div>
                     <div class="col-12 col-md-11">
-                    <h5 class="card-title mb-0" id="title-card">Selecciona una sucursal</h5>
+                    <h5 class="card-title mb-0" id="title-card">Selecciona un producto dependiendo de la sucursal y agrega las series que necesites</h5>
                     </div>
                 </div>
                
@@ -64,19 +64,21 @@
 
                 <div class="row mb-3 justify-content-center">
                     <div class="col-12 col-md-6 text-center">
-                        <div class="btn btn-success" onclick="agregarSerie()">Agregar</div>
+                        <div class="btn btn-success disabled" id="btn-add-serie" onclick="agregarSerie()">Agregar</div>
                     </div>
                 </div>
 
 
 
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-12 col-md-12">
                         <table id="example" class="table table-hover nowrap" style="width:100%">
                          
                         </table>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
