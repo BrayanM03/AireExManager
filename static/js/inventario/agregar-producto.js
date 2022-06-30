@@ -1,44 +1,61 @@
 function agregarProducto(){
 
-    let proveedor = document.getElementById("proveedor")
-    let tonelaje= document.getElementById("tonelaje")
-     let modelo = document.getElementById("modelo")
-     let marca = document.getElementById("marca")
-     let cantidad = document.getElementById("canitdad")
-     let costo = document.getElementById("costo")
-     let precio = document.getElementById("precio")
+    let proveedor = document.getElementById("proveedor").value
+    let tonelaje= document.getElementById("tonelaje").value
+     let modelo = document.getElementById("modelo").value
+     let marca = document.getElementById("marca").value
+     let cantidad = +document.getElementById("cantidad").value //Aqui pongo el mas para hacer la cantidad un "number"
+     let costo = document.getElementById("costo").value
+     let precio = document.getElementById("precio").value
 
-     if(modelo.value == ""){
+
+    let hasCantidadInt = Number.isInteger(cantidad);
+
+     /* if(modelo == ""){
         Toast.fire({
             icon: 'error',
             title: 'Ingresa un modelo'
           })
      }
 
-     else if(marca.value == ""){
+     else if(marca == ""){
         Toast.fire({
             icon: 'error',
             title: 'Ingresa una marca'
           })
     }
 
-    else if(costo.value == ""){
+    else if(cantidad === "" || cantidad < 0){
+        Toast.fire({
+            icon: 'error',
+            title: 'Ingresa una cantidad igual o mayor a 0'
+          })
+    }
+
+    else if(hasCantidadInt == false){
+        Toast.fire({
+            icon: 'error',
+            title: 'Ingresa una cantidad entera'
+          })
+    }
+  
+    else if(costo == ""){
         Toast.fire({
             icon: 'error',
             title: 'Ingresa un costo'
           })
     }
 
-    else if(precio.value == ""){
+    else if(precio == ""){
         Toast.fire({
             icon: 'error',
             title: 'Ingresa un precio'
           })
     }
 
-    else{
+    else{ */
 
-     let datosForm = new FormData();
+     datosForm = new FormData();
      datosForm.append("proveedor", proveedor);
      datosForm.append("tonelaje", tonelaje); 
      datosForm.append("modelo", modelo);
@@ -49,38 +66,38 @@ function agregarProducto(){
      datosForm.append("costo", costo);
 
      if(cantidad !== 0) {
-        let counter = 1;
+       
         let card_title = $("#title-card");
-        let card_body = $("#card-body");
+        card_body = $("#card-body");
         card_title.empty().text("Ingresa los numeros de serie por la cantidad que ingresaste");
-        card_body.empty().load(`vistas/inventario/agregar-serie.php`)
+        $("#backbtn_area").empty().append(`
+        <div class="btn" onclick="RegresarAtras(2)">
+        <i class="fa-solid fa-circle-left fa-2xl icono" style="color:#E5BE01"></i>
+        `)
+        card_body.empty().load(`vistas/inventario/agregar-serie.php`,{
+            cantidad: cantidad
+        })
 
-        for(let step = 0; step < cantidad; step++){
-            console.log(step);
-            $("#contenedor-series").append(`
-                <div class="row mb-3">
-                    <div class="col-12 col-md-6">
-                        <input class="form-control" id="serie_condensador_${counter}" type="text" placeholder="Serie ${counter}">
-                    </div>
-                
-                    <div class="col-12 col-md-6">
-                    <input class="form-control" id="serie_evaporador_${counter}" type="text" placeholder="Serie ${counter}">
-                    </div>
-                </div>
-            `)
-
-            counter++;
-        }
+     
+          
+     }else if(cantidad == 0){
+        Swal.fire({
+            icon: 'question',
+            html: `<p>Ingresaste 0 en la cantidad, significa que no vas a registar series del producto, ¿Quieres finalizar el proceso?<p>`,
+            showCancelButton: true,
+            confirmButtonText: 'Finalizar',
+            cancelButtonText: 'Cancelar'
+        }).then(function (response){
+            if(response.isConfirmed){
+                terminarRegistro(1);
+            }
+        })
      }
      
      
 
-    }
+    /* } */
      
-
-    
-
-
 
      
 }
@@ -96,3 +113,80 @@ const Toast = Swal.mixin({
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
   })
+
+
+  function setInputSeries(cantidad, counter){
+
+    for(let step = 0; step < cantidad; step++){
+        console.log(step);
+        $("#contenedor-series").append(`
+            <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                    <input class="form-control" id="serie_condensador_${counter}" type="text" placeholder="Serie ${counter}">
+                </div>
+            
+                <div class="col-12 col-md-6">
+                <input class="form-control" id="serie_evaporador_${counter}" type="text" placeholder="Serie ${counter}">
+                </div>
+            </div>
+        `)
+    
+        counter++;
+    }
+  }
+
+  //Temrinando proceso de registro
+  function terminarRegistro(type){
+
+    if(type == 1){
+        ingresarDatosADB();
+    }else if(type == 2){
+
+        
+        /* $("#contenedor-series").on( "submit", function( event ) {
+            event.preventDefault();
+            series = $( this ).serialize();
+          });
+ */
+           let series_form_evap = document.getElementsByClassName('evap-input')
+           let series_form_cond = document.getElementsByClassName('cond-input')
+           let sucursal_id = document.getElementById('sucursal')
+           let fecha_compra = document.getElementById('fecha_compra')
+       
+           flag =0;
+
+           series = [];
+           for (let item of series_form_cond) {
+            series.push([item.value])
+            
+           }
+
+          
+
+           for (let item of series_form_evap) {
+            series[flag].push(item.value)
+            flag++;
+            
+           }
+
+           series_json = JSON.stringify(series);
+
+           datosForm.append("series", series_json);
+          
+
+          $.ajax({
+            type: "POST",
+            url: "../servidor/inventario/registrar-clima-serie.php",
+            processData: false,
+            contentType: false,
+            data: datosForm,
+           
+            success: function (response) {
+                
+            }
+        });
+
+    }
+
+  }
+  
