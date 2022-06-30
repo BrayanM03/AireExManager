@@ -66,9 +66,17 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-12 col-md-12">
+                    <div class="col-12 col-md-6">
                         <label for="cantidad">Cantidad</label>
                         <input class="form-control" type="number" placeholder="0" name="cantidad" id="cantidad">
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <span class="mb-2">Sucursal a agregar</span>
+                        <select class="form-control mb-1" id="sucursal" name="sucursal">
+                            <option value="1">AireExpress</option>
+                            <option value="2">ServiClima</option>
+                        </select>
                     </div>
 
                 </div>
@@ -178,9 +186,17 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-12 col-md-12">
+                    <div class="col-12 col-md-6">
                         <label for="cantidad">Cantidad</label>
                         <input type="number" class="form-control" value="<?php echo $_POST['cantidad'] ?>" placeholder="0" name="cantidad" id="cantidad">
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <span class="mb-2">Sucursal a agregar</span>
+                        <select class="form-control mb-1" id="sucursal" name="sucursal">
+                            <option value="1">AireExpress</option>
+                            <option value="2">ServiClima</option>
+                        </select>
                     </div>
 
                 </div>

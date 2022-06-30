@@ -7,11 +7,12 @@ function agregarProducto(){
      let cantidad = +document.getElementById("cantidad").value //Aqui pongo el mas para hacer la cantidad un "number"
      let costo = document.getElementById("costo").value
      let precio = document.getElementById("precio").value
+     let sucursal = document.getElementById("sucursal").value
 
 
     let hasCantidadInt = Number.isInteger(cantidad);
 
-     /* if(modelo == ""){
+     if(modelo == ""){
         Toast.fire({
             icon: 'error',
             title: 'Ingresa un modelo'
@@ -53,7 +54,7 @@ function agregarProducto(){
           })
     }
 
-    else{ */
+    else{
 
      datosForm = new FormData();
      datosForm.append("proveedor", proveedor);
@@ -64,6 +65,7 @@ function agregarProducto(){
      datosForm.append("costo", costo);
      datosForm.append("precio", precio);
      datosForm.append("costo", costo);
+     datosForm.append("sucursal", sucursal);
 
      if(cantidad !== 0) {
        
@@ -96,7 +98,7 @@ function agregarProducto(){
      
      
 
-    /* } */
+    }
      
 
      
@@ -139,29 +141,44 @@ const Toast = Swal.mixin({
   function terminarRegistro(type){
 
     if(type == 1){
-        ingresarDatosADB();
+        datosForm.append("has_series", 0);
+        $.ajax({
+            type: "POST",
+            url: "../servidor/inventario/registrar-clima-serie.php",
+            processData: false,
+            contentType: false,
+            data: datosForm,
+           
+            success: function (response) {
+                if(response == 1){
+               
+                    Swal.fire({
+                        icon: "success",
+                        html: "<b>¡Se agrego un nuevo producto al inventario!</b>",
+                        allowOutsideClick: false,
+                        confirmButtonText: "Entendido"
+                    }).then((response)=>{
+                        location.reload();
+                    })
+                }
+            }
+        });
+
     }else if(type == 2){
 
         
-        /* $("#contenedor-series").on( "submit", function( event ) {
-            event.preventDefault();
-            series = $( this ).serialize();
-          });
- */
+        
            let series_form_evap = document.getElementsByClassName('evap-input')
            let series_form_cond = document.getElementsByClassName('cond-input')
-           let sucursal_id = document.getElementById('sucursal')
-           let fecha_compra = document.getElementById('fecha_compra')
+           let fecha_compra = document.getElementById('fecha_compra').value;
        
            flag =0;
 
            series = [];
            for (let item of series_form_cond) {
-            series.push([item.value])
-            
+            series.push([item.value])            
            }
 
-          
 
            for (let item of series_form_evap) {
             series[flag].push(item.value)
@@ -172,19 +189,40 @@ const Toast = Swal.mixin({
            series_json = JSON.stringify(series);
 
            datosForm.append("series", series_json);
+           datosForm.append("has_series", 1);
+
+           if(fecha_compra == ""){
+            Toast.fire({
+                icon: 'error',
+                title: 'Ingresa una fecha'
+              })
+        }else{
+
+            datosForm.append("fecha_compra", fecha_compra);
           
 
-          $.ajax({
-            type: "POST",
-            url: "../servidor/inventario/registrar-clima-serie.php",
-            processData: false,
-            contentType: false,
-            data: datosForm,
-           
-            success: function (response) {
-                
-            }
-        });
+            $.ajax({
+              type: "POST",
+              url: "../servidor/inventario/registrar-clima-serie.php",
+              processData: false,
+              contentType: false,
+              data: datosForm,
+             
+              success: function (response) {
+                  if(response == 1){
+                      Swal.fire({
+                          icon: "success",
+                          html: "<b>¡Se agrego un nuevo producto al inventario!</b>",
+                          allowOutsideClick: false,
+                          confirmButtonText: "Entendido"
+                      }).then((response)=>{
+                          location.reload();
+                      })
+                  }
+              }
+          });
+        }
+        
 
     }
 

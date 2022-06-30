@@ -2,13 +2,9 @@
 
 <div class="row mb-4 justify-content-center">
     <div class="col-12 col-md-6 text-center">
-        <span class="mb-2">Sucursal a agregar</span>
-        <select class="form-control mb-1" id="sucursal" name="sucursal">
-            <option value="1">AireExpress</option>
-            <option value="2">ServiClima</option>
-        </select>
+        
         Fecha compra
-        <input class="form-control" type="date">
+        <input class="form-control" type="date" id="fecha_compra" name="fecha_compra">
     </div>
 </div>
 

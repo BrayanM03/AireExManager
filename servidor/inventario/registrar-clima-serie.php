@@ -10,60 +10,72 @@ if ($_POST) {
     $cantidad = $_POST["cantidad"];
     $precio = $_POST["precio"];
     $costo = $_POST["costo"];
-    $fecha_compra = "2022-06-1997";
     $estatus = "activo";
-    $series = json_decode($_POST['series']);
+    $sucursal = $_POST["sucursal"];
+   
+    $tipo = "Aire acondicionado";
+    $has_series = $_POST["has_series"];
+    
  
 
 
-    /* $insercion = "INSERT INTO inventario(id, 
+    $insercion = "INSERT INTO inventario(id, 
                                          proveedor, 
-                                         fecha_compra, 
                                          tonelaje, 
                                          marca, 
                                          modelo, 
-                                         estatus, 
-                                         stock) VALUES(null,?,?,?,?,?,?,?)";
+                                         costo,
+                                         precio,
+                                         stock,
+                                         estatus,
+                                         sucursal) VALUES(null,?,?,?,?,?,?,?,?,?)";
     $resp = $con->prepare($insercion);
-    $resp->bindParam(1, $proveedor);
-    $resp->bindParam(2, $fecha_compra);                                     
-    $resp->bindParam(3, $tonelaje);
-    $resp->bindParam(4, $marca);
-    $resp->bindParam(5, $modelo);
-    $resp->bindParam(6, $estatus);
+    $resp->bindParam(1, $proveedor);                                     
+    $resp->bindParam(2, $tonelaje);
+    $resp->bindParam(3, $marca);
+    $resp->bindParam(4, $modelo);
+    $resp->bindParam(5, $costo);
+    $resp->bindParam(6, $precio);
     $resp->bindParam(7, $cantidad);
+    $resp->bindParam(8, $estatus);
+    $resp->bindParam(9, $sucursal);
     $resp->execute();
     $resp->closeCursor();
 
-    $id_prod = $con->lastInsertId(); */
+    $id_prod = $con->lastInsertId();
 
 
-  
+    if($has_series == 1){
+
+        $series = json_decode($_POST['series']);
+        $fecha_compra = $_POST["fecha_compra"];
+
+        $insercion_serie = "INSERT INTO series(id, 
+    fecha_compra,
+    serie_condensador,
+    serie_evaporizador,
+    producto_id,
+    tipo) VALUES(null, ?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
+    $resp = $con->prepare($insercion_serie);
+    
 
     foreach ($series as $key => $value) {
-        $series_item = json_decode($value);
-        print_r($key . " -> " .$series_item);
+        
+        $serie_condensador = $value[0];
+        $serie_vaporizador = $value[1];
+        $data = [$fecha_compra, $serie_condensador, $serie_vaporizador, $id_prod, $tipo];
+
+        $resp->execute($data);
+       
     }
-   
+
+    }
     
- /*    $insercion_serie = "INSERT INTO inventario(id, 
-                                         proveedor, 
-                                         fecha_compra, 
-                                         tonelaje, 
-                                         marca, 
-                                         modelo, 
-                                         estatus, 
-                                         stock) VALUES(null,?,?,?,?,?,?,?)";
-    $resp = $con->prepare($insercion);
-    $resp->bindParam(1, $proveedor);
-    $resp->bindParam(2, $fecha_compra);                                     
-    $resp->bindParam(3, $tonelaje);
-    $resp->bindParam(4, $marca);
-    $resp->bindParam(5, $modelo);
-    $resp->bindParam(6, $estatus);
-    $resp->bindParam(7, $cantidad);
-    $resp->execute();
-    $resp->closeCursor(); */
+
+    print_r(1);
+    
+    
+ 
 
 
   

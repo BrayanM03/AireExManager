@@ -96,6 +96,7 @@ if (empty($_SESSION["id"])) {
     <!-- Mis scripts -->
     <script src="js/inventario/opciones.js"></script>
     <script src="js/inventario/agregar-producto.js"></script>
+    <script src="js/inventario/nueva-series.js"></script>
 
     <script>
         
