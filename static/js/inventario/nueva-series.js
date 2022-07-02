@@ -70,6 +70,10 @@ function agregarEventos(params) {
       setearForm(2);
     }
   });
+
+  
+
+
 }
 
 let language_options = {
@@ -326,7 +330,7 @@ function tableInit(array_dataset) {
           return `
                 <div class='row'>
                     <div class='col-12 col-md-12'>
-                        <div class="btn btn-primary" onclick="editarSerie(${row[0]})"><i class="fa-solid fa-pen-to-square"></i></div>
+                        <div class="btn btn-primary" onclick="editarSerie(${row[0]}, '${row[1]}', '${row[2]}', '${row[3]}')"><i class="fa-solid fa-pen-to-square"></i></div>
                         <div class="btn btn-danger" onclick="eliminarSerie(${row[0]})"><i class="fa-solid fa-trash"></i></div>
                     </div>
                 </div>
@@ -336,6 +340,15 @@ function tableInit(array_dataset) {
     ],
 
     language: language_options,
+  });
+
+  $('#example tbody tr').on('click', function () {
+    if ($(this).hasClass('selected')) {
+        $(this).removeClass('selected');
+    } else {
+      tabla.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+    }
   });
 };
 
@@ -389,32 +402,7 @@ function agregarSerie(){
                     title: response.mensj
                   })
 
-                 let id_producto = $("#producto").val();
-                 let indicador = "producto_id";
-                 let tabla_ref = "series";
-
-                 $.ajax({
-                    type: "POST",
-                    url: "../servidor/inventario/traer-datos-en-base-uno.php",
-                    data: { id: id_producto, tabla: tabla_ref, indicador: indicador },
-                    dataType: "JSON",
-                    success: function (response) {
-                    if (response.status == true) {
-                        $("#serie-cond").prop("disabled", false);
-                        $("#serie-evap").prop("disabled", false);
-                        $("#btn-add-serie").removeClass("disabled")
-
-                        let array_dataset = response.data.map(function (item) {
-                        let array_item = Object.values(item);
-                        return array_item;
-                        });
-
-                        
-                        tableDestroy();
-                        tableInit(array_dataset);
-                    }
-                    },
-                });
+                 reloadTable();
 
             }else{
                 Toast.fire({
@@ -432,22 +420,143 @@ function agregarSerie(){
 
 function eliminarSerie(id_serie){
 
+  Swal.fire({
+    icon: "question",
+    html: "<b>¿Seguro de eliminar estas series?</b>",
+    confirmButtonText: "Si",
+    showCancelButton: true,
+    cancelButtonText: "Mejor no"
+  }).then((response) => {
+    if(response.isConfirmed) {
 
-    let dato = {
+      let id_producto = $("#producto").val();
+      let dato = {
+        producto: id_producto,
         type: "eliminacion",
         serie:id_serie
     };
 
-    console.log(dato);
-
-    $.ajax({
+      $.ajax({
         type: "POST",
         url: "../servidor/inventario/manejo-de-series.php",
         data: dato,
         dataType: "JSON",
         success: function (response) {
+        
+        reloadTable()
 
+        Toast.fire({
+          icon: 'success',
+          title: response.mensj
+        })
+          
         }
     });
+
+    }
+  }) 
     
 }
+
+
+function editarSerie(id_serie, fecha, condensador, evaporizador) {
+
+  console.log(fecha);
+  $('#serie-cond').val(condensador)
+  $('#serie-evap').val(evaporizador)
+  $('#fecha-compra').val(fecha)
+
+  $("#area-botones").empty().append(`
+  <div class="col-12 col-md-6 text-end">
+       <div class="btn btn-danger" id="btn-cancel-update" onclick="cancelarUpdate()">Cancelar</div>
+  </div>
+
+  <div class="col-12 col-md-6 text-start">
+       <div class="btn btn-primary" id="btn-update-series" onclick="updateSeries(${id_serie})">Actualizar</div>
+  </div>
+                    `)
+
+
+}
+
+function updateSeries(id_serie) { 
+
+  let id_producto = $("#producto").val();
+  let serie_cond = $("#serie-cond").val();
+  let serie_evap = $("#serie-evap").val();
+  let fecha_compra = $("#fecha-compra").val();
+  let dato = {
+    producto: id_producto,
+    serie_cond: id_serie,
+    serie_cond: serie_cond,
+    serie_evap: serie_evap,
+    fecha_compra: fecha_compra,
+    type: "actualizacion",
+    serie:id_serie
+};
+
+  $.ajax({
+    type: "POST",
+    url: "../servidor/inventario/manejo-de-series.php",
+    data: dato,
+    dataType: "JSON",
+    success: function (response) {
+    
+    reloadTable()
+
+    Toast.fire({
+      icon: 'success',
+      title: response.mensj
+    })
+      
+    }
+});
+
+ }
+
+function cancelarUpdate(){
+
+  $('#serie-cond').val("")
+  $('#serie-evap').val("")
+  $('#fecha-compra').val("")
+
+  $("#area-botones").empty().append(`
+  <div class="col-12 col-md-6 text-center">
+     <div class="btn btn-success" id="btn-add-serie" onclick="agregarSerie()">Agregar</div>
+ </div>
+                    `)
+
+}
+
+
+function reloadTable(){
+
+  let id_producto = $("#producto").val();
+  let indicador = "producto_id";
+  let tabla_ref = "series";
+
+  $.ajax({
+     type: "POST",
+     url: "../servidor/inventario/traer-datos-en-base-uno.php",
+     data: { id: id_producto, tabla: tabla_ref, indicador: indicador },
+     dataType: "JSON",
+     success: function (response) {
+     if (response.status == true) {
+         $("#serie-cond").prop("disabled", false);
+         $("#serie-evap").prop("disabled", false);
+         $("#btn-add-serie").removeClass("disabled")
+
+         let array_dataset = response.data.map(function (item) {
+         let array_item = Object.values(item);
+         return array_item;
+         });
+
+         
+         tableDestroy();
+         tableInit(array_dataset);
+     }
+     },
+ });
+
+}
+

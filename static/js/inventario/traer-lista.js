@@ -1,29 +1,31 @@
 $(document).ready(function () {
 
+    let sucursal_id = getParameterByName("store_id")
     tabla = $('#example').DataTable({
         processing: true,
         serverSide: true,
         ajax:{
-            url: '../servidor/clientes/server_processing.php',//
-            
+            url: '../servidor/inventario/server_processing.php?sucursal_id=' + sucursal_id,
             dataType: 'json'
         },
         responsive: true,
         order: [0, 'desc'],
         columns:  [
             { data:0, title:'#' },
-            { data:1, title:'Nombre' },
-            { data:2, title:'Teléfono' },
-            { data:3, title:'RFC' },
-            { data:4, title:'Estatus' },
-            { data:5, title:'Contacto' },
-            { data:6, title:'Ingreso' },
+            { data:1, title:'Proveedor' },
+            { data:2, title:'Tonelaje' },
+            { data:3, title:'Marca' },
+            { data:4, title:'Modelo' },
+            { data:5, title:'Costo' },
+            { data:6, title:'Precio' },
+            { data:7, title:'Stock' },
+            { data:8, title:'Estatus' },
             { data:null, title:'Opciones', render: function(row){
                 return `
                 <div class='row'>
                     <div class='col-12 col-md-12'>
-                        <div class="btn btn-primary" onclick="editarCliente(${row[0]})"><i class="fa-solid fa-pen-to-square"></i></div>
-                        <div class="btn btn-danger" onclick="eliminarCliente(${row[0]})"><i class="fa-solid fa-trash"></i></div>
+                        <div class="btn btn-primary" onclick="editarProducto(${row[0]})"><i class="fa-solid fa-pen-to-square"></i></div>
+                        <div class="btn btn-danger" onclick="eliminarProducto(${row[0]})"><i class="fa-solid fa-trash"></i></div>
                     </div>
                 </div>
                 `
@@ -38,11 +40,49 @@ $(document).ready(function () {
     });
 });
 
-function editarCliente(id){
-    window.location.href = "editar-cliente.php?id_customer="+ id;
+function editarProducto(id){
+  let sucursal_id = getParameterByName("store_id")
+    window.location.href = "editar-producto.php?id_product="+ id +"&sucursal=" + sucursal_id;
 
 }
 
+function eliminarProducto(id_product){
+  Swal.fire({
+    icon: "question",
+    html: "<b>¿Seguro de eliminar este producto?</b>"+
+    "<p>Se eliminaran las series de este modelo</p>",
+    confirmButtonText: "Si",
+    showCancelButton: true,
+    cancelButtonText: "Mejor no"
+  }).then((response) => {
+    if(response.isConfirmed) {
+
+     
+      let dato = {
+        producto: id_product,
+        type: "eliminacion",
+    };
+
+      $.ajax({
+        type: "POST",
+        url: "../servidor/inventario/manejo-productos.php",
+        data: dato,
+        dataType: "JSON",
+        success: function (response) {
+        
+       tabla.ajax.reload( null, false)
+
+        Toast.fire({
+          icon: 'success',
+          title: response.mensj
+        })
+          
+        }
+    });
+
+    }
+  }) 
+}
 
 
 let language_options = {
@@ -287,3 +327,23 @@ let language_options = {
       "renameTitle": "Cambiar Nombre Estado"
     }
   }
+
+
+  function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })

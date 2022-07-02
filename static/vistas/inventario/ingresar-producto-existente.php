@@ -62,7 +62,7 @@
                 </div>
                 
 
-                <div class="row mb-3 justify-content-center">
+                <div class="row mb-3 justify-content-center" id="area-botones">
                     <div class="col-12 col-md-6 text-center">
                         <div class="btn btn-success disabled" id="btn-add-serie" onclick="agregarSerie()">Agregar</div>
                     </div>
