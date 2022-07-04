@@ -5,7 +5,7 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         ajax:{
-            url: '../servidor/inventario/server_processing.php?sucursal_id=' + sucursal_id,
+            url: '../servidor/refacciones/server_processing.php?sucursal_id=' + sucursal_id,
             dataType: 'json'
         },
         responsive: true,
@@ -13,13 +13,13 @@ $(document).ready(function () {
         columns:  [
             { data:0, title:'#' },
             { data:1, title:'Proveedor' },
-            { data:2, title:'Tonelaje' },
-            { data:3, title:'Marca' },
+            { data:2, title:'Descripcion' },
+            { data:3, title:'Stock' },
             { data:4, title:'Modelo' },
             { data:5, title:'Costo' },
             { data:6, title:'Precio' },
-            { data:7, title:'Stock' },
-            { data:8, title:'Estatus' },
+            { data:7, title:'Estatus' },
+            { data:8, title:'Observaciones' },
             { data:null, title:'Opciones', render: function(row){
                 return `
                 <div class='row'>
@@ -57,8 +57,7 @@ function eliminarProducto(id_product){
     cancelButtonText: "Mejor no"
   }).then((response) => {
     if(response.isConfirmed) {
-
-     
+  
       let dato = {
         producto: id_product,
         type: "eliminacion",

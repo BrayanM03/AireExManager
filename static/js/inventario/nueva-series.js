@@ -71,10 +71,8 @@ function agregarEventos(params) {
     }
   });
 
-  
-
-
 }
+
 
 let language_options = {
   processing: "<div >Procesando...</div>",
@@ -312,6 +310,7 @@ let language_options = {
 };
 
 function tableInit(array_dataset) {
+  console.log(array_dataset);
   tabla = $("#example").DataTable({
 
     processing: true,

@@ -23,6 +23,7 @@ if (empty($_SESSION["id"])) {
     <title>Inventario clima | AireEx manager</title>
 
     <link href="css/app.css" rel="stylesheet">
+    <link href="css/estilos-agregar-producto.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
@@ -42,46 +43,18 @@ if (empty($_SESSION["id"])) {
             ?>
 
             <main class="content">
-                <div class="container-fluid p-0">
+                <div class="container-fluid p-0" id="main-content">
 
-                    <div class="row mb-2">
-                        <div class="col-12 col-md-6">
-                            <h1 class="h3 mb-3">Inventario de aires <?php echo $_GET['name'] ?></h1>
-                        </div>
-                        <div class="col-12 col-md-6 text-end">
-                            <a href="agregar-producto.php?store_id=<?php echo $_GET['store_id'] ?>&name=<?php echo $_GET['name'] ?>"><div class="btn btn-success">Agregar nuevo</div></a>
-                        </div>
-                    </div>
-
-
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title mb-0">Aires en el catalogo</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 col-md-12">
-                                            <table id="example" class="table table-hover nowrap" style="width:100%">
-                                            <!-- <thead>
-                                                <tr>
-                                                    <th>Subscriber ID</th>
-                                                    <th>Install Location</th>
-                                                    <th>Subscriber Name</th>
-                                                    <th>some data</th>
-                                                </tr>
-                                            </thead> -->
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
+                        <?php
+                        include "vistas/inventario/seleccionar-tipo-agregar.php";
+                        ?>
+                    
 
                 </div>
+
+                
+                
             </main>
 
             <footer class="footer">
@@ -111,7 +84,7 @@ if (empty($_SESSION["id"])) {
                     </div>
                 </div>
             </footer>
-        </div>
+        </div> 
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -124,10 +97,29 @@ if (empty($_SESSION["id"])) {
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
 
     <!-- Mis scripts -->
-    <script src="js/inventario/traer-lista.js"></script>
-    <!-- <script src="js/clientes/traer-lista.js"></script>
-    <script src="js/clientes/eliminar-cliente.js"></script>
- -->
+    <!-- <script src="js/inventario/opciones.js"></script>
+    <script src="js/inventario/agregar-producto.js"></script>
+    <script src="js/inventario/nueva-series.js"></script> -->
+
+  
+    <script>
+        
+$( "#card-aire" ).hover(
+  function() {
+    $("#imagen-aire").addClass( "animate__pulse animate__infinite infinite")
+  }, function() {
+    $("#imagen-aire").removeClass( "animate__pulse animate__infinite infinite" );
+  }
+);
+
+$( "#card-check" ).hover(
+  function() {
+    $("#imagen-checklist").addClass( "animate__pulse animate__infinite infinite" );
+  }, function() {
+    $("#imagen-checklist").removeClass( "animate__pulse animate__infinite infinite" );
+  }
+);
+    </script>
 </body>
 
 </html>

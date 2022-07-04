@@ -16,6 +16,42 @@ if ($_POST) {
         echo json_encode($sentencia, JSON_UNESCAPED_UNICODE);
 
 
+    }else if($type == 'actualizacion') {
+
+        $proveedor = $_POST["proveedor"];
+        $tonelaje = $_POST["tonelaje"];
+        $modelo = $_POST["modelo"];
+        $marca = $_POST["marca"];
+        $precio = $_POST["precio"];
+        $costo = $_POST["costo"];
+        $estatus = "activo";
+        $sucursal = $_POST["sucursal"];
+        $id_producto = $_POST["id_producto"];
+        $tipo = "Aire acondicionado";
+
+        $query = "UPDATE inventario SET proveedor = ?,
+                                             tonelaje = ?,
+                                             marca = ?,
+                                             modelo = ?,
+                                             costo = ?,
+                                             precio = ?,
+                                             estatus = ?,
+                                             sucursal = ? WHERE id =?";
+        $resp = $con->prepare($query);
+        $resp->bindParam(1, $proveedor);                                     
+        $resp->bindParam(2, $tonelaje);
+        $resp->bindParam(3, $marca);
+        $resp->bindParam(4, $modelo);
+        $resp->bindParam(5, $costo);
+        $resp->bindParam(6, $precio);
+        $resp->bindParam(7, $estatus);
+        $resp->bindParam(8, $sucursal);   
+        $resp->bindParam(9, $id_producto);  
+        $resp->execute();
+        $resp->closeCursor();  
+        
+        print_r(1);
+        
     }
 }
 

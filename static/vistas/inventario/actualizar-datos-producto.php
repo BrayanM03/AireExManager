@@ -24,7 +24,7 @@
                    
                     </div>
                     <div class="col-12 col-md-11">
-                    <h5 class="card-title mb-0" id="title-card">Ingresa los datos del producto</h5>
+                    <h5 class="card-title mb-0" id="title-card">Edita los datos del producto</h5>
                     </div>
                 </div>
                
@@ -67,14 +67,14 @@
                 <div class="row mb-3">
                     <div class="col-12 col-md-6">
                         <label for="cantidad">Cantidad</label>
-                        <input type="number" class="form-control" value="<?php echo $_POST['cantidad'] ?>" placeholder="0" name="cantidad" id="cantidad">
+                        <input type="number" class="form-control" value="<?php echo $_POST['cantidad'] ?>" placeholder="0" name="cantidad" id="cantidad" disabled>
                     </div>
 
                     <div class="col-12 col-md-6">
                         <span class="mb-2">Sucursal a agregar</span>
                         <select class="form-control mb-1" id="sucursal" name="sucursal">
-                            <option value="1">AireExpress</option>
-                            <option value="2">ServiClima</option>
+                            <option value="1" <?=$_POST['id_sucursal'] == '1' ? ' selected="selected"' : '';?>>AireExpress</option>
+                            <option value="2" <?=$_POST['id_sucursal'] == '2' ? ' selected="selected"' : '';?>>ServiClima</option>
                         </select>
                     </div>
 
@@ -93,7 +93,7 @@
 
                 <div class="row mb-3">
                     <div class="col-12 col-md-6">
-                        <div class="btn btn-success" onclick="actualizarProducto()">Actualizar</div>
+                        <div class="btn btn-success" onclick="actualizarProducto(<?php echo $_POST['id_producto']; ?>)">Actualizar</div>
                     </div>
                 </div>
 

@@ -46,7 +46,7 @@ if (empty($_SESSION["id"])) {
 
                     <div class="row mb-2">
                         <div class="col-12 col-md-6">
-                            <h1 class="h3 mb-3">Inventario de aires <?php echo $_GET['name'] ?></h1>
+                            <h1 class="h3 mb-3">Inventario de refacciones <?php echo $_GET['name'] ?></h1>
                         </div>
                         <div class="col-12 col-md-6 text-end">
                             <a href="agregar-producto.php?store_id=<?php echo $_GET['store_id'] ?>&name=<?php echo $_GET['name'] ?>"><div class="btn btn-success">Agregar nuevo</div></a>
@@ -124,7 +124,7 @@ if (empty($_SESSION["id"])) {
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
 
     <!-- Mis scripts -->
-    <script src="js/inventario/traer-lista.js"></script>
+    <script src="js/refacciones/traer-lista.js"></script>
     <!-- <script src="js/clientes/traer-lista.js"></script>
     <script src="js/clientes/eliminar-cliente.js"></script>
  -->

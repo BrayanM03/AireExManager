@@ -12,6 +12,7 @@ if ($_POST) {
     $costo = $_POST["costo"];
     $estatus = "activo";
     $sucursal = $_POST["sucursal"];
+    $categoria = "Producto";
    
     $tipo = "Aire acondicionado";
     $has_series = $_POST["has_series"];
@@ -28,7 +29,8 @@ if ($_POST) {
                                          precio,
                                          stock,
                                          estatus,
-                                         sucursal) VALUES(null,?,?,?,?,?,?,?,?,?)";
+                                         sucursal,
+                                         categoria) VALUES(null,?,?,?,?,?,?,?,?,?,?)";
     $resp = $con->prepare($insercion);
     $resp->bindParam(1, $proveedor);                                     
     $resp->bindParam(2, $tonelaje);
@@ -39,6 +41,7 @@ if ($_POST) {
     $resp->bindParam(7, $cantidad);
     $resp->bindParam(8, $estatus);
     $resp->bindParam(9, $sucursal);
+    $resp->bindParam(10, $categoria);
     $resp->execute();
     $resp->closeCursor();
 
