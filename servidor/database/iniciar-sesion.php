@@ -31,6 +31,7 @@ if($_POST){
                 if(password_verify($pass, $hash)){
                     
                     session_start();
+                    
                     $_SESSION["id"] = $row['id'];
                     $_SESSION['nombre'] = $row['nombre'];
                     $_SESSION['apellido'] = $row['apellido'];
@@ -38,6 +39,8 @@ if($_POST){
                     $_SESSION['fecha_ingreso'] = $row['fecha_ingreso'];
                     $_SESSION['rol'] = $row['rol'];
                     $_SESSION['estatus'] = $row['estatus'];
+                    $_SESSION["sucursal_id"] = $row['sucursal_id'];
+
                     print_r(1);
     
                 }else{

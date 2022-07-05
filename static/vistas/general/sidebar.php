@@ -16,8 +16,8 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="venta.php">
-                    <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Nueva ventas</span>
+                <a class="sidebar-link" href="nueva-orden.php">
+                    <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Nueva venta</span>
                 </a>
             </li>
 
@@ -82,7 +82,7 @@
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a class="sidebar-link" href="refacciones.php?store_id=<?php echo $row['id'] ?>&name=<?php echo $row['nombre'] ?>">
+                                    <a class="sidebar-link" href="#">
                                         <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Refacciones</span>
                                     </a>
                                 </li>
