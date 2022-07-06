@@ -1,4 +1,6 @@
 let producto = $("#productos");
+let sucursal_usuario = $("#user-data").attr("id_sucursal")
+
 
 //Select2 clientes
 producto.select2({
@@ -60,9 +62,15 @@ producto.on('select2:select', function(selection){
 })
 
 function formatsSelection(repo){
+
+  
+  if(sucursal_usuario == repo.sucursal){
   let label =  repo.marca + " "+ repo.modelo + " " + repo.tonelaje;
  
-  return repo.text || label;
+  return label;
+  }else{
+    
+  }
 }
 
 function formatResultProducto(repo){
@@ -133,15 +141,35 @@ function formatResultProducto(repo){
 
 function formatSelectionP(repo) {
 
-  console.log(repo);
+  
+  if(sucursal_usuario == repo.sucursal){
+  
   setearSeries(repo.id);
-
   $("#precio").val(repo.precio)
   $("#datos-btn").attr("id_producto", repo.id)
   $("#datos-btn").attr("producto_id", repo.producto_id)
   $("#datos-btn").attr("serie_condensador", repo.serie_condensador)
   $("#datos-btn").attr("serie_evaporizador", repo.serie_evaporizador)
   $("#datos-btn").attr("fecha_compra", repo.fecha_compra)
+
+  }else{
+
+    Toast.fire({
+      icon: 'error',
+      title: 'Este producto no pertenece a tu sucursal'
+    });
+    
+    $("#lista-series").empty().append(`
+                    <div class="list-group-item list-group-item-action" aria-current="true">
+                        <div class="row">
+                            <div class="col-12 col-md-12">Sin datos</div>
+                        </div>
+                    </div>
+            `)
+
+  }
+
+  
 
   
 }
@@ -230,7 +258,7 @@ function agregarProductoAPreventa(){
   let valoresSeries = [];
 
 $("input[type=checkbox]:checked").each(function(){
-  console.log(this.value);
+ 
     valoresSeries.push(this.value);
 });
 
@@ -248,6 +276,10 @@ $("input[type=checkbox]:checked").each(function(){
       dataType: "JSON",
       success: function (response) {
         if(response == 1){
+          Toast.fire({
+            icon: 'success',
+            title: 'Agregado correctamente'
+          });
           setearSeries(id_producto)
           tabla.ajax.reload(null, false)  
         }

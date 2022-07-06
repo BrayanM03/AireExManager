@@ -30,7 +30,9 @@ if (empty($_SESSION["id"])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
-	<style>
+	<link href="../vendor/nice-select/css/nice-select.css">
+    <link href="../vendor/nice-select/css/style.css">
+    <style>
        .select2-container .select2-selection--single {
         height: 20px !important;
         }
@@ -109,11 +111,13 @@ width:100%!important;
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="../vendor/nice-select/js/jquery.nice-select.min.js"></script>
 
     <!-- Mis scripts -->
     <script src="js/nueva-orden/seleccionar-cliente.js"></script>
     <script src="js/nueva-orden/seleccionar-producto.js"></script>
     <script src="js/nueva-orden/preventa.js"></script>
+    <script src="js/nueva-orden/registro-ordenes.js"></script>
   
     <script>
         

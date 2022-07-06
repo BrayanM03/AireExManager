@@ -53,16 +53,17 @@
         $re->execute([$id_producto, $_SESSION["id"]]);
 
         while($row = $re->fetch(PDO::FETCH_OBJ)){
-            $cantidad_actual = $row->cantidad ;
+            $cantidad_actual = $row->cantidad;
             $id_detalle = $row->id;
         }
         
 
         $nueva_cantidad = $cantidad + $cantidad_actual;
+        $nuevo_importe = $nueva_cantidad * $precio_unitario;
 
-        $update = "UPDATE detalle_preventa_tmp SET cantidad = ? WHERE producto_id = ? AND user_id = ?";
+        $update = "UPDATE detalle_preventa_tmp SET cantidad = ?, importe = ? WHERE producto_id = ? AND user_id = ?";
         $re = $con->prepare($update);
-        $re->execute([$nueva_cantidad, $id_producto, $_SESSION["id"]]);
+        $re->execute([$nueva_cantidad, $nuevo_importe, $id_producto, $_SESSION["id"]]);
 
        
         print_r(1);
