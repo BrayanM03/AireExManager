@@ -10,7 +10,7 @@ if ($_POST) {
     $cantidad = $_POST["cantidad"];
     $precio = $_POST["precio"];
     $costo = $_POST["costo"];
-    $estatus = "activo";
+    $estatus = "Activo";
     $sucursal = $_POST["sucursal"];
     $categoria = "Producto";
    
@@ -58,7 +58,8 @@ if ($_POST) {
     serie_condensador,
     serie_evaporizador,
     producto_id,
-    tipo) VALUES(null, ?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
+    tipo,
+    estatus) VALUES(null, ?,?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
     $resp = $con->prepare($insercion_serie);
     
 
@@ -66,7 +67,7 @@ if ($_POST) {
         
         $serie_condensador = $value[0];
         $serie_vaporizador = $value[1];
-        $data = [$fecha_compra, $serie_condensador, $serie_vaporizador, $id_prod, $tipo];
+        $data = [$fecha_compra, $serie_condensador, $serie_vaporizador, $id_prod, $tipo, $estatus];
 
         $resp->execute($data);
        

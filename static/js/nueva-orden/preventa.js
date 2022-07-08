@@ -34,6 +34,19 @@ let user_id = $("#user-data").attr("id_user");
         
     });
 
+
+    //setear-tabla e importe
+    $.ajax({
+      type: "POST",
+      url: "../servidor/nueva-orden/setear-datos.php",
+      data: "data",
+      dataType: "JSON",
+      success: function (response) {
+        tabla.ajax.reload( null, false)
+        $("#neto").val(response.importe)
+      }
+    });
+
 });
 
 function eliminarItem(id) {
@@ -56,7 +69,7 @@ function eliminarItem(id) {
         }
         
         tabla.ajax.reload(null, false);
-
+        $("#neto").val(response.importe)
       }
     }
   });

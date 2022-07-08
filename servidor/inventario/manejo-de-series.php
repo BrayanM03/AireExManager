@@ -6,6 +6,7 @@ if ($_POST) {
    
     $type = $_POST["type"];
     $tipo = "Aire acondicionado";
+    $estatus = "Activo";
 
     //Funciones
     function validarSerieRepetidad($con, $serie, $producto_id){
@@ -83,9 +84,10 @@ if ($_POST) {
             serie_condensador,
             serie_evaporizador,
             producto_id,
-            tipo) VALUES(null, ?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
+            tipo,
+            estatus) VALUES(null, ?,?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
             $resp = $con->prepare($insercion_serie);
-            $data = [$fecha_compra, $serie_condensador, $serie_evaporizador, $producto_id, $tipo];
+            $data = [$fecha_compra, $serie_condensador, $serie_evaporizador, $producto_id, $tipo, $estatus];
             $resp->execute($data);
 
             $response = array("mensj"=>"Se insertaron las series, stock actualizado.",

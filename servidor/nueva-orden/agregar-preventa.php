@@ -3,6 +3,7 @@
 
     session_start();
     include '../database/conexion.php';
+    include '../nueva-orden/traer-importe.php';
     
     date_default_timezone_set("America/Matamoros");
 
@@ -42,9 +43,9 @@
     $id_detalle = $con->lastInsertId();
 
     
+  
+    $response = array("status"=> true, "mensj"=>"Los datos se insertaron correctamente");
     
-
-    print_r(1);
 
     }else if($count > 0){
 
@@ -66,7 +67,7 @@
         $re->execute([$nueva_cantidad, $nuevo_importe, $id_producto, $_SESSION["id"]]);
 
        
-        print_r(1);
+        $response = array("status"=> true, "mensj"=>"Los datos se actualizarón correctamente");
     }
 
 
@@ -91,9 +92,13 @@
         
 
         }
+
+        
     }
 
-    
+    $importe  = traerImporte($con);
+        $response["importe"] = $importe;
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
 
 ?>     

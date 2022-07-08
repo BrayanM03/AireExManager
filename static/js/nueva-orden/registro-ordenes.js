@@ -3,11 +3,11 @@ function registrarOrden(type){
     //recogiendo Variables
     let id_cliente = $("#id-cliente").text();
     let direccion = $("#direccion").val();
-    console.log(id_cliente);
-    console.log(direccion);
+    let total = $("#neto").val();
 
     let data = {
         "id_cliente": id_cliente,
+        "total": total,
         "id_direccion": direccion,
         "tipo": 1
     };
@@ -29,7 +29,17 @@ function sendData(data){
         data: data,
         dataType: "JSON",
         success: function (response) {
-            
+            if(response.status ==false){
+                Toast.fire({
+                    icon: 'error',
+                    title: response.mensj
+                  });
+            }else{
+                Toast.fire({
+                    icon: 'success',
+                    title: response.mensj
+                  });
+            }
         }
     });
 }

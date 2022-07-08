@@ -188,58 +188,64 @@ function setearSeries(id_producto){
         success: function (response) {
           if (response.status == true) {
 
-            let array_dataset = response.data.map(function (item) {
+              let array_dataset = response.data.map(function (item) {
               let array_item = Object.values(item);
               return array_item;
+
             });
 
             counter = 1;
             $("#lista-series").empty();
+
+
             
             array_dataset.forEach(element => {
 
-              $.ajax({
-                type: "POST",
-                url: "../servidor/nueva-orden/comprobar-series-preventa.php",
-                data: {"id_serie": element[6]},
+              if(element[6] == "Activo"){
                 
-                success: function (response2) {
-                 
-                  if(response2 == 1){
-
-                    $("#lista-series").append(`
-                    <div class="list-group-item list-group-item-action" aria-current="true">
-                        <div class="row">
-                            <div class="col-12 col-md-1">${element[0]}</div>
-                            <div class="col-12 col-md-2">${element[1]}</div>
-                            <div class="col-12 col-md-3">${element[2]}</div>
-                            <div class="col-12 col-md-3">${element[3]}</div>
-                            <div class="col-12 col-md-3">
-                                <input class="form-check-input" type="checkbox" value="${element[0]}" id="${element[0]}">
-                            </div>
-                        </div>
-                    </div>
-            `)
-                  }else if(response2 == 0){
-                    $("#lista-series").append(`
-                    <div class="list-group-item list-group-item-action disabled" aria-disabled="true" style="background-color:whitesmoke">
-                        <div class="row">
-                            <div class="col-12 col-md-1">${element[0]}</div>
-                            <div class="col-12 col-md-2">${element[1]}</div>
-                            <div class="col-12 col-md-3">${element[2]}</div>
-                            <div class="col-12 col-md-3">${element[3]}</div>
-                            <div class="col-12 col-md-3">
-                                <input class="form-check-input" type="checkbox" value="${element[0]}" id="${element[0]}">
-                            </div>
-                        </div>
-                    </div>
-            `)
+                $.ajax({
+                  type: "POST",
+                  url: "../servidor/nueva-orden/comprobar-series-preventa.php",
+                  data: {"id_serie": element[0]},
+                  
+                  success: function (response2) {
+                   
+                    if(response2 == 1){
+  
+                      $("#lista-series").append(`
+                      <div class="list-group-item list-group-item-action" aria-current="true">
+                          <div class="row">
+                              <div class="col-12 col-md-1">${element[0]}</div>
+                              <div class="col-12 col-md-2">${element[1]}</div>
+                              <div class="col-12 col-md-3">${element[2]}</div>
+                              <div class="col-12 col-md-3">${element[3]}</div>
+                              <div class="col-12 col-md-3">
+                                  <input class="form-check-input" type="checkbox" value="${element[0]}" id="${element[0]}">
+                              </div>
+                          </div>
+                      </div>
+              `)
+                    }else if(response2 == 0){
+                      $("#lista-series").append(`
+                      <div class="list-group-item list-group-item-action disabled" aria-disabled="true" style="background-color:whitesmoke">
+                          <div class="row">
+                              <div class="col-12 col-md-1">${element[0]}</div>
+                              <div class="col-12 col-md-2">${element[1]}</div>
+                              <div class="col-12 col-md-3">${element[2]}</div>
+                              <div class="col-12 col-md-3">${element[3]}</div>
+                              <div class="col-12 col-md-3">
+                                  <input class="form-check-input" type="checkbox" value="${element[0]}" id="${element[0]}">
+                              </div>
+                          </div>
+                      </div>
+              `)
+                    }
+  
                   }
+                });
 
-                }
-              });
-                
-                
+              }  //Porgramar un else para los modelos con series totalmente vendidas
+                   
              counter++;
             });
             /* tableDestroy();
@@ -275,13 +281,15 @@ $("input[type=checkbox]:checked").each(function(){
       data: { id: id_producto, series: valoresSeries, precio: precio },
       dataType: "JSON",
       success: function (response) {
-        if(response == 1){
+        if(response.status == true){
           Toast.fire({
             icon: 'success',
             title: 'Agregado correctamente'
           });
+
           setearSeries(id_producto)
           tabla.ajax.reload(null, false)  
+          $("#neto").val(response.importe)
         }
       }
     
