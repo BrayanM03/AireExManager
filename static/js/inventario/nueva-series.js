@@ -60,6 +60,15 @@ function agregarEventos(params) {
               return array_item;
             });
 
+             array_dataset = array_dataset.filter(function(val) {
+              console.log(val[6]);
+              if(val[6] == "Activo"){
+                return val; 
+              }
+              
+          });
+
+          
             
             tableDestroy();
             tableInit(array_dataset);
@@ -310,7 +319,7 @@ let language_options = {
 };
 
 function tableInit(array_dataset) {
-  console.log(array_dataset);
+ 
   tabla = $("#example").DataTable({
 
     processing: true,
@@ -547,9 +556,17 @@ function reloadTable(){
 
          let array_dataset = response.data.map(function (item) {
          let array_item = Object.values(item);
+         console.log(array_item);
          return array_item;
          });
-
+         
+         array_dataset = array_dataset.filter(function(val) {
+          console.log(val[6]);
+          if(val[6] == "Activo"){
+            return val; 
+          }
+          
+      });
          
          tableDestroy();
          tableInit(array_dataset);

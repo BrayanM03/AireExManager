@@ -10,7 +10,7 @@ if ($_POST) {
 
     $consultar = $con->prepare("SELECT COUNT(*) FROM $tabla WHERE $indicador  = ?");
     $consultar->execute([$key]);
-    $total = $consultar->fetchColumn();
+    $total = $consultar->fetchColumn(); 
 
     if($total > 0){
 

@@ -110,7 +110,7 @@
 
 
 
-            <!-- <li class="sidebar-header">
+            <li class="sidebar-header">
                 Personas
             </li>
 
@@ -119,7 +119,7 @@
                     <i class="align-middle" data-feather="heart"></i> <span class="align-middle">Clientes</span>
                 </a>
             </li>
-
+<!-- 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="maps-google.html">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Usuarios</span>

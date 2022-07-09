@@ -121,6 +121,14 @@ function clickEditarSeries(){
               return array_item;
             });
 
+            array_dataset = array_dataset.filter(function(val) {
+              console.log(val[6]);
+              if(val[6] == "Activo"){
+                return val; 
+              }
+              
+          });
+
             tableInit(array_dataset);
           }
         },
