@@ -1,6 +1,5 @@
 <?php
 
-$id_orden =  $_GET["id"];
 
 ?>
 
@@ -17,8 +16,11 @@ $id_orden =  $_GET["id"];
     
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
-<script src="../../static/js/reportes/plantilla-reporte-pdf.js">
-<script src="../../static/reportes/fuente+.js">
+<script src="https://unpkg.com/jspdf-autotable@3.5.25/dist/jspdf.plugin.autotable.js"></script>
+
+<script src="../../static/js/reportes/logo.js"></script>
+<script src="../../static/js/reportes/fuente.js"></script>
+<script src="../../static/js/reportes/plantilla-reporte-pdf.js"></script>
 </script>
 </html>
 
