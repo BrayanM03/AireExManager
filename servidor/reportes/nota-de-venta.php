@@ -4,7 +4,7 @@ $id_orden =  $_GET["id"];
 
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,6 +18,7 @@ $id_orden =  $_GET["id"];
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <script src="../../static/js/reportes/plantilla-reporte-pdf.js">
+<script src="../../static/reportes/fuente+.js">
 </script>
 </html>
 
