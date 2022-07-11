@@ -15,8 +15,8 @@ let id_orden = getParameterByName("id_orden")
         console.log(response);
     }
 }); */
-
-console.log(doc.getFontList());
+/* 
+console.log(doc.getFontList()); */
 doc.setFont("helvetica"); // set font
 doc.setFontType("bold"); // set font
 
@@ -55,6 +55,51 @@ doc.text("Domicilio", 10, 53);
 doc.text("Telefono", 147, 53);
 doc.text("Colonia", 10, 60);
 doc.text("Correo", 147, 60);
+
+let bodyTable = [
+    { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
+    { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
+    { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
+    { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
+    { precio_unit: 'Metodo', importe:'Tarjeta' },
+    { descripcion: 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes', precio_unit: 'Total', importe:'76,000.00' },
+  ];
+
+  console.log(bodyTable.length);
+
+doc.autoTable(({
+    theme: 'grid',
+    /* columnStyles: { 0: { halign: 'left', fillColor: [255, 255, 255] } }, */
+    /* headStyles: { 0: { halign: 'left', fillColor: [211, 211, 211] } }, */
+    headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79]},
+    body: bodyTable,
+
+    columns: [
+      { header: 'Cant', dataKey: 'cantidad' },
+      { header: 'Descripcion', dataKey: 'descripcion' },
+      { header: 'Precio Unit.', dataKey: 'precio_unit' },
+      { header: 'Importe', dataKey: 'importe' },
+    ],
+    startY:64,
+    margin: { left: 8 },
+    tableWidth: 193
+  }))
+
+  //Tabla medidas de StartY a partir de la primera pártida. 7.5 puntos de altura por partida
+  /* 1 item = 94 puntos en Y
+     2 item = 101.5 puntos en Y
+     3 item = 109 puntos en Y
+     4 item = 116.5 puntos en Y */
+
+  doc.autoTable(({
+    headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
+    startY:116.5,
+    margin: { left: 8 },
+    tableWidth: 193,
+    columns: [
+        { header: 'Venta sin instalación', dataKey: null }
+      ],
+  }))
 
 
 doc.save("Orden de servicio.pdf");
