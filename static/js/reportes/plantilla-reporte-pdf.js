@@ -6,15 +6,15 @@ doc.addImage(logo, "JPEG", 8, 5, 40, 18);
 
 let id_orden = getParameterByName("id_orden")  
 
-/* $.ajax({
+$.ajax({
     type: "POST",
-    url: "../inventario/traer-datos-de-ordne.php",
-    data: {id_orden: id_orden},
+    url: "../reportes/traer-datos-de-orden.php",
+    data: {id_orden: id_orden, tabla: "ordenes", indicador: "id"},
     dataType: "JSON",
     success: function (response) {
         console.log(response);
     }
-}); */
+});
 /* 
 console.log(doc.getFontList()); */
 doc.setFont("helvetica"); // set font
@@ -56,16 +56,19 @@ doc.text("Telefono", 147, 53);
 doc.text("Colonia", 10, 60);
 doc.text("Correo", 147, 60);
 
+//-----------Cuerpo de items -----//
 let bodyTable = [
-    { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
-    { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
-    { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
     { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
     { precio_unit: 'Metodo', importe:'Tarjeta' },
     { descripcion: 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes', precio_unit: 'Total', importe:'76,000.00' },
   ];
 
-  console.log(bodyTable.length);
+  //---------Cuerpo de seires ---//
+  let bodySeries = [
+    { index: '1', condensador: 'MUI789524', evaporizador: 'MOU789524', desc:'TOSHIBA T-15300' },
+  ];
+  //---------END------
+
 
 doc.autoTable(({
     theme: 'grid',
@@ -86,14 +89,18 @@ doc.autoTable(({
   }))
 
   //Tabla medidas de StartY a partir de la primera pártida. 7.5 puntos de altura por partida
+  //86.5 puntos de altura inicial
   /* 1 item = 94 puntos en Y
      2 item = 101.5 puntos en Y
      3 item = 109 puntos en Y
      4 item = 116.5 puntos en Y */
+     let alturaPartidas = 7.5 * (bodyTable.length)   
+     let startY = 71.5 + alturaPartidas;
+
 
   doc.autoTable(({
     headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
-    startY:116.5,
+    startY:startY,
     margin: { left: 8 },
     tableWidth: 193,
     columns: [
@@ -101,8 +108,72 @@ doc.autoTable(({
       ],
   }))
 
+  let startYSeries = startY + 7.5; 
+  doc.autoTable(({
+    headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+    startY:startYSeries,
+    body: bodySeries,
+    margin: { left: 8 },
+    tableWidth: 193,
+    columns: [
+        { header: '#', dataKey: "index" },
+        { header: 'Serie condensador', dataKey: "condensador" },
+        { header: 'Serie evaporizador', dataKey: "evaporizador" },
+        { header: 'Equipo', dataKey: "desc"}
+      ],
+  }))
 
-doc.save("Orden de servicio.pdf");
+  let alturaSeries = 7.5 * (bodySeries.length)
+  let startYfooter = 25 + startY + alturaSeries;
+
+
+  doc.text("Firma:", 10, startYfooter);
+  doc.text("Nombre:", 60, startYfooter);
+  doc.text("Fecha:", 160, startYfooter);
+
+  doc.setFontSize(8);
+  doc.setFontType("normal");
+  let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
+  zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
+  Rev. 11 2015`
+  doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+
+
+  //--------GARANTIA-------
+  let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
+Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
+y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
+
+doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+
+let bodyGarantia = [
+  {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
+  {index: "1", desc: "Año(s) de garantia en refacciones"},
+  {index: "3", desc: "Año(s) de garantia en componentes electronicos"}];
+doc.autoTable(({
+  headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+  startY:startYfooter + 25,
+  body: bodyGarantia,
+  margin: { left: 8 },
+  tableWidth: 193,
+  columns: [{header: null, dataKey: 'index'},
+  {header: null, dataKey: 'desc'},]
+}))
+
+//----MINISPLIT INCLUYE
+let alturaGarantias = startYfooter + 60
+doc.setFontType("bold"); // set font
+doc.setFontSize(11);
+
+doc.text("Mini Split incluye", 10, alturaGarantias);
+doc.setFontType("normal");
+doc.setFontSize(9);
+let incluye = `Evaporador, Condensador, control remoto, kit de instalacion de 3 o 4 metros dependiendo de la marca de
+y modelo de su equipo.
+Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
+Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
+doc.text(incluye, 10, alturaGarantias + 5);
+/* doc.save("Orden de servicio.pdf"); */
 
 
 

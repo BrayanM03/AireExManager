@@ -16,7 +16,7 @@
 
     if($count > 0) {
 
-        $id_direccion = $_POST['id_direccion'];
+    $id_direccion = $_POST['id_direccion'];
     $id_direccion == null ? $id_direccion = 0 : $id_direccion= $id_direccion;
     $hora_inicio = date('h:i:s a');
     $fecha_inicio = date('Y-m-d');
@@ -128,7 +128,7 @@
 
         }
 
-        //Actualizando series
+                 //Actualizando series
                 //Trayendo serie
                 $consult_serie = "SELECT * FROM detalle_series_tmp WHERE user_id = ?";
                     $rep_s = $con->prepare($consult_serie);
@@ -149,14 +149,15 @@
                                                  serie_evaporizador,
                                                  detalle_id,
                                                  serie_id,
+                                                 producto_id,
                                                  user_id,
                                                  order_id)
-                                                VALUES (null, ?,?,?,?,?,?)";
+                                                VALUES (null, ?,?,?,?,?,?,?)";
 
 
                         $re = $con->prepare($insertar);
                         $re->execute([$fila_s["serie_condensador"], $fila_s["serie_evaporizador"], $fila_s["id_detalle"], 
-                        $fila_s["serie_id"], $fila_s["user_id"], $id_orden]);
+                        $fila_s["serie_id"], $fila_s["producto_id"], $fila_s["user_id"], $id_orden]);
 
 
                     }

@@ -72,6 +72,7 @@
 
 
     //Trayendo series
+   
     foreach ($series as $key => $value) {
         $consultar = "SELECT * FROM series WHERE id = ?";
         $resp = $con->prepare($consultar);
@@ -80,15 +81,17 @@
         while ($row = $resp->fetch()) {
             $evap = $row["serie_evaporizador"];
             $cond = $row["serie_condensador"];
+            $prod_id = $row["producto_id"];
 
             $insertNS = "INSERT INTO detalle_series_tmp(id,
                                                        serie_condensador,
                                                        serie_evaporizador,
                                                        id_detalle,
+                                                       id_producto,
                                                        serie_id,
-                                                       user_id) VALUES(null, ?,?,?,?,?)";
+                                                       user_id) VALUES(null, ?,?,?,?,?,?)";
             $resp = $con->prepare($insertNS);
-            $resp->execute([$cond, $evap, $id_detalle, $value, $_SESSION["id"]]);
+            $resp->execute([$cond, $evap, $id_detalle, $prod_id, $value, $_SESSION["id"]]);
         
 
         }
