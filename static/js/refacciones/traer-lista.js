@@ -24,8 +24,8 @@ $(document).ready(function () {
                 return `
                 <div class='row'>
                     <div class='col-12 col-md-12'>
-                        <div class="btn btn-primary" onclick="editarProducto(${row[0]})"><i class="fa-solid fa-pen-to-square"></i></div>
-                        <div class="btn btn-danger" onclick="eliminarProducto(${row[0]})"><i class="fa-solid fa-trash"></i></div>
+                        <div class="btn btn-primary" onclick="editarRefaccion(${row[0]})"><i class="fa-solid fa-pen-to-square"></i></div>
+                        <div class="btn btn-danger" onclick="eliminarRefaccion(${row[0]})"><i class="fa-solid fa-trash"></i></div>
                     </div>
                 </div>
                 `

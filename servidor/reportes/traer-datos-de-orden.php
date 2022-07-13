@@ -24,6 +24,7 @@ if ($_POST) {
             $total = $row['total'];
             $estatus = $row['estatus'];
             $usuario = $row['usuario_id'];
+            $metodo_pago = $row['metodo_pago'];
 
             $consulta_cliente = "SELECT COUNT(*) FROM clientes WHERE id = ?";
             $resp = $con->prepare($consulta_cliente);
@@ -50,16 +51,16 @@ if ($_POST) {
                 }
             }
 
-            $consulta_direccion = "SELECT COUNT(*) FROM detalle_direccion WHERE id_usuario = ?";
+            $consulta_direccion = "SELECT COUNT(*) FROM detalle_direccion WHERE id = ?";
             $respu = $con->prepare($consulta_direccion);
-            $respu->execute([$id_cliente]);
+            $respu->execute([$id_direccion]);
             $total_clientes = $respu->fetchColumn();
 
         
             if($total_clientes > 0) {
-                $consulta_direccion = "SELECT * FROM detalle_direccion WHERE id_usuario = ?";
+                $consulta_direccion = "SELECT * FROM detalle_direccion WHERE id = ?";
                 $respues = $con->prepare($consulta_direccion);
-                $respues->execute([$id_cliente]);
+                $respues->execute([$id_direccion]);
 
                 while ($fila_direccion = $respues->fetch()) {
 
@@ -88,10 +89,12 @@ if ($_POST) {
             /* $data['data'] = array(""); */
         }
 
+        $response["folio"] = $key;
         $response["fecha"] =     $fecha;
         $response["total"] =     $total;
         $response["estatus"] =   $estatus;
         $response["usuario"] =   $usuario;
+        $response["metodo_pago"] = $metodo_pago;
         $response['status'] =    true;
         $response['mensj'] =     "Se encontraron datos";
 
@@ -129,7 +132,7 @@ if ($_POST) {
 
                     $respuesta->execute([$producto_id, $key]);
                     $series = [];
-                    print_r("id_producto -> ".  $producto_id . " id_orden -> " . $key );
+                    
                     while($fila_serie = $respuesta->fetch()) {
                 
                         $condensador = $fila_serie["serie_condensador"];
@@ -142,7 +145,7 @@ if ($_POST) {
 
                 $detalle_orden[] = array("descripcion" => $item_descripcion, 
                                          "series"=> $series,
-                                         "cant" => $item_cant,
+                                         "cantidad" => $item_cant,
                                          "precio_unit" => $precio_unitario,
                                          "importe" => $importe);
                 

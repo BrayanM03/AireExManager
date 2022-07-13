@@ -13,10 +13,7 @@ $.ajax({
     dataType: "JSON",
     success: function (response) {
         console.log(response);
-    }
-});
-/* 
-console.log(doc.getFontList()); */
+
 doc.setFont("helvetica"); // set font
 doc.setFontType("bold"); // set font
 
@@ -24,6 +21,7 @@ doc.text("Orden de servicio", 140, 10);
 
 doc.setFontSize(12);
 doc.text("868348398", 140, 17);
+doc.text("F" + response.folio, 170, 17);
 
 doc.setDrawColor(255,0,0); // draw red lines
 doc.line(8, 30, 200, 30); //Line
@@ -56,17 +54,41 @@ doc.text("Telefono", 147, 53);
 doc.text("Colonia", 10, 60);
 doc.text("Correo", 147, 60);
 
+doc.setFontType("normal"); // set font
+doc.text(response.datos_cliente.nombre, 28, 38)
+doc.text(response.fecha, 160, 38)
+doc.text(response.datos_cliente.contacto, 28, 45)
+doc.text(response.datos_cliente.rfc, 165, 45)
+doc.text(response.datos_cliente.direccion, 28, 53)
+doc.text(response.datos_cliente.telefono, 170, 53)
+
+ //---------Cuerpo de seires ---//
+ let bodySeries = [];
+ let contador = 1;
+ response.detalle_orden.forEach(element => {
+    if(element["series"]){
+      element["series"].forEach(serie => {
+        bodySeries.push({index: contador, condensador: serie.serie_condensador, evaporizador: serie.serie_evaporador, desc: serie.descripcion})
+        contador++;
+      });
+    }
+});
+
+
 //-----------Cuerpo de items -----//
-let bodyTable = [
+
+let bodyTable = response.detalle_orden;
+let metodo = { precio_unit: 'Metodo', importe:response.metodo_pago };
+let importe_total = { descripcion: 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes', precio_unit: 'Total', importe: response.total}
+
+bodyTable.push(metodo, importe_total)
+/* [
     { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
     { precio_unit: 'Metodo', importe:'Tarjeta' },
     { descripcion: 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes', precio_unit: 'Total', importe:'76,000.00' },
-  ];
+  ]; */
 
-  //---------Cuerpo de seires ---//
-  let bodySeries = [
-    { index: '1', condensador: 'MUI789524', evaporizador: 'MOU789524', desc:'TOSHIBA T-15300' },
-  ];
+ 
   //---------END------
 
 
@@ -173,7 +195,12 @@ y modelo de su equipo.
 Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
 Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
 doc.text(incluye, 10, alturaGarantias + 5);
-/* doc.save("Orden de servicio.pdf"); */
+doc.save("Orden de servicio.pdf");
+    }
+});
+/* 
+console.log(doc.getFontList()); */
+
 
 
 

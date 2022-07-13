@@ -4,6 +4,7 @@ function registrarOrden(type){
     let id_cliente = $("#id-cliente").text();
     let direccion = $("#direccion").val();
     let total = $("#neto").val();
+    let metodo_pago = $("#metodo-pago").val();
 
     if(id_cliente == ""){
 
@@ -18,6 +19,7 @@ function registrarOrden(type){
             "id_cliente": id_cliente,
             "total": total,
             "id_direccion": direccion,
+            "metodo_pago": metodo_pago,
             "tipo": 1
         };
     

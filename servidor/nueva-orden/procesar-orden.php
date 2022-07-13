@@ -23,6 +23,7 @@
     $id_cliente = $_POST['id_cliente'];
     $tipo = $_POST['tipo']; // Ordenes tipo 1 cerradas al momento
     $total = $_POST['total'];
+    $metodo_pago = $_POST['metodo_pago'];
 
     switch ($tipo) {
         case 1:
@@ -51,12 +52,13 @@
                                      total,
                                      estatus,
                                      tipo,
-                                     usuario_id) VALUES(null, ?,?,?,?,?,?,?,?,?,?)";
+                                     metodo_pago,
+                                     usuario_id) VALUES(null, ?,?,?,?,?,?,?,?,?,?,?)";
 
 
     $re = $con->prepare($insertar);
     $re->execute([$id_cliente, $id_direccion, $fecha_inicio, $hora_inicio, $fecha_cierre, $hora_cierre,
-                  $total, $estatus, $tipo, $_SESSION["id"]]);
+                  $total, $estatus, $tipo, $metodo_pago, $_SESSION["id"]]);
 
     //Se finaliza la insercion de la orden
 
@@ -157,7 +159,7 @@
 
                         $re = $con->prepare($insertar);
                         $re->execute([$fila_s["serie_condensador"], $fila_s["serie_evaporizador"], $fila_s["id_detalle"], 
-                        $fila_s["serie_id"], $fila_s["producto_id"], $fila_s["user_id"], $id_orden]);
+                        $fila_s["serie_id"], $fila_s["id_producto"], $fila_s["user_id"], $id_orden]);
 
 
                     }

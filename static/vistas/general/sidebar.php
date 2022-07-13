@@ -82,7 +82,7 @@
                                         </a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a class="sidebar-link" href="#">
+                                        <a class="sidebar-link" href="refacciones.php?store_id=<?php echo $row['id'] ?>&name=<?php echo $row['nombre'] ?>">
                                             <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Refacciones</span>
                                         </a>
                                     </li>

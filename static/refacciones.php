@@ -22,7 +22,8 @@ if (empty($_SESSION["id"])) {
 
     <title>Inventario clima | AireEx manager</title>
 
-    <link href="css/app.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
@@ -49,7 +50,7 @@ if (empty($_SESSION["id"])) {
                             <h1 class="h3 mb-3">Inventario de refacciones <?php echo $_GET['name'] ?></h1>
                         </div>
                         <div class="col-12 col-md-6 text-end">
-                            <a href="agregar-producto.php?store_id=<?php echo $_GET['store_id'] ?>&name=<?php echo $_GET['name'] ?>"><div class="btn btn-success">Agregar nuevo</div></a>
+                            <a href="#"><div class="btn btn-success" onclick="agregarRefaccion()">Agregar nuevo</div></a>
                         </div>
                     </div>
 
@@ -122,11 +123,13 @@ if (empty($_SESSION["id"])) {
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Mis scripts -->
     <script src="js/refacciones/traer-lista.js"></script>
-    <!-- <script src="js/clientes/traer-lista.js"></script>
-    <script src="js/clientes/eliminar-cliente.js"></script>
+    <script src="js/refacciones/agregar-refaccion.js"></script>
+    <script src="js/refacciones/editar-refaccion.js"></script><!-- 
+    <script src="js/refacciones/borrar-refaccion.js"></script> -->
  -->
 </body>
 
