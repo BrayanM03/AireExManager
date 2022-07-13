@@ -128,8 +128,8 @@ if (empty($_SESSION["id"])) {
     <!-- Mis scripts -->
     <script src="js/refacciones/traer-lista.js"></script>
     <script src="js/refacciones/agregar-refaccion.js"></script>
-    <script src="js/refacciones/editar-refaccion.js"></script><!-- 
-    <script src="js/refacciones/borrar-refaccion.js"></script> -->
+    <script src="js/refacciones/editar-refaccion.js"></script>
+    <script src="js/refacciones/eliminar-refaccion.js"></script>
  -->
 </body>
 

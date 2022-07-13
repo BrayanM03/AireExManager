@@ -34,6 +34,15 @@ function editarRefaccion(id) {
                   </div>
                </div>
                <div class="row mb-3">
+                  <div class="col-md-6 col-12">
+                      <label>Estatus</label>
+                      <select class="form-control" id="estatus">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                      </select>
+                  </div>
+               </div>
+               <div class="row mb-3">
                   <div class="col-md-4 col-12">
                       <label>Cantidad</label>
                       <input class="form-control" value="${resp.data.stock}" type="number" id="cantidad" placeholder="0"/>
@@ -50,6 +59,9 @@ function editarRefaccion(id) {
                   </div>
                </div>
                </div>`,
+        didOpen: function(){
+            $("#estatus").val(resp.data.estatus)
+        },       
         confirmButtonText: "Registrar",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
@@ -91,8 +103,10 @@ function editarRefaccion(id) {
             let observacion = $("#observacion").val();
             let descripcion = $("#descripcion").val();
             let sucursal = getParameterByName("store_id");
+            let estatus = $("#estatus").val();
 
             let data = {
+                id : id,
                 proveedor: proveedor,
                 modelo: modelo,
                 costo: costo,
@@ -100,7 +114,8 @@ function editarRefaccion(id) {
                 cantidad: cantidad,
                 observacion: observacion,
                 descripcion: descripcion,
-                sucursal: sucursal
+                sucursal: sucursal,
+                estatus: estatus
             } 
 
             $.ajax({
@@ -108,7 +123,7 @@ function editarRefaccion(id) {
                 url: "../servidor/refacciones/actualizar-refaccion.php",
                 data: data,
                 dataType: "JSON",
-                success: function (response2) {
+                success: function (response2) { 
                     if(response2.status == true){
                         Swal.fire({
                             icon:"success",
