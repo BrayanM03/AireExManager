@@ -41,6 +41,13 @@ function agregarRefaccion() {
                       <label>Precio</label>
                       <input class="form-control" type="number" id="precio" placeholder="0.00"/>
                   </div>
+                  
+               </div>
+               <div class="row mb-3">
+                    <div class="col-md-6 col-12">
+                        <label>Marca</label>
+                        <input class="form-control" type="text" id="marca" placeholder="Marca"/>
+                    </div>
                </div>
                <div class="row mb-3">
                   <div class="col-md-4 col-12">
@@ -94,6 +101,7 @@ function agregarRefaccion() {
 
             let proveedor = $("#proveedor").val();
             let modelo = $("#modelo").val();
+            let marca = $("#marca").val();
             let costo = $("#costo").val();
             let precio = $("#precio").val();
             let cantidad = $("#cantidad").val();
@@ -104,6 +112,7 @@ function agregarRefaccion() {
             let data = {
                 proveedor: proveedor,
                 modelo: modelo,
+                marca: marca,
                 costo: costo,
                 precio: precio,
                 cantidad: cantidad,

@@ -34,6 +34,12 @@ function editarRefaccion(id) {
                   </div>
                </div>
                <div class="row mb-3">
+                    <div class="col-md-6 col-12">
+                        <label>Marca</label>
+                        <input class="form-control" value="${resp.data.marca}" type="text" id="marca" placeholder="Marca"/>
+                    </div>
+               </div>
+               <div class="row mb-3">
                   <div class="col-md-6 col-12">
                       <label>Estatus</label>
                       <select class="form-control" id="estatus">
@@ -62,7 +68,7 @@ function editarRefaccion(id) {
         didOpen: function(){
             $("#estatus").val(resp.data.estatus)
         },       
-        confirmButtonText: "Registrar",
+        confirmButtonText: "Actualizar",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         preConfirm: function() {
@@ -97,6 +103,7 @@ function editarRefaccion(id) {
 
             let proveedor = $("#proveedor").val();
             let modelo = $("#modelo").val();
+            let marca = $("#marca").val();
             let costo = $("#costo").val();
             let precio = $("#precio").val();
             let cantidad = $("#cantidad").val();
@@ -109,6 +116,7 @@ function editarRefaccion(id) {
                 id : id,
                 proveedor: proveedor,
                 modelo: modelo,
+                marca: marca,
                 costo: costo,
                 precio: precio,
                 cantidad: cantidad,

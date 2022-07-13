@@ -16,10 +16,11 @@ $(document).ready(function () {
             { data:2, title:'Descripcion' },
             { data:3, title:'Stock' },
             { data:4, title:'Modelo' },
-            { data:5, title:'Costo' },
-            { data:6, title:'Precio' },
-            { data:7, title:'Estatus' },
-            { data:8, title:'Observaciones' },
+            { data:5, title:'Marca' },
+            { data:6, title:'Costo' },
+            { data:7, title:'Precio' },
+            { data:8, title:'Estatus' },
+            { data:9, title:'Observaciones' },
             { data:null, title:'Opciones', render: function(row){
                 return `
                 <div class='row'>

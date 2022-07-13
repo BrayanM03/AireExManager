@@ -6,6 +6,7 @@ if ($_POST) {
     $id = $_POST['id'];
     $proveedor = $_POST['proveedor'];
     $modelo = $_POST['modelo'];
+    $marca = $_POST['marca'];
     $costo = $_POST['costo'];
     $precio = $_POST['precio'];
     $cantidad = $_POST['cantidad'];
@@ -18,13 +19,14 @@ if ($_POST) {
                                        descripcion = ?,
                                        stock = ?,
                                        modelo = ?,
+                                       marca = ?,
                                        costo = ?,
                                        precio = ?,
                                        estatus = ?,
                                        observaciones = ?,
                                        sucursal = ? WHERE id= ?";
     $resp = $con->prepare($insert);
-    $resp->execute([$proveedor, $descripcion, $cantidad, $modelo, $costo, $precio, $estatus, $observacion,  $sucursal, $id]);
+    $resp->execute([$proveedor, $descripcion, $cantidad, $modelo, $marca, $costo, $precio, $estatus, $observacion,  $sucursal, $id]);
     $resp->closeCursor();
 
     $response = array("status"=>true, "mensj"=>"La refacción se actualizó correctamente");

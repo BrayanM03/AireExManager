@@ -41,7 +41,7 @@ function editarRefaccion(id) {
         didOpen: function(){
             $("#estatus").val(resp.data.estatus)
         },       
-        confirmButtonText: "Registrar",
+        confirmButtonText: "Actualizar",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         preConfirm: function() {
