@@ -30,7 +30,7 @@
             $estatus = "Cerrada";
             $fecha_cierre = $fecha_inicio;
             $hora_cierre = $hora_inicio;
-            $tabla_origen = 'inventario';
+            /* $tabla_origen = 'inventario'; */
             break;
 
         
@@ -67,6 +67,7 @@
     
 
         $response = array("status"=> true, "mensj"=>"Venta generada con exito", "id_orden"=>$id_orden);
+       
         $consultar = "SELECT * FROM detalle_preventa_tmp WHERE user_id = ?";
         $resp = $con->prepare($consultar);
         $resp->execute([$_SESSION["id"]]);
@@ -80,6 +81,7 @@
 
             $response["partidas"] = $productos;
             //Obtenemos la utilidad de cada partida
+            $tabla_origen = $row["categoria"];
             
             if($tipo == 1){
                 
@@ -94,7 +96,7 @@
                 $suma_utilidad += $suma_utilidad + $utilidad_neta;
 
                 //Traer stock
-                    $consult = "SELECT stock FROM inventario WHERE id = ?";
+                    $consult = "SELECT stock FROM $tabla_origen WHERE id = ?";
                     $rep = $con->prepare($consult);
                     $rep->execute([$row['producto_id']]);
                     $stock_actual = $rep->fetchColumn();
@@ -103,7 +105,7 @@
                     $stock_nuevo = $stock_actual - $row["cantidad"];
 
                 //Actualizando el stock
-                $update_stock = "UPDATE inventario SET stock = ? WHERE id =?";
+                $update_stock = "UPDATE $tabla_origen SET stock = ? WHERE id =?";
                 $respuesta = $con->prepare($update_stock);
                 $respuesta->execute([$stock_nuevo, $row['producto_id']]);
 
@@ -120,19 +122,27 @@
                                                    utilidad,
                                                    producto_id,
                                                    user_id,
-                                                   orden_id)
-                                                   VALUES (null, ?,?,?,?,?,?,?,?)";
+                                                   orden_id,
+                                                   categoria)
+                                                   VALUES (null, ?,?,?,?,?,?,?,?,?)";
 
 
             $re = $con->prepare($insertar);
             $re->execute([$row["descripcion"], $row["cantidad"], $row["precio_unitario"], 
-            $row["importe"], $utilidad_neta, $row["producto_id"], $row["user_id"], $id_orden]);
+            $row["importe"], $utilidad_neta, $row["producto_id"], $row["user_id"], $id_orden, $tabla_origen]);
 
         }
 
                  //Actualizando series
                 //Trayendo serie
-                $consult_serie = "SELECT * FROM detalle_series_tmp WHERE user_id = ?";
+                $contar_serie = "SELECT COUNT(*) FROM detalle_series_tmp WHERE user_id = ?";
+                $respu = $con->prepare($contar_serie);
+                $respu->execute([$_SESSION["id"]]);
+                $series_contadas = $respu->fetchColumn();
+
+                if($series_contadas > 0) {
+
+                    $consult_serie = "SELECT * FROM detalle_series_tmp WHERE user_id = ?";
                     $rep_s = $con->prepare($consult_serie);
                     $rep_s->execute([$_SESSION['id']]);
                     $estatus_serie = "Vendido";
@@ -164,6 +174,10 @@
 
                     }
                     $rep_s->closeCursor();
+                    
+                }
+
+                
 
         $updt = "UPDATE ordenes SET utilidad = ? WHERE id =?";
         $res = $con->prepare($updt);

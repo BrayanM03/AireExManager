@@ -28,10 +28,10 @@
 <div class="row justify-content-center mt-3">
     <div class="col-12 col-md-4 text-start">
         <label for="buscador-select"><i class="fa-solid fa-magnifying-glass"></i> Buscar:</label>
-        <select name="buscador" class="form-control w-50" id="buscador-select">
+        <select name="buscador" class="form-control w-50" id="buscador-select" onchange="cambiarSeleccionarProducto()">
             <option value="inventario">Aire Acondicionado</option>
             <option value="refacciones">Refaccion</option>
-            <option value="servicios">Servicio</option>
+            <!-- <option value="servicios">Servicio</option> -->
         </select>
     </div>
     <div class="col-12 col-md-4 text-start">

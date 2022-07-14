@@ -260,7 +260,7 @@ function setearSeries(id_producto){
 function agregarProductoAPreventa(){
   let id_producto = $("#datos-btn").attr("id_producto");
   let precio = $("#precio").val();
-
+  let categoria = $("#buscador-select").val();
   let valoresSeries = [];
 
 $("input[type=checkbox]:checked").each(function(){
@@ -278,7 +278,7 @@ $("input[type=checkbox]:checked").each(function(){
     $.ajax({
       type: "POST",
       url: "../servidor/nueva-orden/agregar-preventa.php",
-      data: { id: id_producto, series: valoresSeries, precio: precio },
+      data: { id: id_producto, series: valoresSeries, precio: precio, categoria: categoria},
       dataType: "JSON",
       success: function (response) {
         if(response.status == true){

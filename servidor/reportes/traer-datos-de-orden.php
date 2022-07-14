@@ -117,10 +117,13 @@ if ($_POST) {
                 $precio_unitario = $fila_orden["precio_unitario"];
                 $producto_id = $fila_orden["producto_id"];
                 $importe = $fila_orden["importe"];
-                
+                $categoria = $fila_orden["categoria"];
+                $series = [];
 
               
-                $consulta_series = "SELECT COUNT(*) FROM detalle_series WHERE producto_id = ? AND order_id =?";
+                if($categoria == "inventario"){
+
+                    $consulta_series = "SELECT COUNT(*) FROM detalle_series WHERE producto_id = ? AND order_id =?";
                 $r = $con->prepare($consulta_series);
                 $r->execute([$producto_id, $key]);
                 $total_ordenes = $r->fetchColumn();
@@ -142,6 +145,9 @@ if ($_POST) {
                     }
 
                 }
+                
+                }
+                
 
                 $detalle_orden[] = array("descripcion" => $item_descripcion, 
                                          "series"=> $series,

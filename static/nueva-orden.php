@@ -118,6 +118,7 @@ width:100%!important;
     <script src="js/nueva-orden/seleccionar-producto.js"></script>
     <script src="js/nueva-orden/preventa.js"></script>
     <script src="js/nueva-orden/registro-ordenes.js"></script>
+    <script src="js/nueva-orden/cambiar-tipo-orden.js"></script>
   
     <script>
         
