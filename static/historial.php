@@ -20,30 +20,15 @@ if (empty($_SESSION["id"])) {
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
-    <title>Nueva orden | AireEx manager</title>
+    <title>Inventario clima | AireEx manager</title>
 
-    <link href="css/app.css" rel="stylesheet">
-    <link href="css/estilos-agregar-producto.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
-	<link href="../vendor/nice-select/css/nice-select.css">
-    <link href="../vendor/nice-select/css/style.css">
-    <style>
-       .select2-container .select2-selection--single {
-        height: 20px !important;
-        }
-        .select2-container .select2-selection--single .select2-selection__rendered{
-        padding: 0 0 0 8px !important;
-        }
 
-        .select2 {
-width:100%!important;
-}
-    </style>
 </head>
 
 <body>
@@ -58,18 +43,46 @@ width:100%!important;
             ?>
 
             <main class="content">
-                <div class="container-fluid p-0" id="main-content">
+                <div class="container-fluid p-0">
 
-                   
-                        <?php
-                        include "vistas/nueva_orden/seleccionar-tipo-venta.php";
-                        ?>
-                    
+                    <div class="row mb-2">
+                        <div class="col-12 col-md-6">
+                            <h1 class="h3 mb-3">Inventario de Servicios <?php echo $_GET['name'] ?></h1>
+                        </div>
+                        <div class="col-12 col-md-6 text-end">
+                            <a href="#"><div class="btn btn-success" onclick="agregarRefaccion()">Agregar nuevo</div></a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Aires en el catalogo</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <table id="example" class="table table-hover nowrap" style="width:100%">
+                                            <!-- <thead>
+                                                <tr>
+                                                    <th>Subscriber ID</th>
+                                                    <th>Install Location</th>
+                                                    <th>Subscriber Name</th>
+                                                    <th>some data</th>
+                                                </tr>
+                                            </thead> -->
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
-
-                
-                
             </main>
 
             <footer class="footer">
@@ -99,7 +112,7 @@ width:100%!important;
                     </div>
                 </div>
             </footer>
-        </div> 
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -110,36 +123,14 @@ width:100%!important;
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="../vendor/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Mis scripts -->
-    <script src="js/nueva-orden/seleccionar-cliente.js"></script>
-    <script src="js/nueva-orden/seleccionar-producto.js"></script>
-    <script src="js/nueva-orden/preventa.js"></script>
-    <script src="js/nueva-orden/registro-ordenes.js"></script>
-    
-    <script src="js/nueva-orden/alternar-producto.js"></script>
-    <script src="js/nueva-orden/cambiar-tipo-orden.js"></script>
-  
-    <script>
-        
-$( "#card-aire" ).hover(
-  function() {
-    $("#imagen-aire").addClass( "animate__pulse animate__infinite infinite")
-  }, function() {
-    $("#imagen-aire").removeClass( "animate__pulse animate__infinite infinite" );
-  }
-);
-
-$( "#card-check" ).hover(
-  function() {
-    $("#imagen-checklist").addClass( "animate__pulse animate__infinite infinite" );
-  }, function() {
-    $("#imagen-checklist").removeClass( "animate__pulse animate__infinite infinite" );
-  }
-);
-    </script>
+    <script src="js/historial/traer-lista.js"></script><!-- 
+    <script src="js/historial/agregar-servicio.js"></script>
+    <script src="js/historial/editar-servicio.js"></script>
+    <script src="js/historial/eliminar-servicio.js"></script>
+ --> -->
 </body>
 
 </html>
