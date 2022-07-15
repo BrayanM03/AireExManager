@@ -119,6 +119,16 @@
                     <i class="align-middle" data-feather="heart"></i> <span class="align-middle">Clientes</span>
                 </a>
             </li>
+
+            <li class="sidebar-header">
+                Seguridad
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="token.php">
+                    <i class="align-middle" data-feather="heart"></i> <span class="align-middle">Token</span>
+                </a>
+            </li>
 <!-- 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="maps-google.html">

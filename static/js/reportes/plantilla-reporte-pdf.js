@@ -197,7 +197,7 @@ Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
 doc.text(incluye, 10, alturaGarantias + 5);
 doc.save("Orden de servicio.pdf");
 
-cerrar()
+
 
   }
 });

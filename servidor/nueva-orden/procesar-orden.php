@@ -12,7 +12,7 @@
     $re = $con->prepare($contar);
     $re->execute([ $_SESSION["id"]]);
     $count = $re->fetchColumn();
-
+ 
 
     if($count > 0) {
 
@@ -33,6 +33,13 @@
             $hora_cierre = $hora_inicio;
             /* $tabla_origen = 'inventario'; */
             break;
+
+            case 2:
+                $estatus = "Pendiente";
+                $fecha_cierre = "-";
+                $hora_cierre = "-";
+                /* $tabla_origen = 'inventario'; */
+                break;
 
         
         default:
@@ -85,7 +92,7 @@
             //Obtenemos la utilidad de cada partida
             $tabla_origen = $row["categoria"];
             
-            if($tipo == 1){
+            if($tabla_origen == "inventario" || $tabla_origen == "refacciones"){
                 
                 $utilidad = "SELECT costo FROM $tabla_origen WHERE id = ?";
                 $re = $con->prepare($utilidad);
@@ -112,7 +119,9 @@
                 $respuesta->execute([$stock_nuevo, $row['producto_id']]);
 
 
-            }     
+            }else if($tabla_origen == "servicios"){
+                $utilidad_neta = $row["importe"];
+            }    
 
             //Insertando los datos
 
