@@ -14,7 +14,14 @@ $(document).ready(function () {
             { data:0, title:'#' },
             { data:1, title:'Proveedor' },
             { data:2, title:'Descripcion' },
-            { data:3, title:'Stock' },
+            { data:null, title:'Stock', render:function(data,row){ 
+             
+              if(data[3] == 0){
+                return `${data[3]} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+              }else{
+                return data[3]
+              }
+             }},
             { data:4, title:'Modelo' },
             { data:5, title:'Marca' },
             { data:6, title:'Costo' },

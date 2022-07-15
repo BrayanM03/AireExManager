@@ -19,7 +19,7 @@
  */
 
 // DB table to use
-$table = 'view_ordenes';
+$table = 'vista_ordenes';
 
 // Table's primary key
 $primaryKey = 'id';
@@ -32,9 +32,17 @@ $sucursal_id = $_GET['sucursal_id'];
 // indexes
 $columns = array(
 	array( 'db' => 'id', 'dt' => 0 ),
-	array( 'db' => 'descripcion', 'dt' => 1 ),
-	array( 'db' => 'precio',   'dt' => 2 ),
-	array( 'db' => 'estatus',   'dt' => 3 )
+	array( 'db' => 'cliente', 'dt' => 14 ),
+	array( 'db' => 'fecha_inicio',   'dt' => 3 ),
+	array( 'db' => 'hora_inicio',   'dt' => 4 ),
+	array( 'db' => 'fecha_cierre',   'dt' => 5 ),
+	array( 'db' => 'hora_cierre',   'dt' => 6 ),
+	array( 'db' => 'total',   'dt' => 7 ),
+	array( 'db' => 'utilidad',   'dt' => 8 ),
+	array( 'db' => 'estatus',   'dt' => 9 ),
+	array( 'db' => 'metodo_pago',   'dt' => 11 ),
+	array( 'db' => 'usuario',   'dt' => 15 ),
+	array( 'db' => 'tipo',   'dt' => 10 )
 /* 	array(
 		'db'        => 'start_date',
 		'dt'        => 4,
@@ -68,7 +76,7 @@ $sql_details = array(
 require( '../database/ssp.class.php' );
 
 echo json_encode(
-	SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns)
+	SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, null, "sucursal_id = '$sucursal_id'")
 );
 
 

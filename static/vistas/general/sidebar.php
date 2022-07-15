@@ -28,7 +28,7 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="#">
+                <a class="sidebar-link" href="historial.php">
                     <i class="align-middle" data-feather="folder"></i> <span class="align-middle">Historial</span>
                 </a>
             </li>

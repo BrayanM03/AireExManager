@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    let sucursal_id = getParameterByName("store_id")
+  let sucursal_id = $("#user-data").attr("id_sucursal");
     tabla = $('#example').DataTable({
         processing: true,
         serverSide: true,
@@ -12,22 +12,28 @@ $(document).ready(function () {
         order: [0, 'desc'],
         columns:  [
             { data:0, title:'#' },
-            { data:1, title:'cliente' },
-            { data:2, title:'fecha inicio' },
-            { data:3, title:'hora inicio' },
-            { data:4, title:'fecha cierre' },
-            { data:5, title:'hora cierre' },
-            { data:6, title:'total' },
-            { data:7, title:'utilidad' },
-            { data:8, title:'estatus' },
-            { data:9, title:'tipo' },
-            { data:10, title:'usuario' },
+            { data:14, title:'cliente' },
+            { data:3, title:'fecha inicio' },
+            { data:4, title:'hora inicio' },
+            { data:5, title:'fecha cierre' },
+            { data:6, title:'hora cierre' },
+            { data:7, title:'total' },
+            { data:8, title:'utilidad'},
+            { data:null, title:'estatus', render:function(data,row){ 
+             
+              if(data[9] == "Cerrada"){classN = 'success'}else if(data[9] == "Pendiente"){
+                classN = 'warning'
+              }
+             return `<span class="badge bg-${classN}">${data[9]}</span>`}},
+            { data:11, title:'metodo' },
+            { data:15, title:'usuario' },
+            { data:10, title:'tipo' },
             { data:null, title:'Opciones', render: function(row){
                 return `
                 <div class='row'>
                     <div class='col-12 col-md-12'>
-                        <div class="btn btn-primary" onclick="editarRefaccion(${row[0]})"><i class="fa-solid fa-pen-to-square"></i></div>
-                        <div class="btn btn-danger" onclick="eliminarRefaccion(${row[0]})"><i class="fa-solid fa-trash"></i></div>
+                        <div class="btn btn-success" onclick="descargarOrden(${row[0]})"><i class="fa-solid fa-file-pdf"></i></div>
+                        <div class="btn btn-danger" onclick="eliminarOrden(${row[0]})"><i class="fa-solid fa-trash"></i></div>
                     </div>
                 </div>
                 `

@@ -47,7 +47,7 @@ if (empty($_SESSION["id"])) {
 
                     <div class="row mb-2">
                         <div class="col-12 col-md-6">
-                            <h1 class="h3 mb-3">Inventario de Servicios <?php echo $_GET['name'] ?></h1>
+                            <h1 class="h3 mb-3">Historial de ordenes</h1>
                         </div>
                         <div class="col-12 col-md-6 text-end">
                             <a href="#"><div class="btn btn-success" onclick="agregarRefaccion()">Agregar nuevo</div></a>
@@ -126,8 +126,9 @@ if (empty($_SESSION["id"])) {
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Mis scripts -->
-    <script src="js/historial/traer-lista.js"></script><!-- 
-    <script src="js/historial/agregar-servicio.js"></script>
+    <script src="js/historial/traer-lista.js"></script>
+    <script src="js/historial/descargar-orden.js"></script><!-- 
+    
     <script src="js/historial/editar-servicio.js"></script>
     <script src="js/historial/eliminar-servicio.js"></script>
  --> -->

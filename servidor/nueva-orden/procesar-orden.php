@@ -24,6 +24,7 @@
     $tipo = $_POST['tipo']; // Ordenes tipo 1 cerradas al momento
     $total = $_POST['total'];
     $metodo_pago = $_POST['metodo_pago'];
+    $id_sucursal = $_POST['id_sucursal'];
 
     switch ($tipo) {
         case 1:
@@ -53,12 +54,13 @@
                                      estatus,
                                      tipo,
                                      metodo_pago,
-                                     usuario_id) VALUES(null, ?,?,?,?,?,?,?,?,?,?,?)";
+                                     usuario_id,
+                                     sucursal_id) VALUES(null, ?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
     $re = $con->prepare($insertar);
     $re->execute([$id_cliente, $id_direccion, $fecha_inicio, $hora_inicio, $fecha_cierre, $hora_cierre,
-                  $total, $estatus, $tipo, $metodo_pago, $_SESSION["id"]]);
+                  $total, $estatus, $tipo, $metodo_pago, $_SESSION["id"], $id_sucursal]);
 
     //Se finaliza la insercion de la orden
 

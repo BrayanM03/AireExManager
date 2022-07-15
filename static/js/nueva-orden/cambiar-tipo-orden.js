@@ -17,6 +17,9 @@ $("#tipo").on("change", function() {
         $("#buscador-select").empty().append(`
             <option value="servicios">Servicio</option>
         `)
+
+        busquedaServicios()
+
     }
 
 })

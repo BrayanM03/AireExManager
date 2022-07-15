@@ -196,8 +196,13 @@ Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
 Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
 doc.text(incluye, 10, alturaGarantias + 5);
 doc.save("Orden de servicio.pdf");
-    }
+
+cerrar()
+
+  }
 });
+
+
 /* 
 console.log(doc.getFontList()); */
 
@@ -210,3 +215,8 @@ function getParameterByName(name) {
     results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
+
+  function cerrar() { 
+    window.open('','_parent',''); 
+    window.close(); 
+ } 
