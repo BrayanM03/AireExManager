@@ -10,8 +10,10 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-12 mt-3 col-md-4 text-center">
-                    <b id="precio-label">Precio:</b> 
-                    <input type="text" class="form-control" id="precio" placeholder="0">
+                <label class="input-corto precio-pointer" id="precio-tok" onclick="generarToken();">
+                            <b id="precio-label">Precio:</b> 
+                            <input type="number" class="form-control" id="precio" placeholder="0" disabled>
+                     </label>
                 </div>
             </div>
         </div>

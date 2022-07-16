@@ -27,7 +27,14 @@ $(document).ready(function () {
              return `<span class="badge bg-${classN}">${data[9]}</span>`}},
             { data:11, title:'metodo' },
             { data:15, title:'usuario' },
-            { data:10, title:'tipo' },
+            { data:null, title:'tipo', render(data, row){
+              switch(data[10]){
+                case '1': type = 'Venta <b style="color: tomato;">sin</b> instalación'; break;
+                case '2': type = 'Venta <b style="color: #009c8c;">con</b> instalación'; break;
+                case '3': type = 'Servicio'; break;
+              }
+              return type;
+            } },
             { data:null, title:'Opciones', render: function(row){
                 return `
                 <div class='row'>

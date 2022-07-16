@@ -41,6 +41,13 @@
                 /* $tabla_origen = 'inventario'; */
                 break;
 
+                case 3:
+                    $estatus = "Pendiente";
+                    $fecha_cierre = "-";
+                    $hora_cierre = "-";
+                    /* $tabla_origen = 'inventario'; */
+                    break;
+
         
         default:
             # code...

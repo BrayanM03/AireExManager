@@ -121,6 +121,7 @@ width:100%!important;
     
     <script src="js/nueva-orden/alternar-producto.js"></script>
     <script src="js/nueva-orden/cambiar-tipo-orden.js"></script>
+    <script src="js/configuracion/token.js"></script>
   
     <script>
         

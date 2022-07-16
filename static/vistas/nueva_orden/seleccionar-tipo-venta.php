@@ -42,6 +42,7 @@
             <option value="Tarjeta">Tarjeta</option>
             <option value="Cheque">Cheque</option>
             <option value="Sin definir">Sin definir</option>
+            <option value="Combinado">Combinar metodos</option>
         </select>
     </div>
 </div>

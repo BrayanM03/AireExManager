@@ -26,20 +26,21 @@ if (empty($_SESSION["id"])) {
     <link href="css/estilos-agregar-producto.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
-	<link href="../vendor/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
+    <link href="../vendor/nice-select/css/nice-select.css">
     <link href="../vendor/nice-select/css/style.css">
     <style>
-       .select2-container .select2-selection--single {
-        height: 20px !important;
+        .select2-container .select2-selection--single {
+            height: 20px !important;
         }
-        .select2-container .select2-selection--single .select2-selection__rendered{
-        padding: 0 0 0 8px !important;
+
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            padding: 0 0 0 8px !important;
         }
 
         .select2 {
-width:100%!important;
-}
+            width: 100% !important;
+        }
     </style>
 </head>
 
@@ -57,19 +58,61 @@ width:100%!important;
             <main class="content">
                 <div class="container-fluid" id="main-content">
 
-                   <div class="card h-25">
-                       <div class="row justify-content-center">
-                           <div class="col-12 col-md-8 text-center">
-                               <b>Token</b><br>
-                               <h2><b>8565</b></h2>
-                           </div>
-                       </div>
-                   </div>
+                <div class="row mb-3 justify-content-center">
+                    <div class="col-12 col-md-5 text-center card p-4">
+
+                <div class="titulo-inventario">
+                         <h5 style="margin: 10px 0px;"><b>Generar token</b></h5>
+                         <p style="color: gray;">Click en generar para generar un nuevo token de seguridad para cambiar el precio de un producto o servicio en una venta o cotización.</p>
+                         <div class="tokens">
+                         <p style="color: gray;">El token actual es: </br>
+                         <span id="token-actual" style="font-size:20px;"><b>0000</b></span>
+                         </p> 
+                         </div> 
+                        </div>
+                        
+                      <div class="botones">
+                                    <a href="#" class="btn btn-success btn-icon-split"  onclick="random();">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-check-circle"></i>
+                                        </span>
+                                        <span class="text">Generar Token</span>
+                                    </a>
+                                    
+                      </div>
+
+                      </div>
+                      </div>
+
+                <!-- <div class="row mb-3 justify-content-center">
+                    <div class="col-12 col-md-5 text-center">
+                        Para generar un nuevo token da click en el botón generar
+                    </div>
+                </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-5 text-center">
+                            <div class="card p-5">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-5 text-center">
+                                        <b>Token</b><br>
+                                        <h2><b>8565</b></h2>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 justify-content-center">
+                                    <div class="col-12 col-md-5 text-center">
+                                       <div class="btn btn-success">
+                                            Generar
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
 
                 </div>
 
-                
-                
+
+
             </main>
 
             <footer class="footer">
@@ -99,7 +142,7 @@ width:100%!important;
                     </div>
                 </div>
             </footer>
-        </div> 
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -111,8 +154,8 @@ width:100%!important;
     <script src="../vendor/nice-select/js/jquery.nice-select.min.js"></script>
 
     <!-- Mis scripts -->
-    <!-- <script src="js/configuracion/seleccionar-cliente.js"></script> -->
-  
+    <script src="js/configuracion/token.js"></script>
+
 </body>
 
 </html>
