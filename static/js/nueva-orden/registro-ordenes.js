@@ -47,9 +47,9 @@ function registrarOrden(type){
                 <div class="row mb-3">
                     <div class="col-md-12 col-12">
                     <b>Agregar mas metodos de pago</b><br>
-                    Total neto: $${total} <br>
+                    Total neto: ${total} <br>
 
-                    Monto: $<span id="acumulado">0</span>
+                    Monto: <span id="acumulado">0</span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -174,48 +174,199 @@ function registrarOrden(type){
 
                        
                     
+                        limit == parseFloat(limit);
                         if(foo == 2){
                             $("#monto-1").keyup(function(){
+
                                 let valor = parseFloat($(this).val());
-                                let monto2 = parseFloat($("#monto-2").val()) == "" ? monto2 = 0 : monto2 = parseFloat($("#monto-2").val());
-                                console.log(monto2);
+                                let monto2 = parseFloat($("#monto-2").val());
+                                
+                                if(Number.isNaN(monto2)){
+                                    monto2 =0
+                                }
+                                if(Number.isNaN(valor)){
+                                    valor = 0
+                                }
+                              
                                 let mont_total = valor + monto2
-                                $("#acumulado").text(mont_total);
-                                mont_total == limit ? $("#acumulado").css("color", "green") : $("#acumulado").css("color", "red")
+                                
+                               if(mont_total == limit){
+                                $("#acumulado").css("color", "green")
+                               } else{
+
+                                if(mont_total > limit){
+                                    mont_total = `Arrebasaste el total neto <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                    $("#acumulado").attr("estatus", false);
+                                    $("#acumulado").attr("mensj", "Monto supera al neto total");
+                                }else if(mont_total < 0){
+                                    mont_total = `Esto es un monto negativo <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                    $("#acumulado").attr("estatus", false);
+                                    $("#acumulado").attr("mensj", "Monto es negativo");
+                                }else{
+                                    $("#acumulado").attr("estatus", false);
+                                    $("#acumulado").attr("mensj", "La suma de los montos no es igual al monto neto");
+                                }
+                                $("#acumulado").css("color", "tomato")
+                                
+                               }
+                               $("#acumulado").empty().append(mont_total);
                     
                     
                             })
+
+
+
                             $("#monto-2").keyup(function(){
                                 let valor = parseFloat($(this).val());
-                                let monto1 = parseFloat($("#monto-1").val()) == "" ? monto1 = 0 : monto2 = parseFloat($("#monto-1").val());
+                                let monto1 = parseFloat($("#monto-1").val());
+                                if(Number.isNaN(monto1)){
+                                    monto1 =0
+                                }
+                                if(Number.isNaN(valor)){
+                                    valor = 0
+                                }
                                 let mont_total = valor + monto1
-                                $("#acumulado").text(mont_total);
-                                mont_total == limit ? $("#acumulado").css("color", "green") : $("#acumulado").css("color", "red")
-                    
+
+                                if(mont_total == limit){
+                                $("#acumulado").css("color", "green")
+                               } else{
+
+                                if(mont_total > limit){
+                                    mont_total = `Arrebasaste el total neto <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                    $("#acumulado").attr("estatus", false);
+                                    $("#acumulado").attr("mensj", "Monto supera al neto total");
+                                }else if(mont_total < 0){
+                                    mont_total = `Esto es un monto negativo <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                    $("#acumulado").attr("estatus", false);
+                                    $("#acumulado").attr("mensj", "Monto es negativo");
+                                }else{
+                                    $("#acumulado").attr("estatus", false);
+                                    $("#acumulado").attr("mensj", "La suma de los montos no es igual al monto neto");
+                                }
+                                
+                                $("#acumulado").css("color", "tomato")
+                                
+                               }
+                               $("#acumulado").empty().append(mont_total);
                     
                             })
+
                         }else if(foo == 3){
                             $("#monto-1").keyup(function(){
                                 let valor = parseFloat($(this).val());
-                                let mont_total = valor + parseFloat($("#monto-2)").val())  + parseFloat($("#monto-3").val());
-                                $("#acumulado").text(mont_total);
-                                mont_total == limit ? $("#acumulado").css("color", "green") : $("#acumulado").css("color", "red")
-                    
+                                let monto2 = parseFloat($("#monto-2").val());
+                                let monto3 = parseFloat($("#monto-3").val());
+                                if(Number.isNaN(monto2)){
+                                    monto2 =0
+                                }
+                                if(Number.isNaN(monto3)){
+                                    monto3 =0
+                                }
+                                if(Number.isNaN(valor)){
+                                    valor = 0
+                                }
+
+                                let mont_total = valor + monto2  + monto3;
+
+                                if(mont_total == limit){
+                                    $("#acumulado").css("color", "green")
+                                   } else{
+    
+                                    if(mont_total > limit){
+                                        mont_total = `Arrebasaste el total neto <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "Monto supera al neto total");
+                                    }else if(mont_total < 0){
+                                        mont_total = `Esto es un monto negativo <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "Monto es negativo");
+                                    }else{
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "La suma de los montos no es igual al monto neto");
+                                    }
+                                    $("#acumulado").css("color", "tomato")
+                                  
+                                    
+                                   }
+                                   $("#acumulado").empty().append(mont_total);
                     
                             })
                             $("#monto-2").keyup(function(){
                                 let valor = parseFloat($(this).val());
-                                let mont_total = valor + parseFloat($("#monto-1").val())  + parseFloat($("#monto-3").val());
-                                $("#acumulado").text(mont_total);
-                                mont_total == limit ? $("#acumulado").css("color", "green") : $("#acumulado").css("color", "red")
-                    
+                                let monto1 = parseFloat($("#monto-1").val());
+                                let monto3 = parseFloat($("#monto-3").val());
+                                if(Number.isNaN(monto1)){
+                                    monto1 =0
+                                }
+                                if(Number.isNaN(monto3)){
+                                    monto3 =0
+                                }
+                                if(Number.isNaN(valor)){
+                                    valor = 0
+                                }
+
+                                let mont_total = valor + monto1  + monto3;
+
+                                if(mont_total == limit){
+                                    $("#acumulado").css("color", "green")
+                                   } else{
+    
+                                    if(mont_total > limit){
+                                        mont_total = `Arrebasaste el total neto <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "Monto supera al neto total");
+                                    }else if(mont_total < 0){
+                                        mont_total = `Esto es un monto negativo <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "Monto es negativo");
+                                    }else{
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "La suma de los montos no es igual al monto neto");
+                                    }
+                                    $("#acumulado").css("color", "tomato")
+                                   
+                                    
+                                   }
+                                   $("#acumulado").empty().append(mont_total);
+                              
                             })
                             $("#monto-3").keyup(function(){
                                 let valor = parseFloat($(this).val());
-                                let mont_total = valor + parseFloat($("#monto-1").val())  + parseFloat($("#monto-2").val());
-                                $("#acumulado").text(mont_total);
-                                mont_total == limit ? $("#acumulado").css("color", "green") : $("#acumulado").css("color", "red")
-                    
+                                let monto1 = parseFloat($("#monto-1").val());
+                                let monto2 = parseFloat($("#monto-2").val());
+                                if(Number.isNaN(monto2)){
+                                    monto2 =0
+                                }
+                                if(Number.isNaN(monto1)){
+                                    monto1 =0
+                                }
+                                if(Number.isNaN(valor)){
+                                    valor = 0
+                                }
+
+                                let mont_total = valor + monto1  + monto2;
+
+                                if(mont_total == limit){
+                                    $("#acumulado").css("color", "green")
+                                   } else{
+    
+                                    if(mont_total > limit){
+                                        mont_total = `Arrebasaste el total neto <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "Monto supera al neto total");
+                                    }else if(mont_total < 0){
+                                        mont_total = `Esto es un monto negativo <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "Monto es negativo");
+                                    }else{
+                                        $("#acumulado").attr("estatus", false);
+                                        $("#acumulado").attr("mensj", "La suma de los montos no es igual al monto neto");
+                                    }
+                                    $("#acumulado").css("color", "tomato")
+                                    
+                                    
+                                   }
+                                   $("#acumulado").empty().append(mont_total);
                     
                             })
                         }
