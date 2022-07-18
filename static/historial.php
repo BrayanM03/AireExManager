@@ -50,7 +50,6 @@ if (empty($_SESSION["id"])) {
                             <h1 class="h3 mb-3">Historial de ordenes</h1>
                         </div>
                         <div class="col-12 col-md-6 text-end">
-                            <a href="#"><div class="btn btn-success" onclick="agregarRefaccion()">Agregar nuevo</div></a>
                         </div>
                     </div>
 

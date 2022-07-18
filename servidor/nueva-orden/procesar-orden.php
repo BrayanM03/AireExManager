@@ -25,6 +25,7 @@
     $total = $_POST['total'];
     $metodo_pago = $_POST['metodo_pago'];
     $id_sucursal = $_POST['id_sucursal'];
+    $multi_metodo = $_POST["multi_metodo"];
 
     switch ($tipo) {
         case 1:

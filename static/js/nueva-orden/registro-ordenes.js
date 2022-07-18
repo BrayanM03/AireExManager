@@ -376,16 +376,60 @@ function registrarOrden(type){
                 },
                 confirmButtonText: "Aceptar",
                 showCancelButton: true,
-                cancelButtonText: "No"
+                cancelButtonText: "No",
+                preConfirm: ()=>{
+                    let mensj = $("#acumulado").attr("mensj")
+                    let stats = $("#acumulado").attr("estatus")
+                    if(stats == false){
+                        Swal.showValidationMessage(
+                            `Error: ${mensj}`
+                          )
+                    }
+                }
         
             }).then((resp)=>{
 
-                //let combinado = 
+                if(resp.isConfirmed){
+
+                 let total_metodos = $("#total-metodos").val();
+                 if(total_metodos == 2){
+
+                    let metodo_1 = $("#metodo-1").val();
+                    let metodo_2 = $("#metodo-2").val();
+                    
+                    let monto_1 = $("#monto-1").val();
+                    let monto_2 = $("#monto-2").val();
+
+                    data["multi_metodo"] = [
+                        [metodo_1, monto_1],
+                        [metodo_2, monto_2]
+                    ]
+
+                 }else if(total_metodos == 3){
+
+                    let  metodo_1 = $("#metodo-1").val();
+                    let  metodo_2 = $("#metodo-2").val();
+                    let  metodo_3 = $("#metodo-3").val();
+                    
+                    let  monto_1 = $("#monto-1").val();
+                    let  monto_2 = $("#monto-1").val();
+                    let  monto_3 = $("#metodo-3").val();
+
+                    data["multi_metodo"] = [
+                        [metodo_1, monto_1],
+                        [metodo_2, monto_2],
+                        [metodo_3, monto_3]
+                    ]
+                 }
+
+
                 sendData(data)
+                }
+                
             })
 
         }else{
-            let combinado = [];
+            data["multi_metodo"] = []
             sendData(data)
         }
 
