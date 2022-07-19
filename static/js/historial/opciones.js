@@ -77,8 +77,13 @@ function verOpciones(id, estatus, tipo){
                             response["data"].forEach(element => {
                                 $("#area-detalle-servicio").empty().append(`
                                 <a href="#" class="list-group-item list-group-item-action" 
-                                onclick="setPrecios( ${element.id}, ${element.cantidad}, '${element.descripcion}',
-                                ${element.precio_unitario}, ${element.importe})">
+                                code="${element.id}"
+                                id="detalle_${element.id}"
+                                desc="${element.descripcion}"
+                                cant="${element.cantidad}"
+                                p_unit="${element.precio_unitario}"
+                                import="${element.importe}"
+                                onclick="setPrecios( ${element.id})">
                                 <div class="row">
                                 <div class="col-md-2 col-12">
                                     ${element.id}
@@ -121,10 +126,52 @@ function verOpciones(id, estatus, tipo){
         }
     }).then(function(re){
         if(re.isConfirmed){
+            let detalles = []
             let estatus = $("#estatus").val()
             if(estatus == "Cerrada"){
                 let area_detalle = $("#area-detalle-servicio")
+                area_detalle.children().each(function(index, element){
+                   
+                    let desc=  $(this).attr("desc")
+                    let p_unit=  $(this).attr("p_unit")
+                    let importe=  $(this).attr("import")
+                    let cant=  $(this).attr("cant")
+                    let code=  $(this).attr("code")
+
+
+                    detalle = new Object();
+                    detalle.desc = desc;
+                    detalle.p_unit = p_unit;
+                    detalle.importe = importe;
+                    detalle.cant = cant;
+                    detalle.id = code
+            
+                    detalles.push(detalle);
+                })
+                console.log(detalles);
             }
+
+            let dat = {
+                "id_orden": id,
+                "estatus": estatus,
+                "detalles": detalles
+            }
+
+            $.ajax({
+                type: "post",
+                url: "../servidor/historial/update-estatus.php",
+                data: dat,
+                /* dataType: "JSON", */
+                success: function (response) {
+                    Swal.fire({
+                        icon:"success",
+                        html: "<b>Actualizado correctamente</b>",
+                        
+                    })
+
+                    tabla.ajax.reload(null, false)
+                }
+            });
         }
     })
 }
@@ -194,6 +241,11 @@ function updateServicio(id_detalle) {
     $(`#desc_${id_detalle}`).text($("#desc").val());
     $(`#pu_${id_detalle}`).text($("#u-price").val());
     $(`#imp_${id_detalle}`).text($("#import").val());
+
+    $(`#detalle_${id_detalle}`).attr("desc", $("#desc").val())
+    $(`#detalle_${id_detalle}`).attr("cant", $("#cant").val())
+    $(`#detalle_${id_detalle}`).attr("p_unit", $("#u-price").val())
+    $(`#detalle_${id_detalle}`).attr("import", $("#import").val())
 
     $("#cant").val("")
     $("#desc").val("")
