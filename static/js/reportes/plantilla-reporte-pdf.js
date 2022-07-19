@@ -2,6 +2,8 @@
 const doc = new jsPDF();
 
 logo = data_logo.replace(/[\s"\\]/gm, "");
+icon_checked= data_checked.replace(/[\s"\\]/gm, "");
+icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
 doc.addImage(logo, "JPEG", 8, 5, 40, 18);
 
 let id_orden = getParameterByName("id_orden")  
@@ -116,85 +118,358 @@ doc.autoTable(({
      2 item = 101.5 puntos en Y
      3 item = 109 puntos en Y
      4 item = 116.5 puntos en Y */
-     let alturaPartidas = 7.5 * (bodyTable.length)   
+     let alturaPartidas = 8.5 * (bodyTable.length)   
      let startY = 71.5 + alturaPartidas;
 
 
-  doc.autoTable(({
-    headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
-    startY:startY,
-    margin: { left: 8 },
-    tableWidth: 193,
-    columns: [
-        { header: 'Venta sin instalación', dataKey: null }
-      ],
-  }))
 
-  let startYSeries = startY + 7.5; 
-  doc.autoTable(({
-    headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
-    startY:startYSeries,
-    body: bodySeries,
-    margin: { left: 8 },
-    tableWidth: 193,
-    columns: [
-        { header: '#', dataKey: "index" },
-        { header: 'Serie condensador', dataKey: "condensador" },
-        { header: 'Serie evaporizador', dataKey: "evaporizador" },
-        { header: 'Equipo', dataKey: "desc"}
-      ],
-  }))
+     //MAQUETANDO FOOT DEPENDIENDO DEL TIPO DE ORDENES
+     //TIPO 1 VENTA SIN INSTALACION
+     //TIPO 2 VENTA CON INSTALACION
+     //TIPO 3 SERVICIO
 
-  let alturaSeries = 7.5 * (bodySeries.length)
-  let startYfooter = 25 + startY + alturaSeries;
+     if(response.tipo == 1){
+
+      doc.autoTable(({
+        headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
+        startY:startY,
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: 'Venta sin instalación', dataKey: null }
+          ],
+      }))
+    
+    
+    
+      let startYSeries = startY + 7.5; 
+      doc.autoTable(({
+        headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+        startY:startYSeries,
+        body: bodySeries,
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: '#', dataKey: "index" },
+            { header: 'Serie condensador', dataKey: "condensador" },
+            { header: 'Serie evaporizador', dataKey: "evaporizador" },
+            { header: 'Equipo', dataKey: "desc"}
+          ],
+      }))
+    
+      let alturaSeries = 7.5 * (bodySeries.length)
+    
+      let startYfooter = 25 + startY + alturaSeries;
+    
+      
+    
+    
+      doc.text("Firma:", 10, startYfooter);
+      doc.text("Nombre:", 60, startYfooter);
+      doc.text("Fecha:", 160, startYfooter);
+    
+      doc.setFontSize(8);
+      doc.setFontType("normal");
+      let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
+      zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
+      Rev. 11 2015`
+      doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+    
+    
+      //--------GARANTIA-------
+      let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
+    Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
+    y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
+    
+    doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+    
+    let bodyGarantia = [
+      {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
+      {index: "1", desc: "Año(s) de garantia en refacciones"},
+      {index: "3", desc: "meses de garantia en componentes electronicos"}];
+    doc.autoTable(({
+      headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+      startY:startYfooter + 25,
+      body: bodyGarantia,
+      margin: { left: 8 },
+      tableWidth: 193,
+      columns: [{header: null, dataKey: 'index'},
+      {header: null, dataKey: 'desc'},]
+    }))
+    
+    //----MINISPLIT INCLUYE
+    let alturaGarantias = startYfooter + 60
+    doc.setFontType("bold"); // set font
+    doc.setFontSize(11);
+    
+    doc.text("Mini Split incluye", 10, alturaGarantias);
+    doc.setFontType("normal");
+    doc.setFontSize(9);
+    let incluye = `Evaporador, Condensador, control remoto, kit de instalacion de 3 o 4 metros dependiendo de la marca de
+    y modelo de su equipo.
+    Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
+    Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
+    doc.text(incluye, 10, alturaGarantias + 5);
+
+     }else if(response.tipo == 2){
+     
+      doc.autoTable(({
+        headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
+        startY:startY,
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: 'Venta con instalación', dataKey: null }
+          ],
+      }))
+    
+    
+      let bodyDatosInstalacion = [{index: 1, cantidad_personal: response.cantidad_personal,
+                                  tiempo_horas: response.tiempo_horas,
+                                  nombre_personal: response.nombre_personal}] 
+      let startYSeries = startY + 7.5; 
+      doc.autoTable(({
+        headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+        startY:startYSeries,
+        body: bodyDatosInstalacion,
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: '#', dataKey: "index" },
+            { header: 'Cantidad de personal', dataKey: "cantidad_personal" },
+            { header: 'Tiempo en horas', dataKey: "tiempo_horas" },
+            { header: 'Nombre de personal', dataKey: "nombre_personal"}
+          ],
+      }))
+    
+      let alturaDatosInstalacion = 7.5 * (bodyDatosInstalacion.length)
+    
+      let startOptions = 30 + startY + alturaDatosInstalacion;
+
+      doc.setFontType("bold");
+      doc.text("Pago en domicilio:", 20, startOptions);
+      doc.text("pago en sucursal:", 80, startOptions);
+      doc.text("Verificar electrico:", 20, startOptions +7 );
+      doc.text("Cliente ya cuenta con electrico:", 80, startOptions +7);
+
+      if(response.pago_domicilio == "true"){
+        doc.addImage(icon_checked, "JPEG", 55, startOptions - 5, 5,  5);
+      }else{
+        doc.addImage(icon_unchecked, "JPEG", 55, startOptions - 5, 5,  5);
+      }
+
+      if(response.pago_sucursal == "true"){
+        doc.addImage(icon_checked, "JPEG", 113, startOptions -5,5,  5);
+      }else{
+        doc.addImage(icon_unchecked, "JPEG", 113, startOptions -5,5,  5);
+      }
+
+      
+      if(response.verificar_electrico == "true"){
+        doc.addImage(icon_checked, "JPEG", 55, startOptions+2 ,5,  5);
+      }else{
+        doc.addImage(icon_unchecked, "JPEG", 55, startOptions +2 ,5,  5);
+      }
+
+      
+      if(response.tiene_electrico == "true"){
+        doc.addImage(icon_checked, "JPEG", 136, startOptions+2 ,5,  5);
+      }else{
+        doc.addImage(icon_unchecked, "JPEG", 136, startOptions+2 ,5,  5);
+      }
+      
+    
+      
+    let startYfooter =  startY + alturaDatosInstalacion +25 +16 
+
+    doc.setFontType("normal");
+    
+      doc.text("Firma:", 10, startYfooter);
+      doc.text("Nombre:", 60, startYfooter);
+      doc.text("Fecha:", 160, startYfooter);
+    
+      doc.setFontSize(8);
+      doc.setFontType("normal");
+      let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
+      zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
+      Rev. 11 2022`
+      doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+    
+    
+      //--------GARANTIA-------
+      let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
+    Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
+    y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
+    
+    doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+    
+    let bodyGarantia = [
+      {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
+      {index: "1", desc: "Año(s) de garantia en refacciones"},
+      {index: "3", desc: "meses de garantia en componentes electronicos, control remoto y gas refrigerante."}];
+    doc.autoTable(({
+      headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+      startY:startYfooter + 25,
+      body: bodyGarantia,
+      margin: { left: 8 },
+      tableWidth: 193,
+      columns: [{header: null, dataKey: 'index'},
+      {header: null, dataKey: 'desc'},]
+    }))
+    
+    //----MINISPLIT INCLUYE
+    let alturaGarantias = startYfooter + 60
+    doc.setFontType("bold"); // set font
+    doc.setFontSize(11);
+    
+    doc.text("Observaciones", 10, alturaGarantias);
+    doc.setFontType("normal");
+    doc.setFontSize(9);
+    let incluye = `Es obligacion del cliente despejar el area donde se llevara a cabo la ejecución del servicio ya que AIRE EXPRESS(Maria 
+      Dolores Gonzalez Ramirez) no se hace responsable por la perdida, daños y/o pertenencias personales o de valor en el lugar del servicio.
+      
+      Se requier instalacion electrica al pie de MiniSplit
+
+      -Instalacion mecanica basica en Mini Split incluye:
+      -Montaje y fijacion de evaporador Mini Split, motaje y anclaje de condensador Mini Split.
+      -Tuberias de refrigeracion, Asilamiento termico, Cinta protectiva, cable de senal y poder entre evaprador y condensador
+       de 3 o 4 metros dependiendo de la marca y modelo de su equipo.
+
+      Instalación mecanica no incluye en caso de ser requerido:
+      -Tuberias de refrigración adicionales, desmontajes de Mini Split, tuberia de desague adicionales, base metalica o de concreto para condensador,
+      trabajos de albañileria como ranurado, ocultacion de tuberias, acabados y/o pinturas.
+       
+      Para agendar cualquier servicio es necesario llamar a la oficina.
+
+      Favor de revisar su mercancia antes de salir, ya que no habra cambios ni devoluciones.
+      
+      Si necesita factura favor de solicitarla al momento de la compra y/o servicio.
+      
+      Para cualquier aclaración o correcion en su factura, tiene 5 dias habiles dentro del mismo mes para solicitarlo.
+      
+      Precios no incluyen IVA(16%)
+      
+      Toda cancelacion de servicio genera costo de revisión y/o visita del tecnico.`
+    doc.text(incluye, 10, alturaGarantias + 5);
 
 
-  doc.text("Firma:", 10, startYfooter);
-  doc.text("Nombre:", 60, startYfooter);
-  doc.text("Fecha:", 160, startYfooter);
+     }else if (response.tipo ==3){
+      
+      
+      doc.autoTable(({
+        headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
+        startY:startY,
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: 'Reporte de servicio', dataKey: null }
+          ],
+      }))
+    
+    
+      let bodyDatosInstalacion = [{index: 1, cantidad_personal: response.cantidad_personal,
+                                  tiempo_horas: response.tiempo_horas,
+                                  nombre_personal: response.nombre_personal}] 
+      let startYSeries = startY + 7.5; 
+      doc.autoTable(({
+        headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+        startY:startYSeries,
+        body: bodyDatosInstalacion,
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: '#', dataKey: "index" },
+            { header: 'Cantidad de personal', dataKey: "cantidad_personal" },
+            { header: 'Tiempo en horas', dataKey: "tiempo_horas" },
+            { header: 'Nombre de personal', dataKey: "nombre_personal"}
+          ],
+      }))
+    
+      let alturaDatosInstalacion = 7.5 * (bodyDatosInstalacion.length)
+    
+      let startOptions = 30 + startY + alturaDatosInstalacion;
 
-  doc.setFontSize(8);
-  doc.setFontType("normal");
-  let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
-  zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
-  Rev. 11 2015`
-  doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+      doc.setFontType("bold");
+      doc.text("Pago en domicilio:", 20, startOptions);
+      doc.text("pago en sucursal:", 80, startOptions);
 
+      if(response.pago_domicilio == "true"){
+        doc.addImage(icon_checked, "JPEG", 55, startOptions - 5, 5,  5);
+      }else{
+        doc.addImage(icon_unchecked, "JPEG", 55, startOptions - 5, 5,  5);
+      }
 
-  //--------GARANTIA-------
-  let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
-Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
-y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
+      if(response.pago_sucursal == "true"){
+        doc.addImage(icon_checked, "JPEG", 113, startOptions -5,5,  5);
+      }else{
+        doc.addImage(icon_unchecked, "JPEG", 113, startOptions -5,5,  5);
+      }
+      
+    
+      
+    let startYfooter =  startY + alturaDatosInstalacion +25 +10 
 
-doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+    doc.setFontType("normal");
+    
+      doc.text("Firma:", 10, startYfooter);
+      doc.text("Nombre:", 60, startYfooter);
+      doc.text("Fecha:", 160, startYfooter);
+    
+      doc.setFontSize(8);
+      doc.setFontType("normal");
+      let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
+      zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
+      Rev. 11 2022`
+      doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+    
+    
+      //--------GARANTIA-------
+     /*  let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
+    Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
+    y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
+    
+    doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+     */
+    let bodyGarantia = [
+      {index: "30", desc: "dias de garantia en servicios de reparación y mantenimiento preventivo."},
+     ];
+    doc.autoTable(({
+      headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+      startY:startYfooter + 18,
+      body: bodyGarantia,
+      margin: { left: 8 },
+      tableWidth: 193,
+      columns: [{header: null, dataKey: 'index'},
+      {header: null, dataKey: 'desc'},]
+    }))
+    
+    //----MINISPLIT INCLUYE
+    let alturaGarantias = startYfooter + 30
+    doc.setFontType("bold"); // set font
+    doc.setFontSize(11);
+    
+    doc.text("Observaciones", 10, alturaGarantias);
+    doc.setFontType("normal");
+    doc.setFontSize(9);
+    let incluye = `Es obligacion del cliente despejar el area donde se llevara a cabo la ejecución del servicio ya que AIRE EXPRESS(Maria 
+      Dolores Gonzalez Ramirez) no se hace responsable por la perdida, daños y/o pertenencias personales o de valor en el lugar del servicio.
+      
+      Para agendar cualquier servicio es necesario llamar a la oficina.
 
-let bodyGarantia = [
-  {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
-  {index: "1", desc: "Año(s) de garantia en refacciones"},
-  {index: "3", desc: "Año(s) de garantia en componentes electronicos"}];
-doc.autoTable(({
-  headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
-  startY:startYfooter + 25,
-  body: bodyGarantia,
-  margin: { left: 8 },
-  tableWidth: 193,
-  columns: [{header: null, dataKey: 'index'},
-  {header: null, dataKey: 'desc'},]
-}))
+      Favor de revisar su mercancia antes de salir, ya que no habra cambios ni devoluciones.
+      
+      Si necesita factura favor de solicitarla al momento de la compra y/o servicio.
+      
+      Para cualquier aclaración o correcion en su factura, tiene 5 dias habiles dentro del mismo mes para solicitarlo.
+      
+      Precios no incluyen IVA(16%)
+      
+      Toda cancelacion de servicio genera costo de revisión y/o visita del tecnico.`
+    doc.text(incluye, 10, alturaGarantias + 5);
 
-//----MINISPLIT INCLUYE
-let alturaGarantias = startYfooter + 60
-doc.setFontType("bold"); // set font
-doc.setFontSize(11);
+     }
 
-doc.text("Mini Split incluye", 10, alturaGarantias);
-doc.setFontType("normal");
-doc.setFontSize(9);
-let incluye = `Evaporador, Condensador, control remoto, kit de instalacion de 3 o 4 metros dependiendo de la marca de
-y modelo de su equipo.
-Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
-Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
-doc.text(incluye, 10, alturaGarantias + 5);
+  
 doc.save("Orden de servicio.pdf");
 
 

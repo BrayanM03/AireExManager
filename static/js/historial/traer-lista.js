@@ -40,6 +40,7 @@ $(document).ready(function () {
                 <div class='row'>
                     <div class='col-12 col-md-12'>
                         <div class="btn btn-success" onclick="descargarOrden(${row[0]})"><i class="fa-solid fa-file-pdf"></i></div>
+                        <div class="btn btn-primary" onclick="verOpciones(${row[0]},'${row[9]}', '${row[10]}')"><i class="fa-solid fa-gear"></i></i></div>
                         <div class="btn btn-danger" onclick="eliminarOrden(${row[0]})"><i class="fa-solid fa-trash"></i></div>
                     </div>
                 </div>

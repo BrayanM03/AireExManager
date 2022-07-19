@@ -24,7 +24,16 @@ if ($_POST) {
             $total = $row['total'];
             $estatus = $row['estatus'];
             $usuario = $row['usuario_id'];
+            $tipo = $row['tipo'];
             $metodo_pago = $row['metodo_pago'];
+
+            $pago_domicilio = $row['pago_domicilio'];
+            $pago_sucursal = $row['pago_sucursal'];
+            $verificar_electrico = $row['verificar_electrico'];
+            $tiene_electrico = $row['tiene_electrico'];
+            $cantidad_personal = $row['cantidad_personal'];
+            $tiempo_horas = $row['tiempo_horas'];
+            $nombre_personal = $row['nombre_personal'];
 
             $consulta_cliente = "SELECT COUNT(*) FROM clientes WHERE id = ?";
             $resp = $con->prepare($consulta_cliente);
@@ -95,8 +104,17 @@ if ($_POST) {
         $response["estatus"] =   $estatus;
         $response["usuario"] =   $usuario;
         $response["metodo_pago"] = $metodo_pago;
+        $response["tipo"] = $tipo;
         $response['status'] =    true;
         $response['mensj'] =     "Se encontraron datos";
+
+        $response["pago_sucursal"] = $pago_sucursal;
+        $response["verificar_electrico"] = $verificar_electrico;
+        $response["tiene_electrico"] = $tiene_electrico;
+        $response["cantidad_personal"] = $cantidad_personal;
+        $response["tiempo_horas"] = $tiempo_horas;
+        $response["nombre_personal"] = $nombre_personal;
+        $response["pago_domicilio"] = $pago_domicilio;
 
 
         //BUSCANDO LOS DETALLES DE LA ORDENES

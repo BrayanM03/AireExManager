@@ -3,8 +3,8 @@
 
 ?>
 
-<!DOCTYPE html> 
-<html lang="en">
+<!DOCTYPE html>  
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,11 +15,14 @@
 <body>
     
 </body>
+<script src="https://kit.fontawesome.com/31a28ea63e.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <script src="https://unpkg.com/jspdf-autotable@3.5.22/dist/jspdf.plugin.autotable.js"></script>
 
 <script src="../../static/js/reportes/logo.js"></script>
+<script src="../../static/js/reportes/checked.js"></script>
+<script src="../../static/js/reportes/unchecked.js"></script>
 <script src="../../static/js/reportes/fuente.js"></script>
 <script src="../../static/js/reportes/plantilla-reporte-pdf.js"></script>
 </script>

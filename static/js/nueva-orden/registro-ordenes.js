@@ -8,6 +8,33 @@ function registrarOrden(type){
     let id_sucursal = $("#user-data").attr("id_sucursal");
     let tipo = $("#tipo").val();
 
+    if(tipo == 2){
+         pago_domicilio = $("#pago_domicilio").is(':checked')
+         pago_sucursal = $("#pago_sucursal").is(':checked')
+         verificar_electrico = $("#verificar_electrico").is(':checked')
+         tiene_electrico = $("#tiene_electrico").is(':checked')
+         cantidad_personal = $("#cantidad_personal").val();
+         tiempo_horas = $("#tiempo_horas").val();
+         nombre_personal = $("#nombre_personal").val();
+
+    }else if(tipo == 3){
+         pago_domicilio = $("#pago_domicilio").is(':checked')
+         pago_sucursal = $("#pago_sucursal").is(':checked')
+         verificar_electrico = "No aplica";
+         tiene_electrico = "No aplica";
+         cantidad_personal = $("#cantidad_personal").val();
+         tiempo_horas = $("#tiempo_horas").val();
+         nombre_personal = $("#nombre_personal").val();
+    }else{
+         pago_domicilio = "No aplica";
+         pago_sucursal = "No aplica";
+         verificar_electrico = "No aplica";
+         tiene_electrico = "No aplica";
+         cantidad_personal = "No aplica";
+         tiempo_horas = "No aplica";
+         nombre_personal = "No aplica";
+    }
+
     if(id_cliente == ""){
 
         Toast.fire({
@@ -36,7 +63,14 @@ function registrarOrden(type){
                 "id_sucursal": id_sucursal,
                 "id_direccion": direccion,
                 "metodo_pago": metodo_pago,
-                "tipo": tipo
+                "tipo": tipo,
+                "pago_domicilio" : pago_domicilio,
+                "pago_sucursal" : pago_sucursal,
+                "verificar_electrico" : verificar_electrico,
+                "tiene_electrico" : tiene_electrico,
+                "cantidad_personal" : cantidad_personal,
+                "tiempo_horas" : tiempo_horas,
+                "nombre_personal" : nombre_personal
             };
 
         if(metodo_pago == "Combinado"){
@@ -49,7 +83,7 @@ function registrarOrden(type){
                     <b>Agregar mas metodos de pago</b><br>
                     Total neto: ${total} <br>
 
-                    Monto: <span id="acumulado">0</span>
+                    Monto: <span id="acumulado" estatus="false" mensj="Ups, olvidaste seleccionar el un total de metodos de pago">0</span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -72,6 +106,8 @@ function registrarOrden(type){
 
                     $("#total-metodos").on("change", function() {
 
+                        $("#acumulado").attr("estatus", false)
+                        $("#acumulado").attr("mensj", "Ups, olvidaste seleccionar el un total de metodos de pago")
                      
                         if($(this).val() == "2") {
                             $("#area-mas-metodos").empty().append(`
@@ -192,6 +228,7 @@ function registrarOrden(type){
                                 
                                if(mont_total == limit){
                                 $("#acumulado").css("color", "green")
+                                $("#acumulado").attr("estatus", true);
                                } else{
 
                                 if(mont_total > limit){
@@ -229,6 +266,7 @@ function registrarOrden(type){
 
                                 if(mont_total == limit){
                                 $("#acumulado").css("color", "green")
+                                $("#acumulado").attr("estatus", true);
                                } else{
 
                                 if(mont_total > limit){
@@ -270,6 +308,7 @@ function registrarOrden(type){
 
                                 if(mont_total == limit){
                                     $("#acumulado").css("color", "green")
+                                    $("#acumulado").attr("estatus", true);
                                    } else{
     
                                     if(mont_total > limit){
@@ -309,6 +348,7 @@ function registrarOrden(type){
 
                                 if(mont_total == limit){
                                     $("#acumulado").css("color", "green")
+                                    $("#acumulado").attr("estatus", true);
                                    } else{
     
                                     if(mont_total > limit){
@@ -348,6 +388,7 @@ function registrarOrden(type){
 
                                 if(mont_total == limit){
                                     $("#acumulado").css("color", "green")
+                                    $("#acumulado").attr("estatus", true);
                                    } else{
     
                                     if(mont_total > limit){
@@ -377,10 +418,12 @@ function registrarOrden(type){
                 confirmButtonText: "Aceptar",
                 showCancelButton: true,
                 cancelButtonText: "No",
-                preConfirm: ()=>{
+                preConfirm: function(){
                     let mensj = $("#acumulado").attr("mensj")
                     let stats = $("#acumulado").attr("estatus")
-                    if(stats == false){
+                    console.log(stats);
+                    console.log(mensj);
+                    if(stats == "false"){
                         Swal.showValidationMessage(
                             `Error: ${mensj}`
                           )
@@ -404,6 +447,7 @@ function registrarOrden(type){
                         [metodo_1, monto_1],
                         [metodo_2, monto_2]
                     ]
+                    console.log(data);
 
                  }else if(total_metodos == 3){
 
@@ -430,6 +474,7 @@ function registrarOrden(type){
 
         }else{
             data["multi_metodo"] = []
+            console.log(data);
             sendData(data)
         }
 
@@ -449,6 +494,7 @@ function sendData(data){
         data: data,
         dataType: "JSON",
         success: function (response) {
+
             if(response.status ==false){
                 Toast.fire({
                     icon: 'error',
@@ -459,7 +505,7 @@ function sendData(data){
                 Swal.fire({
                     icon: 'success',
                     title: '<b>' + response.mensj + '</b>',
-                    confirmButtonText: 'Imprimir nota',
+                    confirmButtonText: 'Descargar nota',
                     showCancelButton: false,
                     showDenyButton: true,
                     denyButtonText: 'Realizar otra venta',

@@ -16,6 +16,7 @@
 
     if($count > 0) {
 
+      
     $id_direccion = $_POST['id_direccion'];
     $id_direccion == null ? $id_direccion = 0 : $id_direccion= $id_direccion;
     $hora_inicio = date('h:i:s a');
@@ -25,7 +26,21 @@
     $total = $_POST['total'];
     $metodo_pago = $_POST['metodo_pago'];
     $id_sucursal = $_POST['id_sucursal'];
-    $multi_metodo = $_POST["multi_metodo"];
+
+    $pago_domicilio = $_POST['pago_domicilio'];
+    $pago_sucursal = $_POST['pago_sucursal'];
+    $verificar_electrico = $_POST['verificar_electrico'];
+    $tiene_electrico = $_POST['tiene_electrico'];
+    $cantidad_personal = $_POST['cantidad_personal'];
+    $tiempo_horas = $_POST['tiempo_horas'];
+    $nombre_personal = $_POST['nombre_personal'];
+
+    if(isset($_POST['multi_metodo'])) {
+        $multi_metodo = $_POST['multi_metodo'];
+        $estatus_multi_metodo = true;
+      }else{
+        $estatus_multi_metodo = false;
+      }
 
     switch ($tipo) {
         case 1:
@@ -70,12 +85,22 @@
                                      tipo,
                                      metodo_pago,
                                      usuario_id,
-                                     sucursal_id) VALUES(null, ?,?,?,?,?,?,?,?,?,?,?,?)";
+                                     sucursal_id,
+                                     multi_metodo,
+                                     pago_domicilio,
+                                     pago_sucursal,
+                                     verificar_electrico,
+                                     tiene_electrico,
+                                     cantidad_personal,
+                                     tiempo_horas,
+                                     nombre_personal) VALUES(null, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
     $re = $con->prepare($insertar);
+
     $re->execute([$id_cliente, $id_direccion, $fecha_inicio, $hora_inicio, $fecha_cierre, $hora_cierre,
-                  $total, $estatus, $tipo, $metodo_pago, $_SESSION["id"], $id_sucursal]);
+                  $total, $estatus, $tipo, $metodo_pago, $_SESSION["id"], $id_sucursal, $estatus_multi_metodo,
+                $pago_domicilio, $pago_sucursal, $verificar_electrico, $tiene_electrico, $cantidad_personal, $tiempo_horas, $nombre_personal]);
 
     //Se finaliza la insercion de la orden
 
@@ -85,6 +110,8 @@
 
         $response = array("status"=> true, "mensj"=>"Venta generada con exito", "id_orden"=>$id_orden);
        
+
+        //Pasando los datos del detalle de prventa
         $consultar = "SELECT * FROM detalle_preventa_tmp WHERE user_id = ?";
         $resp = $con->prepare($consultar);
         $resp->execute([$_SESSION["id"]]);
@@ -194,6 +221,16 @@
                     }
                     $rep_s->closeCursor();
                     
+                }
+
+                if($estatus_multi_metodo == true) {
+                    foreach ($multi_metodo as $key => $value) {
+                        $insert_multi_metodo = "INSERT INTO multi_metodo(id, metodo_pago, monto_pago, id_orden, id_sucursal)
+                        VALUES(null, ?,?,?,?)";
+                        $respuu = $con->prepare($insert_multi_metodo);
+                        $respuu->execute([$value[0], $value[1], $id_orden, $id_sucursal]);
+
+                    }
                 }
 
                 

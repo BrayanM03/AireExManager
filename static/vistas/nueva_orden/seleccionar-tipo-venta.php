@@ -25,6 +25,9 @@
     </div>
 </div>
 
+<div class="row  justify-content-center mt-3" id="verificaciones_area">
+</div>
+
 <div class="row justify-content-center mt-3">
     <div class="col-12 col-md-4 text-start">
         <label for="buscador-select"><i class="fa-solid fa-magnifying-glass"></i> Buscar:</label>

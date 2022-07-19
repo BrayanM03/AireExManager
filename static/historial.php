@@ -20,6 +20,7 @@ if (empty($_SESSION["id"])) {
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
+
     <title>Inventario clima | AireEx manager</title>
 
     <link href="css/app.css" rel="stylesheet">    
@@ -29,6 +30,11 @@ if (empty($_SESSION["id"])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
 
+    <style>
+        .swal-wide{
+    width:950px !important;
+}
+    </style>
 </head>
 
 <body>
@@ -126,9 +132,9 @@ if (empty($_SESSION["id"])) {
 
     <!-- Mis scripts -->
     <script src="js/historial/traer-lista.js"></script>
-    <script src="js/historial/descargar-orden.js"></script><!-- 
+    <script src="js/historial/descargar-orden.js"></script>
     
-    <script src="js/historial/editar-servicio.js"></script>
+    <script src="js/historial/opciones.js"></script><!-- 
     <script src="js/historial/eliminar-servicio.js"></script>
  --> -->
 </body>
