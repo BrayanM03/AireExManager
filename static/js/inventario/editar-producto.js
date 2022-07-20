@@ -35,6 +35,7 @@ function getParameterByName(name) {
      let costo = document.getElementById("costo").value
      let precio = document.getElementById("precio").value
      let sucursal = document.getElementById("sucursal").value
+     let descripcion = document.getElementById("descripcion").value
 
 
      if(modelo == ""){
@@ -84,6 +85,7 @@ function getParameterByName(name) {
      datosForm.append("precio", precio);
      datosForm.append("costo", costo);
      datosForm.append("sucursal", sucursal);
+     datosForm.append("descripcion", descripcion);
      datosForm.append("type", "actualizacion");
 
 

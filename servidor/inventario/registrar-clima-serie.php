@@ -4,6 +4,7 @@ if ($_POST) {
     date_default_timezone_set('America/Matamoros');
 
     $proveedor = $_POST["proveedor"];
+    $descripcion = $_POST["descripcion"];
     $tonelaje = $_POST["tonelaje"];
     $modelo = $_POST["modelo"];
     $marca = $_POST["marca"];
@@ -13,6 +14,7 @@ if ($_POST) {
     $estatus = "Activo";
     $sucursal = $_POST["sucursal"];
     $categoria = "Producto";
+
    
     $tipo = "Aire acondicionado";
     $has_series = $_POST["has_series"];
@@ -30,7 +32,8 @@ if ($_POST) {
                                          stock,
                                          estatus,
                                          sucursal,
-                                         categoria) VALUES(null,?,?,?,?,?,?,?,?,?,?)";
+                                         categoria,
+                                         descripcion) VALUES(null,?,?,?,?,?,?,?,?,?,?,?)";
     $resp = $con->prepare($insercion);
     $resp->bindParam(1, $proveedor);                                     
     $resp->bindParam(2, $tonelaje);
@@ -42,6 +45,7 @@ if ($_POST) {
     $resp->bindParam(8, $estatus);
     $resp->bindParam(9, $sucursal);
     $resp->bindParam(10, $categoria);
+    $resp->bindParam(11, $descripcion);
     $resp->execute();
     $resp->closeCursor();
 

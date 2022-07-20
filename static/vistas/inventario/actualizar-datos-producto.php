@@ -92,6 +92,13 @@
                 </div>
 
                 <div class="row mb-3">
+                    <div class="col-12 col-md-12">
+                        <label for="descripcion">Descripción</label>
+                        <textarea class="form-control" placeholder="Descripción" name="descripcion" id="descripcion"><?php echo $_POST['descripcion'] ?></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
                     <div class="col-12 col-md-6">
                         <div class="btn btn-success" onclick="actualizarProducto(<?php echo $_POST['id_producto']; ?>)">Actualizar</div>
                     </div>

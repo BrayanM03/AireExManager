@@ -4,6 +4,14 @@
 
 function clickNuevoProducto(){
 
+  main_content.empty().append(`
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-6 col-12 text-center">
+           <img src="./img/loading.gif">
+        </div>
+    </div>
+  `)
+
     main_content.empty().load(`vistas/inventario/nuevo-aire.php`, {
         postdata: false,
         proveedor : "",
@@ -12,7 +20,8 @@ function clickNuevoProducto(){
         marca : "",
         cantidad : "",
         costo : "",
-        precio : ""});
+        precio : "",
+      descripcion: ""});
 }
 
 function clickEditarProducto(e) {
@@ -37,7 +46,8 @@ function clickEditarProducto(e) {
                 marca : element.marca,
                 cantidad : element.stock,
                 costo : element.costo,
-                precio : element.precio}
+                precio : element.precio,
+                descripcion : element.descripcion}
             });
             console.log(data);
            
@@ -157,7 +167,8 @@ function RegresarAtras(vista){
               marca : datosForm.get("marca"),
               cantidad : datosForm.get("cantidad"),
               costo : datosForm.get("costo"),
-              precio : datosForm.get("precio")
+              precio : datosForm.get("precio"),
+              descripcion : datosForm.get("descripcion")
         });
 
        

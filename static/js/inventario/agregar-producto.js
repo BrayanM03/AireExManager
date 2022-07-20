@@ -8,6 +8,8 @@ function agregarProducto(){
      let costo = document.getElementById("costo").value
      let precio = document.getElementById("precio").value
      let sucursal = document.getElementById("sucursal").value
+     let descripcion = document.getElementById("descripcion").value
+ 
 
 
     let hasCantidadInt = Number.isInteger(cantidad);
@@ -57,6 +59,7 @@ function agregarProducto(){
     else{
 
      datosForm = new FormData();
+     datosForm.append("descripcion", descripcion);
      datosForm.append("proveedor", proveedor);
      datosForm.append("tonelaje", tonelaje); 
      datosForm.append("modelo", modelo);
@@ -66,6 +69,8 @@ function agregarProducto(){
      datosForm.append("precio", precio);
      datosForm.append("costo", costo);
      datosForm.append("sucursal", sucursal);
+   console.log(datosForm.get("proveedor"));
+   console.log(datosForm.get("descripcion"));
 
      if(cantidad !== 0) {
        

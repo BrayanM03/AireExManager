@@ -93,6 +93,13 @@
                 </div>
 
                 <div class="row mb-3">
+                    <div class="col-12 col-md-12">
+                        <label for="descripcion">Descripción</label>
+                        <textarea class="form-control" placeholder="Descripción" name="descripcion" id="descripcion"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
                     <div class="col-12 col-md-6">
                         <div class="btn btn-success" onclick="agregarProducto()">Agregar</div>
                     </div>
@@ -209,6 +216,13 @@
                     <div class="col-12 col-md-6">
                         <label for="precio">Precio</label>
                         <input class="form-control" placeholder="0.00" value="<?php echo $_POST['precio'] ?>" name="precio" id="precio" type="number">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-12">
+                        <label for="descripcion">Descripción</label>
+                        <textarea class="form-control" placeholder="Descripción" name="descripcion" id="descripcion"><?php echo $_POST['descripcion'] ?></textarea>
                     </div>
                 </div>
 

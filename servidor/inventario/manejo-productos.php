@@ -28,6 +28,7 @@ if ($_POST) {
         $sucursal = $_POST["sucursal"];
         $id_producto = $_POST["id_producto"];
         $tipo = "Aire acondicionado";
+        $descripcion = $_POST["descripcion"];
 
         $query = "UPDATE inventario SET proveedor = ?,
                                              tonelaje = ?,
@@ -36,7 +37,8 @@ if ($_POST) {
                                              costo = ?,
                                              precio = ?,
                                              estatus = ?,
-                                             sucursal = ? WHERE id =?";
+                                             sucursal = ?,
+                                             descripcion = ? WHERE id =?";
         $resp = $con->prepare($query);
         $resp->bindParam(1, $proveedor);                                     
         $resp->bindParam(2, $tonelaje);
@@ -46,7 +48,8 @@ if ($_POST) {
         $resp->bindParam(6, $precio);
         $resp->bindParam(7, $estatus);
         $resp->bindParam(8, $sucursal);   
-        $resp->bindParam(9, $id_producto);  
+        $resp->bindParam(9, $descripcion);
+        $resp->bindParam(10, $id_producto);   
         $resp->execute();
         $resp->closeCursor();  
         
