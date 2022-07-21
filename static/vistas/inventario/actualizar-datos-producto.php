@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <span class="mb-2">Sucursal a agregar</span>
+                        <span class="mb-2">Sucursal a agregar</span> 
                         <select class="form-control mb-1" id="sucursal" name="sucursal">
                             <option value="1" <?=$_POST['id_sucursal'] == '1' ? ' selected="selected"' : '';?>>AireExpress</option>
                             <option value="2" <?=$_POST['id_sucursal'] == '2' ? ' selected="selected"' : '';?>>ServiClima</option>
@@ -81,13 +81,17 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-4">
                         <label for="costo">Costo</label>
                         <input class="form-control" value="<?php echo $_POST['costo'] ?>" placeholder="0.00" name="costo" id="costo" type="number">
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-4">
                         <label for="precio">Precio</label>
                         <input class="form-control" placeholder="0.00" value="<?php echo $_POST['precio'] ?>" name="precio" id="precio" type="number">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label for="costo">Precio <b>con</b> instalación</label>
+                        <input class="form-control" value="<?php echo $_POST['precio_con_inst'] ?>" placeholder="0.00" name="precio_con_inst" id="precio_con_inst" type="number">
                     </div>
                 </div>
 

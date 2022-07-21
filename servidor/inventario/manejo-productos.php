@@ -23,8 +23,9 @@ if ($_POST) {
         $modelo = $_POST["modelo"];
         $marca = $_POST["marca"];
         $precio = $_POST["precio"];
+        $precio_con_inst = $_POST["precio_con_inst"];
         $costo = $_POST["costo"];
-        $estatus = "activo";
+        $estatus = "Activo";
         $sucursal = $_POST["sucursal"];
         $id_producto = $_POST["id_producto"];
         $tipo = "Aire acondicionado";
@@ -36,6 +37,7 @@ if ($_POST) {
                                              modelo = ?,
                                              costo = ?,
                                              precio = ?,
+                                             precio_con_inst = ?,
                                              estatus = ?,
                                              sucursal = ?,
                                              descripcion = ? WHERE id =?";
@@ -46,10 +48,11 @@ if ($_POST) {
         $resp->bindParam(4, $modelo);
         $resp->bindParam(5, $costo);
         $resp->bindParam(6, $precio);
-        $resp->bindParam(7, $estatus);
-        $resp->bindParam(8, $sucursal);   
-        $resp->bindParam(9, $descripcion);
-        $resp->bindParam(10, $id_producto);   
+        $resp->bindParam(7, $precio_con_inst);
+        $resp->bindParam(8, $estatus);
+        $resp->bindParam(9, $sucursal);   
+        $resp->bindParam(10, $descripcion);
+        $resp->bindParam(11, $id_producto);   
         $resp->execute();
         $resp->closeCursor();  
         

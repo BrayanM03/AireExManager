@@ -1,12 +1,13 @@
 function agregarProducto(){
 
-    let proveedor = document.getElementById("proveedor").value
-    let tonelaje= document.getElementById("tonelaje").value
+     let proveedor = document.getElementById("proveedor").value
+     let tonelaje= document.getElementById("tonelaje").value
      let modelo = document.getElementById("modelo").value
      let marca = document.getElementById("marca").value
      let cantidad = +document.getElementById("cantidad").value //Aqui pongo el mas para hacer la cantidad un "number"
      let costo = document.getElementById("costo").value
      let precio = document.getElementById("precio").value
+     let precio_con_inst = document.getElementById("precio_con_inst").value
      let sucursal = document.getElementById("sucursal").value
      let descripcion = document.getElementById("descripcion").value
  
@@ -67,6 +68,7 @@ function agregarProducto(){
      datosForm.append("cantidad", cantidad);
      datosForm.append("costo", costo);
      datosForm.append("precio", precio);
+     datosForm.append("precio_con_inst", precio_con_inst);
      datosForm.append("costo", costo);
      datosForm.append("sucursal", sucursal);
    console.log(datosForm.get("proveedor"));

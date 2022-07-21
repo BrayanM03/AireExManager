@@ -18,6 +18,7 @@ $(document).ready(function () {
             { data:4, title:'Modelo' },
             { data:5, title:'Costo' },
             { data:6, title:'Precio' },
+            { data:12, title:'Precio inst.' },
             { data:7, title:'Stock' },
             { data:8, title:'Estatus' },
             { data:null, title:'Opciones', render: function(row){

@@ -38,6 +38,7 @@ $columns = array(
 	array( 'db' => 'modelo', 'dt' => 4 ),
 	array( 'db' => 'costo',  'dt' => 5 ),
 	array( 'db' => 'precio',   'dt' => 6 ),
+	array( 'db' => 'precio_con_inst', 'dt' => 12 ),
 	array( 'db' => 'stock',   'dt' => 7 ),
 	array( 'db' => 'estatus',   'dt' => 8 ),
 	array( 'db' => 'sucursal',   'dt' => 9 ),

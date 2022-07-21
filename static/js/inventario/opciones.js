@@ -16,18 +16,20 @@ function clickNuevoProducto(){
         postdata: false,
         proveedor : "",
         tonelaje: "",
+        id_sucursal: "1",
         modelo : "",
         marca : "",
         cantidad : "",
         costo : "",
         precio : "",
+        precio_con_inst : "",
       descripcion: ""});
 }
 
 function clickEditarProducto(e) {
 
     let producto_id = getParameterByName("id_product");
-    let sucursal_id = getParameterByName("sucursal");
+    let sucursal_id = getParameterByName("store_id");
     let name = getParameterByName("name");
 
     $.ajax({
@@ -47,10 +49,13 @@ function clickEditarProducto(e) {
                 cantidad : element.stock,
                 costo : element.costo,
                 precio : element.precio,
+                precio_con_inst : element.precio_con_inst,
                 descripcion : element.descripcion}
+
+                
             });
-            console.log(data);
-           
+            
+            console.log(sucursal_id);
 
             main_content.empty().load(`vistas/inventario/actualizar-datos-producto.php?store_id=${sucursal_id}&name=${name}`, data
             );
@@ -168,7 +173,9 @@ function RegresarAtras(vista){
               cantidad : datosForm.get("cantidad"),
               costo : datosForm.get("costo"),
               precio : datosForm.get("precio"),
-              descripcion : datosForm.get("descripcion")
+              precio_con_inst : datosForm.get("precio_con_inst"),
+              descripcion : datosForm.get("descripcion"),
+              id_sucursal: datosForm.get("sucursal"),
         });
 
        

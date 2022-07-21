@@ -143,6 +143,8 @@ function formatSelectionP(repo) {
 
   
   if(sucursal_usuario == repo.sucursal){
+
+  setPantallaCargando()  
   
   setearSeries(repo.id);
   $("#precio").val(repo.precio)
@@ -151,6 +153,9 @@ function formatSelectionP(repo) {
   $("#datos-btn").attr("serie_condensador", repo.serie_condensador)
   $("#datos-btn").attr("serie_evaporizador", repo.serie_evaporizador)
   $("#datos-btn").attr("fecha_compra", repo.fecha_compra)
+
+  quitarLoad()
+
 
   }else{
 
@@ -258,15 +263,16 @@ function setearSeries(id_producto){
 
 
 function agregarProductoAPreventa(){
-  let id_producto = $("#datos-btn").attr("id_producto");
-  let precio = $("#precio").val();
-  let categoria = $("#buscador-select").val();
+ 
+  
   let valoresSeries = [];
 
-$("input[type=checkbox]:checked").each(function(){
+$(".list-group input[type=checkbox]:checked").each(function(){
  
     valoresSeries.push(this.value);
 });
+
+console.log(valoresSeries);
 
   if(valoresSeries.length == 0){
       Toast.fire({
@@ -274,6 +280,12 @@ $("input[type=checkbox]:checked").each(function(){
         title: 'Selecciona una o mas series'
       })
   }else{
+
+    setPantallaCargando() 
+
+    let id_producto = $("#datos-btn").attr("id_producto");
+  let precio = $("#precio").val();
+  let categoria = $("#buscador-select").val();
 
     $.ajax({
       type: "POST",
@@ -296,6 +308,8 @@ $("input[type=checkbox]:checked").each(function(){
     })
 
   }
+
+  quitarLoad()
 }
 
 
@@ -310,5 +324,19 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 })
+
+
+function setPantallaCargando(){
+ 
+  $("#area-loading").append(`
+  <div class="loading show">
+  <div style="display:flex; flex-direction:column; justify-content:center;">
+      <div class="spin"></div><br>
+      <span><b>Cargando<span class = "dotting"> </span></b></span>
+  </div>
+</div>
+  `)
+}
+
 
 

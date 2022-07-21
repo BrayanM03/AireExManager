@@ -34,6 +34,7 @@ function getParameterByName(name) {
     /*  let cantidad = +document.getElementById("cantidad").value //Aqui pongo el mas para hacer la cantidad un "number" */
      let costo = document.getElementById("costo").value
      let precio = document.getElementById("precio").value
+     let precio_con_inst = document.getElementById("precio_con_inst").value
      let sucursal = document.getElementById("sucursal").value
      let descripcion = document.getElementById("descripcion").value
 
@@ -83,6 +84,7 @@ function getParameterByName(name) {
      datosForm.append("marca", marca); 
      datosForm.append("costo", costo);
      datosForm.append("precio", precio);
+     datosForm.append("precio_con_inst", precio_con_inst);
      datosForm.append("costo", costo);
      datosForm.append("sucursal", sucursal);
      datosForm.append("descripcion", descripcion);
