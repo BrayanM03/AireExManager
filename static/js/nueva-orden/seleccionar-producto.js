@@ -65,7 +65,7 @@ function formatsSelection(repo){
 
   
   if(sucursal_usuario == repo.sucursal){
-  let label =  repo.marca + " "+ repo.modelo + " " + repo.tonelaje;
+  let label =  repo.descripcion;
  
   return label;
   }else{
@@ -100,7 +100,7 @@ function formatResultProducto(repo){
        var $container = $(`
            <div class="row">
                <div class="col-12 col-md-12">
-                   <div>${repo.marca} ${repo.modelo} ${repo.tonelaje}</div>
+                   <div>${repo.descripcion}</div>
                </div>
                <div class="col-12 col-md-12 mt-1" style="font-size:12px;">
                    <div><b>Precio:</b>${price} -- <b>Sucursal:</b>${sucursal_name} -- <b>Stock:</b>${repo.stock}</div>
@@ -153,9 +153,15 @@ function formatSelectionP(repo) {
   if(sucursal_usuario == repo.sucursal){
 
   setPantallaCargando()  
+  let tipo = $("#tipo").val()
+  if(tipo == "1"){
+    price = repo.precio
+  }else if(tipo == "2"){
+    price = repo.precio_con_inst
+  }
   
   setearSeries(repo.id);
-  $("#precio").val(repo.precio)
+  $("#precio").val(price)
   $("#datos-btn").attr("id_producto", repo.id)
   $("#datos-btn").attr("producto_id", repo.producto_id)
   $("#datos-btn").attr("serie_condensador", repo.serie_condensador)

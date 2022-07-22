@@ -48,6 +48,7 @@
                             <option value="1 TON 110V">1 TON 110V</option>
                             <option value="1.5 TON 220V">1.5 TON 220V</option>
                             <option value="2 TON 220V">2 TON 220V</option>
+                            <option value="3 TON 220V">3 TON 220V</option>
                             
                         </select>
                     </div>
@@ -175,6 +176,7 @@
                             <option value="1 TON 110V" <?=$_POST['tonelaje'] == '1 TON 110V' ? ' selected="selected"' : '';?>>1 TON 110V</option>
                             <option value="1.5 TON 220V" <?=$_POST['tonelaje'] == '1.5 TON 220V' ? ' selected="selected"' : '';?>>1.5 TON 220V</option>
                             <option value="2 TON 220V" <?=$_POST['tonelaje'] == '2 TON 220V' ? ' selected="selected"' : '';?>>2 TON 220V</option>
+                            <option value="3 TON 220V" <?=$_POST['tonelaje'] == '3 TON 220V' ? ' selected="selected"' : '';?>>3 TON 220V</option>
                             
                         </select>
                     </div>

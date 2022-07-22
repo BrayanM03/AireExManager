@@ -79,9 +79,16 @@ doc.text(response.datos_cliente.telefono, 170, 53)
 
 //-----------Cuerpo de items -----//
 
+if(response.tipo == "1" || response.tipo == "3"){
+   comentario = 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes'
+}else if(response.tipo == "2"){
+   comentario = `Incluye instalación basica de 4 metros de distancia entre evaporador y 
+   condensador, se requiere caja y breaker a menos de 1 metro`
+}
+
 let bodyTable = response.detalle_orden;
 let metodo = { precio_unit: 'Metodo', importe:response.metodo_pago };
-let importe_total = { descripcion: 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes', precio_unit: 'Total', importe: response.total}
+let importe_total = { descripcion: comentario, precio_unit: 'Total', importe: response.total}
 
 bodyTable.push(metodo, importe_total)
 /* [
