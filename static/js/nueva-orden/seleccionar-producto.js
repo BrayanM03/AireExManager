@@ -80,6 +80,13 @@ function formatResultProducto(repo){
         return repo.text;
       }
 
+      let tipo = $("#tipo").val();
+      if(tipo == "1"){
+        price = repo.precio
+      }else if(tipo == "2"){
+        price = repo.precio_con_inst
+      }
+
       if(repo.id !== ""){
 
         if(repo.categoria == "producto"){
@@ -89,13 +96,14 @@ function formatResultProducto(repo){
             sucursal_name = "ServiClima"
        }
 
+ 
        var $container = $(`
            <div class="row">
                <div class="col-12 col-md-12">
                    <div>${repo.marca} ${repo.modelo} ${repo.tonelaje}</div>
                </div>
                <div class="col-12 col-md-12 mt-1" style="font-size:12px;">
-                   <div><b>Costo:</b>${repo.precio} -- <b>Sucursal:</b>${sucursal_name} -- <b>Stock:</b>${repo.stock}</div>
+                   <div><b>Precio:</b>${price} -- <b>Sucursal:</b>${sucursal_name} -- <b>Stock:</b>${repo.stock}</div>
                </div>
            </div>
        `
@@ -125,7 +133,7 @@ function formatResultProducto(repo){
          </div>
      `
        //  "<span id='"+repo.id+"'>"+ repo.marca +" "+ repo.modelo + " " + repo.tonelaje + "</span>"
-     );;
+     );
 
       }
 
@@ -284,8 +292,8 @@ console.log(valoresSeries);
     setPantallaCargando() 
 
     let id_producto = $("#datos-btn").attr("id_producto");
-  let precio = $("#precio").val();
-  let categoria = $("#buscador-select").val();
+    let precio = $("#precio").val();
+    let categoria = $("#buscador-select").val();
 
     $.ajax({
       type: "POST",

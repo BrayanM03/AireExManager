@@ -1,4 +1,6 @@
+ 
 $("#tipo").on("change", function() {
+    let id_prod = $("#datos-btn").attr("id_producto")
     
     if($(this).val() == 1){
         $("#verificaciones_area").empty();
@@ -6,6 +8,7 @@ $("#tipo").on("change", function() {
             <option value="inventario">Aire Acondicionado</option>
             <option value="refacciones">Refacción</option>
         `)
+        setearSeries(id_prod)
     }else
     if($(this).val() == 2){
         $("#verificaciones_area").empty().append(`
