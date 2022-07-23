@@ -421,8 +421,7 @@ function registrarOrden(type){
                 preConfirm: function(){
                     let mensj = $("#acumulado").attr("mensj")
                     let stats = $("#acumulado").attr("estatus")
-                    console.log(stats);
-                    console.log(mensj);
+                    
                     if(stats == "false"){
                         Swal.showValidationMessage(
                             `Error: ${mensj}`

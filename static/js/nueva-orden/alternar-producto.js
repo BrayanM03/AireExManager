@@ -234,7 +234,6 @@ refacciones.select2({
  function formatsSelectionRefaccion(repo){
 
   
-    console.log(repo);
     if(repo.stock == 0){
       Toast.fire({
         icon: 'error',

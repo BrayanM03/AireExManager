@@ -1,4 +1,4 @@
-function verOpciones(id, estatus, tipo){
+function cambiarEstatus(id, estatus, tipo){
 
 
 
@@ -30,7 +30,7 @@ function verOpciones(id, estatus, tipo){
         confirmButtonText: "Actualizar",
         didOpen: function(){
 
-            $("#estatus").val(estatus)
+          /*   $("#estatus").val(estatus)
 
             $("#estatus").on("change", function(){
                if($(this).val() == "Cerrada"){
@@ -118,7 +118,7 @@ function verOpciones(id, estatus, tipo){
                 $("#area_precios").empty()
                }
             })
-
+ */
 
             
 
@@ -174,6 +174,26 @@ function verOpciones(id, estatus, tipo){
             });
         }
     })
+}
+
+function verOpciones(id, estatus, tipo){
+
+    Swal.fire({
+        icon:"info",
+        title: "Selecciona una opción",
+        html: `<div class="container">
+               <div class="row">
+                        <div class="col-md-12">
+                            <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action" onclick="cambiarEstatus(${id}, '${estatus}', '${tipo}')">Cambiar estatus</a>
+                            <a href="#" class="list-group-item list-group-item-action" onclick="agregarCostos(${id})">Agregar costos extra</a>
+                           
+                        </div>
+                        </div> 
+               </div>
+               </div>`
+    })
+
 }
 
 function setPrecios(id_detalle){
@@ -251,4 +271,26 @@ function updateServicio(id_detalle) {
     $("#desc").val("")
     $("#u-price").val("")
     $("#import").val("")
+}
+
+
+function agregarCostos(id){
+
+    Swal.fire({
+        icon:"info",
+        title: "Agregar costo extra",
+        html: `<div class="container">
+               <div class="row">
+                        <div class="col-md-6 col-12">
+                            <label>Monto</label>
+                            <input class="form-control" id="monto_extra" placeholder="0.00" type="number">
+                        </div>
+                        
+                        <div class="col-md-6 col-12">
+                            <label>Monto</label>
+                            <input class="form-control" id="monto_extra" placeholder="0.00" type="number">
+                        </div>  
+               </div>
+               </div>`
+    })
 }
