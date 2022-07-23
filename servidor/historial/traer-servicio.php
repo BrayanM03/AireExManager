@@ -22,10 +22,7 @@ if ($_POST) {
     }else{
         $response = array("status"=>true, "mensj"=>"No se encontro el dato");
     }
-
     
-
-  
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
 

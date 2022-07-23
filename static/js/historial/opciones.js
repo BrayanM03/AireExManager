@@ -287,10 +287,54 @@ function agregarCostos(id){
                         </div>
                         
                         <div class="col-md-6 col-12">
-                            <label>Monto</label>
-                            <input class="form-control" id="monto_extra" placeholder="0.00" type="number">
+                            <label>Cantidad</label>
+                            <input class="form-control" id="cantidad" placeholder="0" type="number">
                         </div>  
                </div>
-               </div>`
+
+               <div class="row mt-3">
+                        <div class="col-md-8 col-12">
+                            <label>Descripción</label>
+                            <textarea class="form-control" id="descripcion" placeholder="Escribe la descripcion del concepto del monto extra..."></textarea>
+                        </div> 
+                        <div class="col-md-4 col-12">
+                            <label>Importe</label><br>
+                            $<b style="font-size:20px; margin-top:10px" id="import">0</b>
+                        </div> 
+               </div>
+
+               </div>` ,
+               confirmButtonText: "Agregar",
+               cancelButtonText: "Cancelar",
+               showCancelButton: true,
+               didOpen: function(){
+                $("#monto_extra").keyup(function(e){
+                    monto_ext = $("#monto_extra").val()
+                    cant = $("#cantidad").val()
+
+                    imp = monto_ext * cant;
+                    $("#import").text(imp);
+                })
+
+                $("#cantidad").keyup(function(e){
+                    monto_ext = $("#monto_extra").val()
+                    cant = $("#cantidad").val()
+
+                    imp = monto_ext * cant;
+                    $("#import").text(imp);
+                })
+               }
+    }).then(function(response) {
+
+        $.ajax({
+            type: "POST",
+            url: "../servidor/",
+            data: "data",
+            dataType: "dataType",
+            success: function (response) {
+                
+            }
+        });
+
     })
 }

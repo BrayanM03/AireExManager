@@ -10,9 +10,14 @@ if ($_POST) {
     $fecha= date("Y-m-d");
     $hora = date("h:i:s a");
 
-    $detalle_length = count($detalles);
+    $updates = "UPDATE ordenes SET fecha_cierre =?, hora_cierre=?, estatus =? WHERE id =?";
+        $resp = $con->prepare($updates);
+        $resp->execute([$fecha, $hora, $estatus, $id]);
 
-    function traerImporte($con, $id, $trayendo){
+
+    /* $detalle_length = count($detalles); */
+
+    /* function traerImporte($con, $id, $trayendo){
         $contar = "SELECT COUNT(*) FROM detalle_orden WHERE orden_id = ?";
         $re = $con->prepare($contar);
         $re->execute([$id]);
@@ -35,9 +40,9 @@ if ($_POST) {
             return 0.00;
         }
     }
+ */
 
-
-    if($detalle_length > 0){
+  /*   if($detalle_length > 0){
 
         foreach ($detalles as $key => $value) {
            
@@ -60,7 +65,7 @@ if ($_POST) {
         $resp = $con->prepare($updates);
         $resp->execute([$fecha, $hora, $importe_detalle, $utilidad_detalle, $estatus, $id]);
     }
-
+ */
     print_r(1);
 
 /*     $insert = "UPDATE servicios SET descripcion = ?,

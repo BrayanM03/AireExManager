@@ -37,10 +37,12 @@
 
     if(isset($_POST['multi_metodo'])) {
         $multi_metodo = $_POST['multi_metodo'];
-        $estatus_multi_metodo = true;
+        $estatus_multi_metodo ="true";
       }else{
-        $estatus_multi_metodo = false;
+        $estatus_multi_metodo = "false";
       }
+
+     
 
     switch ($tipo) {
         case 1:
@@ -156,6 +158,7 @@
 
             }else if($tabla_origen == "servicios"){
                 $utilidad_neta = $row["importe"];
+                $suma_utilidad += $utilidad_neta; 
             }    
 
             //Insertando los datos
@@ -223,7 +226,7 @@
                     
                 }
 
-                if($estatus_multi_metodo == true) {
+                if($estatus_multi_metodo == "true") {
                     foreach ($multi_metodo as $key => $value) {
                         $insert_multi_metodo = "INSERT INTO multi_metodo(id, metodo_pago, monto_pago, id_orden, id_sucursal)
                         VALUES(null, ?,?,?,?)";
@@ -238,6 +241,8 @@
         $updt = "UPDATE ordenes SET utilidad = ? WHERE id =?";
         $res = $con->prepare($updt);
         $res->execute([$suma_utilidad, $id_orden]);
+
+        print_r($suma_utilidad);
 
     }else {
         $response = array("status"=> false, "mensj"=>"Agrega articulos a la tabla");
