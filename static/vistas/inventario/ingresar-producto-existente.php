@@ -45,14 +45,22 @@
 
                 <div class="row mb-3">
                   
-                        <div class="col-12 col-md-5 text-center">
+                        <div class="col-12 col-md-4 text-center">
                             <span>Serie de condensador</span>
                             <input type="text" class="form-control" id="serie-cond" placeholder="Condensador" disabled>
                         </div>
 
-                        <div class="col-12 col-md-5 text-center">
+                        <div class="col-12 col-md-4 text-center">
                             <span>Serie de evaporador</span>
                             <input type="text" class="form-control" id="serie-evap" placeholder="Evaporizador" disabled>
+                        </div>
+
+                        <div class="col-12 col-md-2 text-center">
+                            <span>Metodo</span>
+                            <select class="form-control" id="metodo" name="metodo">
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Transferencia">Transferencia</option>
+                            </select>
                         </div>
 
                         <div class="col-12 col-md-2 text-center">

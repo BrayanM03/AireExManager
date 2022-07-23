@@ -205,7 +205,9 @@ const Toast = Swal.mixin({
               })
         }else{
 
+            let metodo = $("#metodo").val()
             datosForm.append("fecha_compra", fecha_compra);
+            datosForm.append("metodo", metodo);
           
 
             $.ajax({

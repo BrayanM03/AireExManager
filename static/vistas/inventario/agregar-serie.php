@@ -6,6 +6,15 @@
         Fecha compra
         <input class="form-control" type="date" id="fecha_compra" name="fecha_compra">
     </div>
+
+    <div class="col-12 col-md-6 text-center">
+        
+        Metodo
+        <select class="form-control" id="metodo" name="metodo">
+            <option value="Efectivo">Efectivo</option>
+            <option value="Transferencia">Transferencia</option>
+        </select>
+    </div>
 </div>
 
 <div class="row mb-3">
@@ -18,6 +27,8 @@
         <span>Numero de serie de evaporador</span>
     </div>
 </div>
+
+
 
 
 

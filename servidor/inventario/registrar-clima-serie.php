@@ -58,6 +58,7 @@ if ($_POST) {
 
         $series = json_decode($_POST['series']);
         $fecha_compra = $_POST["fecha_compra"];
+        $metodo = $_POST["metodo"];
 
         $insercion_serie = "INSERT INTO series(id, 
     fecha_compra,
@@ -65,7 +66,8 @@ if ($_POST) {
     serie_evaporizador,
     producto_id,
     tipo,
-    estatus) VALUES(null, ?,?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
+    estatus,
+    metodo) VALUES(null, ?,?,?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
     $resp = $con->prepare($insercion_serie);
     
 
@@ -73,7 +75,7 @@ if ($_POST) {
         
         $serie_condensador = $value[0];
         $serie_vaporizador = $value[1];
-        $data = [$fecha_compra, $serie_condensador, $serie_vaporizador, $id_prod, $tipo, $estatus];
+        $data = [$fecha_compra, $serie_condensador, $serie_vaporizador, $id_prod, $tipo, $estatus, $metodo];
 
         $resp->execute($data);
        

@@ -69,6 +69,7 @@ if ($_POST) {
         $serie_condensador = $_POST["serie_cond"]; 
         $serie_evaporizador = $_POST["serie_evap"];
         $producto_id = $_POST["producto"];
+        $metodo = $_POST["metodo"];
 
         $validate1 = validarSerieRepetidad($con, $serie_condensador, $producto_id);
         $validate2 = validarSerieRepetidad($con, $serie_evaporizador, $producto_id);
@@ -85,9 +86,10 @@ if ($_POST) {
             serie_evaporizador,
             producto_id,
             tipo,
-            estatus) VALUES(null, ?,?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
+            estatus,
+            metodo) VALUES(null, ?,?,?,?,?,?,?)";//:fecha, :serie_co, :serie_ev, :id, :tipo
             $resp = $con->prepare($insercion_serie);
-            $data = [$fecha_compra, $serie_condensador, $serie_evaporizador, $producto_id, $tipo, $estatus];
+            $data = [$fecha_compra, $serie_condensador, $serie_evaporizador, $producto_id, $tipo, $estatus, $metodo];
             $resp->execute($data);
 
             $response = array("mensj"=>"Se insertaron las series, stock actualizado.",
@@ -140,15 +142,16 @@ if ($_POST) {
         $serie_condensador = $_POST["serie_cond"]; 
         $serie_evaporizador = $_POST["serie_evap"];
         $fecha_compra = $_POST["fecha_compra"];
+        $metodo = $_POST["metodo"];
 
         $validate1 = validarSerieRepetidad($con, $serie_condensador, $producto_id);
         $validate2 = validarSerieRepetidad($con, $serie_evaporizador, $producto_id);
 
         if($validate1 == true || $validate2 == true){
 
-            $eliminar = "UPDATE series SET fecha_compra = ?, serie_condensador = ?, serie_evaporizador = ? WHERE id =?";
+            $eliminar = "UPDATE series SET fecha_compra = ?, serie_condensador = ?, serie_evaporizador = ?, metodo=? WHERE id =?";
             $resp = $con->prepare($eliminar);
-            $resp->execute([$fecha_compra, $serie_condensador, $serie_evaporizador, $id_serie]);
+            $resp->execute([$fecha_compra, $serie_condensador, $serie_evaporizador, $metodo, $id_serie]);
             $resp->closeCursor();
 
             $response = array("mensj"=> "Series actualizadas correctamente",
@@ -157,9 +160,9 @@ if ($_POST) {
 
         }else{
 
-            $eliminar = "UPDATE series SET fecha_compra = ? WHERE id =?";
+            $eliminar = "UPDATE series SET fecha_compra = ?, metodo = ? WHERE id =?";
             $resp = $con->prepare($eliminar);
-            $resp->execute([$fecha_compra, $id_serie]);
+            $resp->execute([$fecha_compra, $metodo, $id_serie]);
             $resp->closeCursor();
 
             $response = array("mensj"=> "Las dos son las mismas series, pero ok ...",

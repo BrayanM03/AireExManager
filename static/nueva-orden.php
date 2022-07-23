@@ -109,7 +109,7 @@ animation: dot 2s infinite step-start both;
     <div class="loading show">
         <div style="display:flex; flex-direction:column; justify-content:center;">
             <div class="spin"></div><br>
-            <span><b>Cargando<span class = "dotting"> </span></b></span>
+            <span><b>Cargando...<span class = "dotting"> </span></b></span>
         </div>
     </div>
   </div>

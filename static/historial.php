@@ -134,9 +134,9 @@ if (empty($_SESSION["id"])) {
     <script src="js/historial/traer-lista.js"></script>
     <script src="js/historial/descargar-orden.js"></script>
     
-    <script src="js/historial/opciones.js"></script><!-- 
-    <script src="js/historial/eliminar-servicio.js"></script>
- --> -->
+    <script src="js/historial/opciones.js"></script>
+    <script src="js/historial/eliminar-orden.js"></script>
+
 </body>
 
 </html>

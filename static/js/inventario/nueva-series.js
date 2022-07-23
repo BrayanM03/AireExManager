@@ -320,8 +320,9 @@ let language_options = {
 
 function tableInit(array_dataset) {
  
+  console.log(array_dataset);
   tabla = $("#example").DataTable({
-
+    
     processing: true,
     data: array_dataset,
     responsive: true,
@@ -338,7 +339,7 @@ function tableInit(array_dataset) {
           return `
                 <div class='row'>
                     <div class='col-12 col-md-12'>
-                        <div class="btn btn-primary" onclick="editarSerie(${row[0]}, '${row[1]}', '${row[2]}', '${row[3]}')"><i class="fa-solid fa-pen-to-square"></i></div>
+                        <div class="btn btn-primary" onclick="editarSerie(${row[0]}, '${row[1]}', '${row[2]}', '${row[3]}','${row[7]}')"><i class="fa-solid fa-pen-to-square"></i></div>
                         <div class="btn btn-danger" onclick="eliminarSerie(${row[0]})"><i class="fa-solid fa-trash"></i></div>
                     </div>
                 </div>
@@ -381,8 +382,9 @@ function agregarSerie(){
     
     let sucursal = $("#sucursal").val();
     let producto = $("#producto").val();
+    let metodo = $("#metodo").val();
     let fecha = $("#fecha-compra").val();
-    let serie_cond = $("#serie-cond").val();
+    let serie_cond = $("#serie-cond").val(); 
     let serie_evap = $("#serie-evap").val();
 
     let dato = {
@@ -390,11 +392,12 @@ function agregarSerie(){
         sucursal: sucursal,
         producto: producto,
         fecha: fecha,
+        metodo: metodo,
         serie_cond: serie_cond,
         serie_evap: serie_evap
     };
 
-    console.log(dato);
+    
 
     $.ajax({
         type: "POST",
@@ -467,12 +470,13 @@ function eliminarSerie(id_serie){
 }
 
 
-function editarSerie(id_serie, fecha, condensador, evaporizador) {
+function editarSerie(id_serie, fecha, condensador, evaporizador, metodo) {
 
-  console.log(fecha);
+
   $('#serie-cond').val(condensador)
   $('#serie-evap').val(evaporizador)
   $('#fecha-compra').val(fecha)
+  $('#metodo').val(metodo)
 
   $("#area-botones").empty().append(`
   <div class="col-12 col-md-6 text-end">
@@ -493,12 +497,14 @@ function updateSeries(id_serie) {
   let serie_cond = $("#serie-cond").val();
   let serie_evap = $("#serie-evap").val();
   let fecha_compra = $("#fecha-compra").val();
+  let metodo = $("#metodo").val();
   let dato = {
     producto: id_producto,
     serie_cond: id_serie,
     serie_cond: serie_cond,
     serie_evap: serie_evap,
     fecha_compra: fecha_compra,
+    metodo: metodo,
     type: "actualizacion",
     serie:id_serie
 };

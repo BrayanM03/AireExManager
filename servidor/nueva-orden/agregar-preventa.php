@@ -26,7 +26,7 @@
     $resp = $con->prepare($consultar);
     $resp->execute([$id_producto]);
     while ($row = $resp->fetch()) {
-        $descripcion = $row["marca"] . " " . $row["modelo"] . " " . $row["tonelaje"];
+        $descripcion = $row["descripcion"];
     }
 
     $importe = $cantidad * $precio_unitario;
