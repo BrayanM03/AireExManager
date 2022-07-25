@@ -242,7 +242,7 @@
         $res = $con->prepare($updt);
         $res->execute([$suma_utilidad, $id_orden]);
 
-        print_r($suma_utilidad);
+    
 
     }else {
         $response = array("status"=> false, "mensj"=>"Agrega articulos a la tabla");
