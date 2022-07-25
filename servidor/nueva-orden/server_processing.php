@@ -20,6 +20,7 @@
 
 // DB table to use
 $table = 'detalle_preventa_tmp';
+require( '../database/ssp.class.php' );
 
 // Table's primary key
 $primaryKey = 'id';
@@ -63,15 +64,16 @@ $sql_details = array(
 );
 
 
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * If you just want to use the basic configuration for DataTables with PHP
  * server-side, there is no need to edit below this line.
  */
 
-require( '../database/ssp.class.php' );
+
 
 echo json_encode(
 	SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, null, "user_id = '$user_id'")
 );
-
 
