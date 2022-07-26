@@ -22,7 +22,7 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="#">
+                <a class="sidebar-link" href="nueva-cotizacion.php">
                     <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Nueva cotización</span>
                 </a>
             </li>
