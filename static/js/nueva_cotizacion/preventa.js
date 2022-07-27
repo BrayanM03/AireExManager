@@ -5,7 +5,7 @@ let user_id = $("#user-data").attr("id_user");
         processing: true,
         serverSide: true,
         ajax:{
-            url: '../servidor/nueva-orden/server_processing.php?user_id=' + user_id,
+            url: '../servidor/nueva_cotizacion/server_processing.php?user_id=' + user_id,
             dataType: 'json'
         },
         responsive: true,
@@ -38,7 +38,7 @@ let user_id = $("#user-data").attr("id_user");
     //setear-tabla e importe
     $.ajax({
       type: "POST",
-      url: "../servidor/nueva-orden/setear-datos.php",
+      url: "../servidor/nueva_cotizacion/setear-datos.php",
       data: "data",
       dataType: "JSON",
       success: function (response) {
@@ -53,7 +53,7 @@ function eliminarItem(id) {
 
   $.ajax({
     type: "POST",
-    url: "../servidor/nueva-orden/eliminar-preventa.php",
+    url: "../servidor/nueva_cotizacion/eliminar-preventa.php",
     data: {"id_preventa":id},
     dataType: "JSON",
     success: function (response) {
@@ -65,7 +65,7 @@ function eliminarItem(id) {
 
         let id_btn = $("#datos-btn").attr("id_producto")
         if(id_btn == response.product_id){
-          setearSeries(id_btn)
+         
         }
         
         tabla.ajax.reload(null, false);

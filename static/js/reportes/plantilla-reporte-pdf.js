@@ -4,7 +4,7 @@ const doc = new jsPDF();
 logo = data_logo.replace(/[\s"\\]/gm, "");
 icon_checked= data_checked.replace(/[\s"\\]/gm, "");
 icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
-doc.addImage(logo, "JPEG", 8, 5, 40, 18);
+doc.addImage(logo, "JPEG", 8, 5, 40, 13);
 
 let id_orden = getParameterByName("id_orden")  
 
@@ -477,7 +477,7 @@ doc.autoTable(({
      }
 
   
-doc.save("Orden de servicio.pdf");
+doc.save("Orden de servicio F"+ response.folio+".pdf");
 
 
 

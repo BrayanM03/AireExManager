@@ -1,7 +1,8 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="index.html">
-            <span class="align-middle">AireExpress</span>
+            <div style="margin-bottom:-8px"><span class="align-middle"><i>Aire</span><span style="color:tomato">Ex</span></i> <span>Manager</span></div>
+            <small style="font-family: Verdana">AireExpress</small>
         </a>
 
         <ul class="sidebar-nav">
@@ -27,11 +28,36 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="historial.php">
-                    <i class="align-middle" data-feather="folder"></i> <span class="align-middle">Historial</span>
-                </a>
-            </li>
+
+
+            <div class="accordion" id="accordionExample2">
+                <div class="accordion-item">
+
+                    <li class="sidebar-item accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseHistory" aria-expanded="true" aria-controls="collapseHistory">
+                        <a class="sidebar-link" href="#">
+                            <i class="align-middle" data-feather="folder"></i> <span class="align-middle">Historial</span>
+                        </a>
+                    </li>
+
+                    <div id="collapseHistory" class="accordion-collapse collapse" style="margin-left:13px;" aria-labelledby="headingHistory" data-bs-parent="#accordionExample2">
+                        <div class="accordion-body">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="historial.php">
+                                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Ordenes</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="historial-cotizaciones.php">
+                                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Cotizaciones</span>
+                                </a>
+                            </li>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
 
             <!-- <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-blank.html">
@@ -129,7 +155,7 @@
                     <i class="align-middle" data-feather="heart"></i> <span class="align-middle">Token</span>
                 </a>
             </li>
-<!-- 
+            <!-- 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="maps-google.html">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Usuarios</span>

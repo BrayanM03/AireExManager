@@ -1,8 +1,8 @@
-function eliminarRefaccion(id) { 
+function eliminarCotizacion(id) { 
 
     Swal.fire({
         icon:"question",
-        html: `<b>¿Eliminar servicio?</b>`,
+        html: `<b>¿Eliminar cotización?</b>`,
         confirmButtonText: "Borrar",
         showCancelButton: true,
         cancelButtonText: "Cancelar"
@@ -11,7 +11,7 @@ function eliminarRefaccion(id) {
 
             $.ajax({
                 type: "POST",
-                url: "../servidor/servicios/eliminar-servicio.php",
+                url: "../servidor/historial_cotizaciones/eliminar-cotizacion.php",
                 data: {id:id},
                 dataType: "JSON",
                 success: function (response2) { 

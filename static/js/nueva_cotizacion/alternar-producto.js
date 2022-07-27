@@ -219,12 +219,7 @@ refacciones.select2({
  function formatsSelectionRefaccion(repo){
 
   
-    if(repo.stock == 0){
-      Toast.fire({
-        icon: 'error',
-        title: "Este produto esta sin stock"
-      });
-    }else{
+   
       if(sucursal_usuario == repo.sucursal){
         let label =  repo.descripcion + " "+ repo.modelo + " " + repo.marca;
         $("#precio").val(repo.precio)
@@ -233,7 +228,7 @@ refacciones.select2({
         }else{
           
         }
-    }
+    
 
   
   }
@@ -432,7 +427,7 @@ refacciones.select2({
   
       $.ajax({
         type: "POST",
-        url: "../servidor/nueva-orden/agregar-refacccion-preventa.php",
+        url: "../servidor/nueva_cotizacion/agregar-refacccion-preventa.php",
         data: { id: id_producto, precio: precio, cantidad:cantidad },
         dataType: "JSON",
         success: function (response) {
@@ -474,7 +469,7 @@ refacciones.select2({
   
       $.ajax({
         type: "POST",
-        url: "../servidor/nueva-orden/agregar-servicio-preventa.php",
+        url: "../servidor/nueva_cotizacion/agregar-servicio-preventa.php",
         data: { id: id_producto, precio: precio, cantidad:cantidad },
         dataType: "JSON",
         success: function (response) {

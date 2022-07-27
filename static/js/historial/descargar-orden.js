@@ -21,6 +21,11 @@ toastr.options = {
     window.open('../servidor/reportes/nota-de-venta.php?id_orden=' + id, '_blank');
   }
 
+  function descargarCotizacion(id){
+    
+    window.open('../servidor/reportes/nota-de-cotizacion.php?id_orden=' + id, '_blank');
+  }
+
 
 
   

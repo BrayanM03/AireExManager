@@ -21,7 +21,7 @@ if (empty($_SESSION["id"])) {
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
 
-    <title>Historial de ordenes | AireEx manager</title>
+    <title>Historial de cotizaciones | AireEx manager</title>
 
     <link href="css/app.css" rel="stylesheet">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" />
@@ -65,7 +65,7 @@ if (empty($_SESSION["id"])) {
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Lista de ordenes emitidas</h5>
+                                    <h5 class="card-title mb-0">Aires en el catalogo</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -131,11 +131,11 @@ if (empty($_SESSION["id"])) {
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Mis scripts -->
-    <script src="js/historial/traer-lista.js"></script>
+    <script src="js/historial/traer-lista-cotizaciones.js"></script>
     <script src="js/historial/descargar-orden.js"></script>
     
     <script src="js/historial/opciones.js"></script>
-    <script src="js/historial/eliminar-orden.js"></script>
+    <script src="js/historial/eliminar-cotizacion.js"></script>
 
 </body>
 

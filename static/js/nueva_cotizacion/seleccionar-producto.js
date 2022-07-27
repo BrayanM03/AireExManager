@@ -202,12 +202,13 @@ function agregarProductoAPreventa(){
     let id_producto = $("#datos-btn").attr("id_producto");
     let precio = $("#precio").val();
     let categoria = $("#buscador-select").val();
+    let cantidad = $("#cantidad").val();
     valoresSeries = []
 
     $.ajax({
       type: "POST",
-      url: "../servidor/nueva-orden/agregar-preventa.php",
-      data: { id: id_producto, series: valoresSeries, precio: precio, categoria: categoria},
+      url: "../servidor/nueva_cotizacion/agregar-preventa.php",
+      data: { id: id_producto, cantidad: cantidad, precio: precio, categoria: categoria},
       dataType: "JSON",
       success: function (response) {
         if(response.status == true){
