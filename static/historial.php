@@ -53,7 +53,7 @@ if (empty($_SESSION["id"])) {
 
                     <div class="row mb-2">
                         <div class="col-12 col-md-6">
-                            <h1 class="h3 mb-3">Historial de ordenes</h1>
+                            <h1 class="h3 mb-3" id="cotizacion-title" folder="historial">Historial de ordenes</h1>
                         </div>
                         <div class="col-12 col-md-6 text-end">
                         </div>
@@ -65,7 +65,20 @@ if (empty($_SESSION["id"])) {
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Lista de ordenes emitidas</h5>
+                                    <div class="row">
+                                        <div class="col-12 col-md-10">
+                                            <h5 class="card-title mb-0">Lista de ordenes emitidas</h5>
+                                        </div>
+                                        <div class="col-12 col-md-2 text-end">
+                                             <label for="select-sucursal">Ver sucursal</label>
+                                             <select name="sucursal" id="select-sucursal" class="form-control">
+                                                 <option value="null">Selecciona una sucursal</option>
+                                                 <option value="1">AireExpress</option>
+                                                 <option value="2">Serviclima</option>
+                                             </select>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -136,6 +149,7 @@ if (empty($_SESSION["id"])) {
     
     <script src="js/historial/opciones.js"></script>
     <script src="js/historial/eliminar-orden.js"></script>
+    <script src="js/historial/ver-por-sucursal.js"></script>
 
 </body>
 

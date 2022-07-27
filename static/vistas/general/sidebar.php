@@ -2,7 +2,7 @@
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="index.html">
             <div style="margin-bottom:-8px"><span class="align-middle"><i>Aire</span><span style="color:tomato">Ex</span></i> <span>Manager</span></div>
-            <small style="font-family: Verdana">AireExpress</small>
+            <small style="font-family:Arial">AireExpress</small>
         </a>
 
         <ul class="sidebar-nav">
@@ -152,7 +152,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="token.php">
-                    <i class="align-middle" data-feather="heart"></i> <span class="align-middle">Token</span>
+                    <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Token</span>
                 </a>
             </li>
             <!-- 

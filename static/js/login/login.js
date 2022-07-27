@@ -1,5 +1,7 @@
 function iniciarSesion(){
 
+    $("#btn-login").empty().html("<div class='preloader'></div>")
+
     user = document.getElementById("user").value;
     pass = document.getElementById("pass").value;
 
@@ -22,8 +24,10 @@ function iniciarSesion(){
         success: function (response) {
             if(response == 2){
                 animarError('user', 2);
+                $("#btn-login").empty().html("Entrar")
             }else if(response == 3){
                 animarError('pass', 2);
+                $("#btn-login").empty().html("Entrar")
             }else if(response == 1){
                 window.location.href = 'index.php'
             }

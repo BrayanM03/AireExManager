@@ -14,11 +14,31 @@
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-in.html" />
 
-	<title>Sign In | AdminKit Demo</title>
+	<title>Iniciar sesión | AireEx Manager</title>
 
 	<link href="css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+	<style>
+		.preloader {
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid #eee;
+  border-top: 2.5px solid tomato;
+  border-radius: 50%;
+  animation-name: girar;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+@keyframes girar {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+	</style>
 </head>
 
 <body>
@@ -39,7 +59,16 @@
 							<div class="card-body">
 								<div class="m-sm-4">
 									<div class="text-center">
-										<img src="img/avatars/mascota.png" alt="Charles Hall" class="img-fluid" width="100" height="100" />
+										<div class="row">
+											<div class="col-12 col-md-5" style="display:flex;justify-content: end; align-items:center">
+											<img src="img/avatars/mascota.png" alt="Charles Hall" class="img-fluid" width="100" height="100" />
+											</div>
+											
+											<div class="col-12 col-md-7" style="display:flex;justify-content: start; align-items:center">
+											<img src="img/logo.png" alt="Charles Hall" class="img-fluid" width="150" height="150" />
+											</div>
+										</div>
+										
 									</div>
 									<form>
 										<div class="mb-3">
@@ -61,8 +90,10 @@
 												</span>
 											</label>
 										</div>
-										<div class="text-center mt-3">
-											<a href="#validando" class="btn btn-lg btn-primary" onclick="iniciarSesion()">Entrar</a>
+										<div class="text-center mt-3"  style="display:flex; justify-content:center">
+											<a href="#validando" class="btn btn-lg btn-primary" style="width:130px; display:flex; justify-content:center" id="btn-login" onclick="iniciarSesion()">
+											 Entrar
+											</a>
 											<!-- <button type="submit" class="btn btn-lg btn-primary">Sign in</button> -->
 										</div>
 									</form>
@@ -76,7 +107,7 @@
 		</div>
 	</main>
 
-	
+
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script src="js/app.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
