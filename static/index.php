@@ -26,6 +26,12 @@ if (empty($_SESSION["id"])) {
 	<link href="css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+	<style>
+		body.swal2-shown > [aria-hidden="true"] {
+  transition: 0.1s filter;
+  filter: blur(10px);
+}
+	</style>
 </head>
 
 <body>
@@ -41,7 +47,7 @@ if (empty($_SESSION["id"])) {
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+					<h1 class="h3 mb-3">Panel de <strong>analiticas</strong> </h1>
 
 					<div class="row">
 						<div class="col-xl-6 col-xxl-5 d-flex">
@@ -52,12 +58,12 @@ if (empty($_SESSION["id"])) {
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Sales</h5>
+														<h5 class="card-title">Ventas</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="truck"></i>
+															<i class="align-middle" data-feather="shopping-cart"></i>
 														</div>
 													</div>
 												</div>
@@ -94,7 +100,7 @@ if (empty($_SESSION["id"])) {
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Earnings</h5>
+														<h5 class="card-title">Ganancias</h5>
 													</div>
 
 													<div class="col-auto">
@@ -114,12 +120,12 @@ if (empty($_SESSION["id"])) {
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Orders</h5>
+														<h5 class="card-title">Ordenes</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="shopping-cart"></i>
+															<i class="align-middle" data-feather="clipboard"></i>
 														</div>
 													</div>
 												</div>
@@ -151,41 +157,8 @@ if (empty($_SESSION["id"])) {
 					</div>
 
 					<div class="row">
-						<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
-							<div class="card flex-fill w-100">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">Browser Usage</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										<div class="py-3">
-											<div class="chart chart-xs">
-												<canvas id="chartjs-dashboard-pie"></canvas>
-											</div>
-										</div>
-
-										<table class="table mb-0">
-											<tbody>
-												<tr>
-													<td>Chrome</td>
-													<td class="text-end">4306</td>
-												</tr>
-												<tr>
-													<td>Firefox</td>
-													<td class="text-end">3801</td>
-												</tr>
-												<tr>
-													<td>IE</td>
-													<td class="text-end">1689</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+						
+						<!-- <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
@@ -195,8 +168,8 @@ if (empty($_SESSION["id"])) {
 									<div id="world_map" style="height:350px;"></div>
 								</div>
 							</div>
-						</div>
-						<div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
+						</div> -->
+						<!-- <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
 							<div class="card flex-fill">
 								<div class="card-header">
 
@@ -210,7 +183,7 @@ if (empty($_SESSION["id"])) {
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="row">
@@ -218,7 +191,7 @@ if (empty($_SESSION["id"])) {
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Latest Projects</h5>
+									<h5 class="card-title mb-0">Ventas del día</h5>
 								</div>
 								<table class="table table-hover my-0">
 									<thead>
@@ -291,15 +264,36 @@ if (empty($_SESSION["id"])) {
 								</table>
 							</div>
 						</div>
-						<div class="col-12 col-lg-4 col-xxl-3 d-flex">
+						<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Monthly Sales</h5>
+									<h5 class="card-title mb-0">Browser Usage</h5>
 								</div>
-								<div class="card-body d-flex w-100">
-									<div class="align-self-center chart chart-lg">
-										<canvas id="chartjs-dashboard-bar"></canvas>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div class="py-3">
+											<div class="chart chart-xs">
+												<canvas id="chartjs-dashboard-pie"></canvas>
+											</div>
+										</div>
+
+										<table class="table mb-0">
+											<tbody>
+												<tr>
+													<td>Chrome</td>
+													<td class="text-end">4306</td>
+												</tr>
+												<tr>
+													<td>Firefox</td>
+													<td class="text-end">3801</td>
+												</tr>
+												<tr>
+													<td>IE</td>
+													<td class="text-end">1689</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
@@ -340,6 +334,7 @@ if (empty($_SESSION["id"])) {
 	</div>
 
 	<script src="js/app.js"></script>
+	<script src="js/config/configuraciones.js"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
