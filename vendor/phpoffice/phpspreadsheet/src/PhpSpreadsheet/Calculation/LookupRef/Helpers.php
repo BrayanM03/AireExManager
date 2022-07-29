@@ -43,7 +43,7 @@ class Helpers
         if ($namedRange !== null) {
             $workSheet = $namedRange->getWorkSheet();
             $sheetTitle = ($workSheet === null) ? '' : $workSheet->getTitle();
-            $value = (string) preg_replace('/^=/', '', $namedRange->getValue());
+            $value = preg_replace('/^=/', '', $namedRange->getValue());
             self::adjustSheetTitle($sheetTitle, $value);
             $cellAddress1 = $sheetTitle . $value;
             $cellAddress = $cellAddress1;

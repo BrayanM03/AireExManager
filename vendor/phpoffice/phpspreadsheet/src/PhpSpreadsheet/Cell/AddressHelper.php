@@ -118,17 +118,17 @@ class AddressHelper
             throw new Exception('Invalid A1-format Cell Reference');
         }
 
-        if ($cellReference['col'][0] === '$') {
+        $columnId = Coordinate::columnIndexFromString($cellReference['col_ref']);
+        if ($cellReference['absolute_col'] === '$') {
             // Column must be absolute address
             $currentColumnNumber = null;
         }
-        $columnId = Coordinate::columnIndexFromString(ltrim($cellReference['col'], '$'));
 
-        if ($cellReference['row'][0] === '$') {
+        $rowId = (int) $cellReference['row_ref'];
+        if ($cellReference['absolute_row'] === '$') {
             // Row must be absolute address
             $currentRowNumber = null;
         }
-        $rowId = (int) ltrim($cellReference['row'], '$');
 
         if ($currentRowNumber !== null) {
             if ($rowId === $currentRowNumber) {

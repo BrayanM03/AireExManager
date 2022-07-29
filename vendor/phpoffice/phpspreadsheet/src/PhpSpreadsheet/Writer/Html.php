@@ -291,8 +291,10 @@ class Html extends BaseWriter
 
     /**
      * Get sheet index.
+     *
+     * @return int
      */
-    public function getSheetIndex(): ?int
+    public function getSheetIndex()
     {
         return $this->sheetIndex;
     }
@@ -354,8 +356,6 @@ class Html extends BaseWriter
             : '';
     }
 
-    public const BODY_LINE = '  <body>' . PHP_EOL;
-
     /**
      * Generate HTML header.
      *
@@ -386,7 +386,7 @@ class Html extends BaseWriter
 
         $html .= '  </head>' . PHP_EOL;
         $html .= '' . PHP_EOL;
-        $html .= self::BODY_LINE;
+        $html .= '  <body>' . PHP_EOL;
 
         return $html;
     }
@@ -477,15 +477,18 @@ class Html extends BaseWriter
                     $column = $minCol;
                     while ($column <= $maxCol) {
                         // Cell exists?
-                        $cellAddress = Coordinate::stringFromColumnIndex($column) . $row;
-                        $rowData[$column++] = ($sheet->getCellCollection()->has($cellAddress)) ? $cellAddress : '';
+                        if ($sheet->cellExistsByColumnAndRow($column, $row)) {
+                            $rowData[$column] = Coordinate::stringFromColumnIndex($column) . $row;
+                        } else {
+                            $rowData[$column] = '';
+                        }
+                        ++$column;
                     }
                     $html .= $this->generateRow($sheet, $rowData, $row - 1, $cellType);
                 }
 
                 $html .= $endTag;
             }
-            --$row;
             $html .= $this->extendRowsForChartsAndImages($sheet, $row);
 
             // Write table footer
@@ -662,13 +665,13 @@ class Html extends BaseWriter
                 $filename = $drawing->getPath();
 
                 // Strip off eventual '.'
-                $filename = (string) preg_replace('/^[.]/', '', $filename);
+                $filename = preg_replace('/^[.]/', '', $filename);
 
                 // Prepend images root
                 $filename = $this->getImagesRoot() . $filename;
 
                 // Strip off eventual '.' if followed by non-/
-                $filename = (string) preg_replace('@^[.]([^/])@', '$1', $filename);
+                $filename = preg_replace('@^[.]([^/])@', '$1', $filename);
 
                 // Convert UTF8 data to PCDATA
                 $filename = htmlspecialchars($filename, Settings::htmlEntityFlags());
@@ -676,7 +679,7 @@ class Html extends BaseWriter
                 $html .= PHP_EOL;
                 $imageData = self::winFileToUrl($filename);
 
-                if (($this->embedImages && !$this->isPdf) || substr($imageData, 0, 6) === 'zip://') {
+                if ($this->embedImages && !$this->isPdf) {
                     $picture = @file_get_contents($filename);
                     if ($picture !== false) {
                         $imageDetails = getimagesize($filename);
@@ -694,13 +697,11 @@ class Html extends BaseWriter
                 $imageResource = $drawing->getImageResource();
                 if ($imageResource) {
                     ob_start(); //  Let's start output buffering.
-                    // @phpstan-ignore-next-line
                     imagepng($imageResource); //  This will normally output the image, but because of ob_start(), it won't.
                     $contents = ob_get_contents(); //  Instead, output above is saved to $contents
                     ob_end_clean(); //  End the output buffer.
 
-                    /** @phpstan-ignore-next-line */
-                    $dataUri = 'data:image/png;base64,' . base64_encode($contents);
+                    $dataUri = 'data:image/jpeg;base64,' . base64_encode($contents);
 
                     //  Because of the nature of tables, width is more important than height.
                     //  max-width: 100% ensures that image doesnt overflow containing cell
@@ -747,7 +748,7 @@ class Html extends BaseWriter
                     if ($fp = fopen($chartFileName, 'rb', 0)) {
                         $picture = fread($fp, filesize($chartFileName));
                         fclose($fp);
-                        /** @phpstan-ignore-next-line */
+                        // base64 encode the binary data
                         $base64 = base64_encode($picture);
                         $imageData = 'data:' . $imageDetails['mime'] . ';base64,' . $base64;
 
@@ -1229,7 +1230,7 @@ class Html extends BaseWriter
 
     private function generateRowCellCss(Worksheet $worksheet, $cellAddress, $row, $columnNumber)
     {
-        $cell = ($cellAddress > '') ? $worksheet->getCellCollection()->get($cellAddress) : '';
+        $cell = ($cellAddress > '') ? $worksheet->getCell($cellAddress) : '';
         $coordinate = Coordinate::stringFromColumnIndex($columnNumber + 1) . ($row + 1);
         if (!$this->useInlineCss) {
             $cssClass = 'column' . $columnNumber;
@@ -1326,7 +1327,7 @@ class Html extends BaseWriter
 
             // Converts the cell content so that spaces occuring at beginning of each new line are replaced by &nbsp;
             // Example: "  Hello\n to the world" is converted to "&nbsp;&nbsp;Hello\n&nbsp;to the world"
-            $cellData = (string) preg_replace('/(?m)(?:^|\\G) /', '&nbsp;', $cellData);
+            $cellData = preg_replace('/(?m)(?:^|\\G) /', '&nbsp;', $cellData);
 
             // convert newline "\n" to '<br>'
             $cellData = nl2br($cellData);
@@ -1744,7 +1745,7 @@ class Html extends BaseWriter
                 while ($c++ < $e) {
                     $baseCell = $this->isSpannedCell[$sheetIndex][$rowIndex][$c]['baseCell'];
 
-                    if (!in_array($baseCell, $adjustedBaseCells, true)) {
+                    if (!in_array($baseCell, $adjustedBaseCells)) {
                         // subtract rowspan by 1
                         --$this->isBaseCell[$sheetIndex][$baseCell[0]][$baseCell[1]]['rowspan'];
                         $adjustedBaseCells[] = $baseCell;
@@ -1783,11 +1784,6 @@ class Html extends BaseWriter
         return $result;
     }
 
-    public function getOrientation(): ?string
-    {
-        return null;
-    }
-
     /**
      * Generate @page declarations.
      *
@@ -1823,7 +1819,7 @@ class Html extends BaseWriter
             $htmlPage .= 'margin-top: ' . $top;
             $bottom = StringHelper::FormatNumber($worksheet->getPageMargins()->getBottom()) . 'in; ';
             $htmlPage .= 'margin-bottom: ' . $bottom;
-            $orientation = $this->getOrientation() ?? $worksheet->getPageSetup()->getOrientation();
+            $orientation = $worksheet->getPageSetup()->getOrientation();
             if ($orientation === \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE) {
                 $htmlPage .= 'size: landscape; ';
             } elseif ($orientation === \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_PORTRAIT) {

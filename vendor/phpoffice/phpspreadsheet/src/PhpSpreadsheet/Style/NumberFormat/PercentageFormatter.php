@@ -35,11 +35,8 @@ class PercentageFormatter extends BaseFormatter
 
         $wholePartSize += $decimalPartSize;
         $replacement = "{$wholePartSize}.{$decimalPartSize}";
-        $mask = (string) preg_replace('/[#0,]+\.?[?#0,]*/ui', "%{$replacement}f{$placeHolders}", $format);
+        $mask = preg_replace('/[#0,]+\.?[?#0,]*/ui', "%{$replacement}f{$placeHolders}", $format);
 
-        /** @var float */
-        $valueFloat = $value;
-
-        return sprintf($mask, round($valueFloat, $decimalPartSize));
+        return sprintf($mask, $value);
     }
 }
