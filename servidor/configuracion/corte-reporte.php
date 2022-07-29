@@ -68,7 +68,7 @@ $count = 0;
            $drawing->setName('LogoPSC');
            $drawing->setDescription('Logo');
            $drawing->setPath('../../static/img/logo.jpg'); // put your path and image here
-           $drawing->setCoordinates('A1');
+      
            $drawing->setOffsetX(20);
            $drawing->setWidth(80);
            $drawing->setHeight(63);
@@ -184,23 +184,39 @@ $count = 0;
           
                $id= $row["id"];
                $cliente= $row["cliente"];
-               $total= $row["total"];
+              
                $metodo= $row["metodo_pago"];
                $vendedor= $row["usuario"] . " " . $row["apellido"];
-               $concepto = "test";
-               
-               $index = $fila + 1;
-               $indicador = $fila - 1;
-               $hoja_activa->setCellValue('A' . $index, $id);
-               $hoja_activa->setCellValue('B' . $index, $cliente);
-               $hoja_activa->setCellValue('C' . $index, $concepto);
-               $hoja_activa->setCellValue('D' . $index, $total);
-               $hoja_activa->setCellValue('E' . $index, $metodo);
-               $hoja_activa->setCellValue('F' . $index, "F".$id);
-               $hoja_activa->setCellValue('G' . $index, $vendedor);
+             
 
-               $hoja_activa->getStyle('A' .$index. ':G' .$index)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN)->setColor(new Color('6495ed'));
+               $detalle = traerDetalles($con, $id);
+
+               $total_detalles = count($detalle);
+               if($total_detalles > 0){
+                while ($row2 = array_shift($detalle)) {
+                    $concepto = $row2["descripcion"];
+                    $cantidad = $row2["cantidad"];
+                    $total = $row2["importe"];
+
+                    $index = $fila + 1;
+                    $indicador = $fila - 1;
+                    $hoja_activa->setCellValue('A' . $index, $id);
+                    $hoja_activa->setCellValue('B' . $index, $cliente);
+                    $hoja_activa->setCellValue('C' . $index, $concepto);
+                    $hoja_activa->setCellValue('D' . $index, $total);
+                    $hoja_activa->setCellValue('E' . $index, $metodo);
+                    $hoja_activa->setCellValue('F' . $index, "F".$id);
+                    $hoja_activa->setCellValue('G' . $index, $vendedor);
+     
+                    $hoja_activa->getStyle('A' .$index. ':G' .$index)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN)->setColor(new Color('6495ed'));
+                    $fila++;
+                }
+               }else{
+
+               }
+                
                
+              
 
                /* if ($index % 2 == 0) {
                    $hoja_activa->getStyle('A' .$index. ':J' .$index)->applyFromArray($evenRow);
@@ -208,7 +224,7 @@ $count = 0;
                    $hoja_activa->getStyle('A' .$index. ':J' .$index)->applyFromArray($oddRow);    
                }
  */
-               $fila++;
+              
            }
 
           
@@ -256,6 +272,27 @@ $count = 0;
                 return array();
             }
             
+        }
+
+        function traerDetalles($con, $orden_id){
+            $consulta = "SELECT COUNT(*) FROM detalle_orden WHERE order_id = ?";
+            $res = $con->prepare($consulta);
+            $res->execute([$orden_id]);
+            $total = $res->fetchColumn();
+
+            if($total > 0){
+                $consulta = "SELECT * FROM vista_ordenes WHERE fecha_inicio = ?";
+                $res = $con->prepare($consulta);
+                $res->execute([$orden_id]);
+
+                  while ($row = $res->fetch()) {
+                        $data[] = $row;
+
+                    }
+                return $data;
+            }else{
+                return array();
+            } 
         }
 
        

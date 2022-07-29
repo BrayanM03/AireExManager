@@ -6,5 +6,24 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Facturapi\\Exceptions\\Facturapi_Exception' => $vendorDir . '/facturapi/facturapi-php/src/Exceptions/Facturapi_Exception.php',
+    'Facturapi\\Facturapi' => $vendorDir . '/facturapi/facturapi-php/src/Facturapi.php',
+    'Facturapi\\Http\\BaseClient' => $vendorDir . '/facturapi/facturapi-php/src/Http/BaseClient.php',
+    'Facturapi\\InvoiceRelation' => $vendorDir . '/facturapi/facturapi-php/src/InvoiceRelation.php',
+    'Facturapi\\InvoiceType' => $vendorDir . '/facturapi/facturapi-php/src/InvoiceType.php',
+    'Facturapi\\PaymentForm' => $vendorDir . '/facturapi/facturapi-php/src/PaymentForm.php',
+    'Facturapi\\Resources\\Catalogs' => $vendorDir . '/facturapi/facturapi-php/src/Resources/Catalogs.php',
+    'Facturapi\\Resources\\Customers' => $vendorDir . '/facturapi/facturapi-php/src/Resources/Customers.php',
+    'Facturapi\\Resources\\Invoices' => $vendorDir . '/facturapi/facturapi-php/src/Resources/Invoices.php',
+    'Facturapi\\Resources\\Organizations' => $vendorDir . '/facturapi/facturapi-php/src/Resources/Organizations.php',
+    'Facturapi\\Resources\\Products' => $vendorDir . '/facturapi/facturapi-php/src/Resources/Products.php',
+    'Facturapi\\Resources\\Receipts' => $vendorDir . '/facturapi/facturapi-php/src/Resources/Receipts.php',
+    'Facturapi\\Resources\\Retentions' => $vendorDir . '/facturapi/facturapi-php/src/Resources/Retentions.php',
+    'Facturapi\\Resources\\Tools' => $vendorDir . '/facturapi/facturapi-php/src/Resources/Tools.php',
+    'Facturapi\\TaxType' => $vendorDir . '/facturapi/facturapi-php/src/TaxType.php',
+    'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+    'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+    'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 );
