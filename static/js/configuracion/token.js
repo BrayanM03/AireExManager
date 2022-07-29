@@ -18,7 +18,7 @@ function generarToken(){
          title: "Ingrese el token",
          icon: 'info',
          html: 
-         '<label >Ingrese el token de acceso para poder cambiar el precio dle producto</span><br><br>'+
+         '<label >Ingrese el token de acceso para poder cambiar el precio del producto</span><br><br>'+
          '<input id="token-validar" class="form-control" placeholder="Codigo">',
          showCancelButton: true,
          cancelButtonText: 'Cerrar',

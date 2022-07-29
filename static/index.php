@@ -334,7 +334,7 @@ if (empty($_SESSION["id"])) {
 	</div>
 
 	<script src="js/app.js"></script>
-	<script src="js/config/configuraciones.js"></script>
+	<script src="js/configuracion/configuraciones.js"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
