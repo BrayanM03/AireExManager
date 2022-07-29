@@ -90,9 +90,9 @@ class Xml extends BaseReader
         //    Retrieve charset encoding
         if (preg_match('/<?xml.*encoding=[\'"](.*?)[\'"].*?>/m', $data, $matches)) {
             $charSet = strtoupper($matches[1]);
-            if (preg_match('/^ISO-8859-\d[\dL]?$/i', $charSet) === 1) {
+            if (1 == preg_match('/^ISO-8859-\d[\dL]?$/i', $charSet)) {
                 $data = StringHelper::convertEncoding($data, 'UTF-8', $charSet);
-                $data = (string) preg_replace('/(<?xml.*encoding=[\'"]).*?([\'"].*?>)/um', '$1' . 'UTF-8' . '$2', $data, 1);
+                $data = preg_replace('/(<?xml.*encoding=[\'"]).*?([\'"].*?>)/um', '$1' . 'UTF-8' . '$2', $data, 1);
             }
         }
         $this->fileContents = $data;
@@ -231,9 +231,13 @@ class Xml extends BaseReader
 
     /**
      * Loads Spreadsheet from file.
+     *
+     * @return Spreadsheet
      */
-    protected function loadSpreadsheetFromFile(string $filename): Spreadsheet
+    public function load(string $filename, int $flags = 0)
     {
+        $this->processFlags($flags);
+
         // Create new Spreadsheet
         $spreadsheet = new Spreadsheet();
         $spreadsheet->removeSheetByIndex(0);

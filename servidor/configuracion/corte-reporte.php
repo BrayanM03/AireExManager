@@ -258,6 +258,27 @@ $count = 0;
             
         }
 
+        function traerDetalles($con){
+            $consulta = "SELECT COUNT(*) FROM detalle_orden WHERE fecha_inicio = ? AND sucursal_id = ?";
+            $res = $con->prepare($consulta);
+            $res->execute([$fecha, $sucursal]);
+            $total = $res->fetchColumn();
+
+            if($total > 0){
+                $consulta = "SELECT * FROM vista_ordenes WHERE fecha_inicio = ? AND sucursal_id = ?";
+                $res = $con->prepare($consulta);
+                $res->execute([$fecha, $sucursal]);
+
+                  while ($row = $res->fetch()) {
+                        $data[] = $row;
+
+                    }
+                return $data;
+            }else{
+                return array();
+            } 
+        }
+
        
         //Funcion que emulara el get_result-----------------*
         function Arreglo_Get_Result( $Statement ) {
