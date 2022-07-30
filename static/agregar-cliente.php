@@ -114,7 +114,7 @@ if (empty($_SESSION["id"])) {
 	<script src="js/clientes/agregando-datos-cliente.js"></script>
     <script src="js/clientes/formulario.js"></script>
     <script src="js/clientes/agregar-cliente.js"></script>
-    
+    <script src="js/configuracion/configuraciones.js"></script>
 
 
 </body>

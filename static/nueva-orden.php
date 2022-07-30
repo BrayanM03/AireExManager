@@ -190,7 +190,7 @@ animation: dot 2s infinite step-start both;
     <script src="js/nueva-orden/alternar-producto.js"></script>
     <script src="js/nueva-orden/cambiar-tipo-orden.js"></script>
     <script src="js/configuracion/token.js"></script>
-  
+    <script src="js/configuracion/configuraciones.js"></script>
     <script>
 
 $(window).on("load", quitarLoad);

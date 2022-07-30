@@ -126,7 +126,7 @@ if (empty($_SESSION["id"])) {
     <!-- Mis scripts -->
     <script src="js/clientes/traer-lista.js"></script>
     <script src="js/clientes/eliminar-cliente.js"></script>
-
+    <script src="js/configuracion/configuraciones.js"></script>
 </body>
 
 </html>

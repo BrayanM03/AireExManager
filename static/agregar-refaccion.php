@@ -95,7 +95,7 @@ if (empty($_SESSION["id"])) {
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
-
+    <script src="js/configuracion/configuraciones.js"></script>
     <!-- Mis scripts -->
     <!-- <script src="js/inventario/opciones.js"></script>
     <script src="js/inventario/agregar-producto.js"></script>

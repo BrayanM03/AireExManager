@@ -41,24 +41,14 @@ function bajarReporte(){
         $("#btn-registrar").empty().text("Bajar reporte")
         window.open("../servidor/configuracion/corte-reporte.php?sucursal="+sucursal+"&apertura="+apertura+"&fecha="+fecha,'_blank' );
 
-        /* var url = "../servidor/configuracion/corte-reporte.php";
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {sucursal: sucursal, apertura: apertura, fecha: fecha},
-            dataType: "json",
-            success: function(data) {
-                $("#btn-registrar").empty().html("Bajar reporte");
-                if(data.status == "success"){
-                    window.open("../servidor/configuracion/corte-reporte.php?sucursal="+sucursal+"&apertura="+apertura+"&fecha="+fecha);
-                }else{
-                    Toast.fire({
-                        icon: 'error',
-                        title: data.message
-                      });
-                }
-            }
-        }); */
+        Swal.fire({
+            icon: 'question',
+            html: `Ingresa el nuevo monto de apertura para la sucursal tu sucursal<br>
+                <input class="form-control" type="number" placeholder="0.00" id="nuevo_monto">
+            `,
+            confirmButtonText: "Guardar",
+            
+        })
     }
 }
 

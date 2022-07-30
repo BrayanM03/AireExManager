@@ -51,6 +51,11 @@
                                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Cotizaciones</span>
                                 </a>
                             </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="gastos.php">
+                                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Gastos</span>
+                                </a>
+                            </li>
                         </div>
                     </div>
 

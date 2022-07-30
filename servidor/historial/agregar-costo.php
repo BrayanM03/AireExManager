@@ -21,6 +21,21 @@ if ($_POST) {
         $resp = $con->prepare($updates);
         $resp->execute([$descripcion, $cant, $monto_ext, $importe, $importe, $producto_id, $user_id, $id, $categoria]);
 
+        $select = "SELECT * FROM ordenes WHERE id = ?";
+        $resp = $con->prepare($select);
+        $resp->execute([$id]);
+
+        while ($row = $resp->fetch()) {
+            $suma_total = $row['total'] + $importe;
+            $suma_utilidad = $row['utilidad'] + $importe;
+            $updates2 = "UPDATE ordenes SET total =?, utilidad=? WHERE id =?";
+            $resp = $con->prepare($updates2);
+            $resp->execute([$suma_total, $suma_utilidad, $id]);
+        
+        }
+
+
+       
         print_r(1);
 }
 

@@ -20,7 +20,8 @@ if (empty($_SESSION["id"])) {
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
-    <title>Inventario clima | AireEx manager</title>
+
+    <title>Historial de cotizaciones | AireEx manager</title>
 
     <link href="css/app.css" rel="stylesheet">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" />
@@ -29,6 +30,11 @@ if (empty($_SESSION["id"])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
 
+    <style>
+        .swal-wide{
+    width:950px !important;
+}
+    </style>
 </head>
 
 <body>
@@ -47,10 +53,9 @@ if (empty($_SESSION["id"])) {
 
                     <div class="row mb-2">
                         <div class="col-12 col-md-6">
-                            <h1 class="h3 mb-3">Inventario de Servicios <?php echo $_GET['name'] ?></h1>
+                            <h1 class="h3 mb-3" id="cotizacion-title" folder="gastos">Lista de gastos</h1>
                         </div>
                         <div class="col-12 col-md-6 text-end">
-                            <a href="#"><div class="btn btn-success" onclick="agregarRefaccion()">Agregar nuevo</div></a>
                         </div>
                     </div>
 
@@ -60,7 +65,23 @@ if (empty($_SESSION["id"])) {
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Aires en el catalogo</h5>
+                                    <div class="row">
+                                        <div class="col-12 col-md-8">
+                                            <h5 class="card-title mb-0">Gastos</h5>
+                                        </div>
+                                        <div class="col-12 col-md-2">
+                                            <div class="btn btn-success" onclick="agregarGasto()">Agregar gasto</div>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 text-end">
+                                             <label for="select-sucursal">Ver sucursal</label>
+                                             <select name="sucursal" id="select-sucursal" class="form-control">
+                                                 <option value="null">Selecciona una sucursal</option>
+                                                 <option value="1">AireExpress</option>
+                                                 <option value="2">Serviclima</option>
+                                             </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -126,12 +147,13 @@ if (empty($_SESSION["id"])) {
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Mis scripts -->
-    <script src="js/servicios/traer-lista.js"></script>
-    <script src="js/servicios/agregar-servicio.js"></script>
-    <script src="js/servicios/editar-servicio.js"></script>
-    <script src="js/servicios/eliminar-servicio.js"></script>
+    <script src="js/gastos/traer-lista-gastos.js"></script>
+    <script src="js/gastos/agregar-gasto.js"></script>
+    
+   
+    <script src="js/gastos/eliminar-gasto.js"></script>
+    <script src="js/historial/ver-por-sucursal.js"></script>
     <script src="js/configuracion/configuraciones.js"></script>
- 
 </body>
 
 </html>

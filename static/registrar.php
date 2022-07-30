@@ -90,6 +90,7 @@
 	<script src="js/app.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="js/usuarios/registrar.js"></script>
+	<script src="js/configuracion/configuraciones.js"></script>
 
 </body>
 

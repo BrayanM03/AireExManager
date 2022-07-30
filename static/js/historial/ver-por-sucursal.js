@@ -75,6 +75,27 @@ $("#select-sucursal").change(function (e) {
             `//<div class="btn btn-primary" onclick="verOpciones(${row[0]},'${row[9]}', '${row[10]}')"><i class="fa-solid fa-gear"></i></i></div>
         }}
     ]
+   }else if(folder == "gastos"){
+    columnas =  [
+      { data:0, title:'#' },
+      { data:1, title:'Descripcion' },
+      { data:2, title:'Importe' },
+      { data:7, title:'Sucursal' },
+      { data:8, title:'Usuario' },
+      { data:5, title:'Fecha' },
+      { data:6, title:'Hora' },
+      { data:null, title:'Opciones', render: function(row){
+          return `
+          <div class='row'>
+              <div class='col-12 col-md-12'>
+                
+                  
+                  <div class="btn btn-danger" onclick="eliminarGasto(${row[0]})"><i class="fa-solid fa-trash"></i></div>
+              </div>
+          </div>
+          `
+      }}
+  ]
    }
 
    tabla = $('#example').DataTable({

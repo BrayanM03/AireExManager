@@ -155,7 +155,7 @@ if (empty($_SESSION["id"])) {
 
     <!-- Mis scripts -->
     <script src="js/configuracion/token.js"></script>
-
+    <script src="js/configuracion/configuraciones.js"></script>
 </body>
 
 </html>

@@ -150,7 +150,7 @@ if (empty($_SESSION["id"])) {
     <script src="js/historial/opciones.js"></script>
     <script src="js/historial/eliminar-orden.js"></script>
     <script src="js/historial/ver-por-sucursal.js"></script>
-
+    <script src="js/configuracion/configuraciones.js"></script>
 </body>
 
 </html>
