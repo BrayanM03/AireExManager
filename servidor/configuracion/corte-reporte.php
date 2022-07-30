@@ -274,29 +274,16 @@ $count = 0;
             
         }
 
-<<<<<<< HEAD
         function traerDetalles($con, $orden_id){
-            $consulta = "SELECT COUNT(*) FROM detalle_orden WHERE order_id = ?";
+            $consulta = "SELECT COUNT(*) FROM detalle_orden WHERE orden_id = ?";
             $res = $con->prepare($consulta);
             $res->execute([$orden_id]);
             $total = $res->fetchColumn();
 
             if($total > 0){
-                $consulta = "SELECT * FROM vista_ordenes WHERE fecha_inicio = ?";
+                $consulta = "SELECT * FROM detalle_orden WHERE orden_id = ?";
                 $res = $con->prepare($consulta);
                 $res->execute([$orden_id]);
-=======
-        function traerDetalles($con){
-            $consulta = "SELECT COUNT(*) FROM detalle_orden WHERE fecha_inicio = ? AND sucursal_id = ?";
-            $res = $con->prepare($consulta);
-            $res->execute([$fecha, $sucursal]);
-            $total = $res->fetchColumn();
-
-            if($total > 0){
-                $consulta = "SELECT * FROM vista_ordenes WHERE fecha_inicio = ? AND sucursal_id = ?";
-                $res = $con->prepare($consulta);
-                $res->execute([$fecha, $sucursal]);
->>>>>>> d661550c6eb379a27e0a991977de93205f93a020
 
                   while ($row = $res->fetch()) {
                         $data[] = $row;
