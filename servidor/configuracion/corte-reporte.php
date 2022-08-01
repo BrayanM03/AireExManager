@@ -381,16 +381,86 @@ $apertura = $_GET["apertura"];
        }
 
        $flag++;$flag++;$flag++;
+
+       $ordenes_combinados = traerPorMetodo($con, $fecha, $sucursal, "Combinado");
+       $monto_combinado_efectivo = 0;
+       $monto_combinado_transferencia = 0;
+       $monto_combinado_tarjeta = 0;
+       $monto_combinado_cheque = 0;
+
+       if($ordenes_combinados !== 0){
+            foreach ($ordenes_combinados as $key => $value) {
+                $met = $value["metodo"];
+                
+
+                switch ($met) {
+                    case 'Efectivo':
+                        $monto_combinado_efectivo = $value["monto"];
+                    break;
+                    case 'Transferencia':
+                        $monto_combinado_transferencia = $value["monto"];
+                    break;
+                    case 'Tarjeta':
+                        $monto_combinado_tarjeta = $value["monto"];
+                    break;
+                    case 'Cheque':
+                        $monto_combinado_cheque = $value["monto"];
+                    break;
+
+                    default:
+                        # code...
+                        break;
+                }
+            }
+
+       }
+
+    
            
+       $monto_efectivo = traerPorMetodo($con, $fecha, $sucursal, "Efectivo");
+       $hoja_activa->setCellValue('B' . $flag, "Monto en efectivo: ");
+       $monto_total_efectivo = $monto_efectivo + $monto_combinado_efectivo;
+       $hoja_activa->setCellValue('C' . $flag, $monto_total_efectivo);
+       $flag++;
+
+       $monto_transfe = traerPorMetodo($con, $fecha, $sucursal, "Transferencia");
+       $hoja_activa->setCellValue('B' . $flag, "Monto en transferencia: ");
+       $monto_total_transferencia = $monto_transfe + $monto_combinado_transferencia;
+       $hoja_activa->setCellValue('C' . $flag, $monto_total_transferencia);
+       $flag++;
+
+       $monto_tarjeta = traerPorMetodo($con, $fecha, $sucursal, "Tarjeta");
+       $hoja_activa->setCellValue('B' . $flag, "Monto en tarjeta: ");
+       $monto_total_tarjeta = $monto_tarjeta + $monto_combinado_tarjeta;
+       $hoja_activa->setCellValue('C' . $flag, $monto_total_tarjeta);
+       $flag++;
+
+       $monto_cheque = traerPorMetodo($con, $fecha, $sucursal, "Cheque");
+       $hoja_activa->setCellValue('B' . $flag, "Monto en cheque: ");
+       $monto_total_cheque = $monto_cheque + $monto_combinado_cheque;
+       $hoja_activa->setCellValue('C' . $flag, $monto_total_cheque);
+       $flag++;
+
+       $monto_sin_def = traerPorMetodo($con, $fecha, $sucursal, "Sin definir");
+       $hoja_activa->setCellValue('B' . $flag, "Monto sin definir: ");
+       $hoja_activa->setCellValue('C' . $flag, $monto_sin_def);
+       $flag++;
+
+       
+       //echo json_encode($ordenes_combinados, JSON_UNESCAPED_UNICODE);
+
+       $flag++;
+       $flag++;
+
            $hoja_activa->setCellValue('B' . $flag, "Inicio");
            $hoja_activa->setCellValue('C' . $flag, $apertura);
            $flag++;
            
            $hoja_activa->setCellValue('B' . $flag, "Ingreso efectivo");
-           $hoja_activa->setCellValue('C' . $flag, $total_ingresos_efectivo);
+           $hoja_activa->setCellValue('C' . $flag, $monto_total_efectivo);
            $flag++;
 
-           $suma_ingresos_efectivo = $apertura + $total_ingresos_efectivo;
+           $suma_ingresos_efectivo = $apertura + $monto_total_efectivo;
            
            $hoja_activa->setCellValue('B' . $flag, "Total ingresos efectivo");
            $hoja_activa->setCellValue('C' . $flag, $suma_ingresos_efectivo);
@@ -419,7 +489,7 @@ $apertura = $_GET["apertura"];
         $writer->save('php://output');
 
     
-        //Funcion que traera los datos*
+        //Funcion que traera los datos de la base de datos
         function Consulta($con, $fecha, $sucursal){
            
             $consulta = "SELECT COUNT(*) FROM vista_ordenes WHERE fecha_inicio = ? AND sucursal_id = ?";
@@ -487,24 +557,63 @@ $apertura = $_GET["apertura"];
         }
 
         function traerPorMetodo($con, $fecha, $sucursal, $metodo){
-            $consulta = "SELECT COUNT(*) FROM vista_ordenes WHERE fecha_inicio = ? AND metodo_pago = ? AND sucursal_id = ?";
-            $res = $con->prepare($consulta);
-            $res->execute([$fecha, $sucursal, $metodo]);
-            $total = $res->fetchColumn();
 
-            if($total > 0){
-                $consulta = "SELECT * FROM vista_ordenes WHERE fecha_inicio = ? AND metodo_pago = ? AND sucursal_id = ?";
+            $acumulado = 0;
+            if($metodo !== "Combinado"){
+                $consulta = "SELECT COUNT(*) FROM vista_ordenes WHERE fecha_inicio = ? AND metodo_pago = ? AND sucursal_id = ?";
                 $res = $con->prepare($consulta);
                 $res->execute([$fecha, $metodo, $sucursal]);
+                $total = $res->fetchColumn();
+    
+                if($total > 0){
+                    $consulta = "SELECT * FROM vista_ordenes WHERE fecha_inicio = ? AND metodo_pago = ? AND sucursal_id = ?";
+                    $res = $con->prepare($consulta);
+                    $res->execute([$fecha, $metodo, $sucursal]);
+    
+                   
+                      while ($row = $res->fetch()) {
+                            $id = $row['id'];
+                            $metodo_p = $row['metodo_pago'];
+                            $total = $row['total'];
+                            $acumulado += $total;
+                        }
+                    return $acumulado;
+                }else{
+                    return 0;
+                }
 
-                  while ($row = $res->fetch()) {
-                        $data[] = $row;
-
-                    }
-                return $data;
             }else{
-                return array();
+                $metodo_comb = "Combinado";
+
+                $consultad = "SELECT COUNT(*) FROM vista_ordenes WHERE fecha_inicio = ? AND  metodo_pago = ? AND sucursal_id = ?";
+                $ress = $con->prepare($consultad);
+                $ress->execute([$fecha, $metodo_comb, $sucursal]);
+                $total_comb = $ress->fetchColumn();
+
+                if($total_comb > 0){
+                    $consulta = "SELECT * FROM vista_ordenes WHERE fecha_inicio = ? AND metodo_pago = ? AND sucursal_id = ?";
+                    $res = $con->prepare($consulta);
+                    
+                    $res->execute([$fecha, $metodo_comb, $sucursal]);
+                    while ($row3 = $res->fetch()) {
+                        $id = $row3['id'];
+                        $consultac = "SELECT * FROM multi_metodo WHERE id_orden = ?";
+                        $res2 = $con->prepare($consultac);
+                        $res2->execute([$id]);
+                        while ($row2 = $res2->fetch()) {
+                            $met = $row2['metodo_pago'];
+                            $monto = $row2['monto_pago'];
+                            $data[] = array("metodo"=>$met, "monto"=>$monto, "id"=> $id);
+                           /*  $acumulado += $row2['monto_pago']; */
+                        }
+                        
+                    }
+                    return $data;
+                }else{
+                    return 0;
+                }
             }
+           
         }
 
        

@@ -327,34 +327,37 @@ function agregarCostos(id){
                }
     }).then(function(response) {
 
-        console.log(monto_ext);
-        console.log(cant);
-        descripcion = $("#descripcion").val();
-
-        $.ajax({
-            type: "POST",
-            url: "../servidor/historial/agregar-costo.php",
-            data: {"monto_ext": monto_ext, "cant": cant, "descripcion": descripcion, "id": id},
-            dataType: "JSON",
-            success: function (response) {
-                
-                if(response == 1){
-                    Swal.fire({
-                        icon:"success",
-                        html: "<b>Actualizado correctamente</b>",
-                        
-                    })
-                }else{
-                    Swal.fire({
-                        icon:"error",
-                        html: "<b>Ocurrio un error</b>",
-                        
-                    })
+        if(response.isConfirmed){
+           
+            descripcion = $("#descripcion").val();
+    
+            $.ajax({
+                type: "POST",
+                url: "../servidor/historial/agregar-costo.php",
+                data: {"monto_ext": monto_ext, "cant": cant, "descripcion": descripcion, "id": id},
+                dataType: "JSON",
+                success: function (response) {
+                    
+                    if(response == 1){
+                        Swal.fire({
+                            icon:"success",
+                            html: "<b>Actualizado correctamente</b>",
+                            
+                        })
+                    }else{
+                        Swal.fire({
+                            icon:"error",
+                            html: "<b>Ocurrio un error</b>",
+                            
+                        })
+                    }
+                    
+    
                 }
-                
+            });
+        }
 
-            }
-        });
+       
 
     })
 }
