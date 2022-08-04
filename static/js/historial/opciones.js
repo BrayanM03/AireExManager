@@ -149,7 +149,7 @@ function cambiarEstatus(id, estatus, tipo){
             
                     detalles.push(detalle);
                 })
-                console.log(detalles);
+                
             }
 
             let dat = {
