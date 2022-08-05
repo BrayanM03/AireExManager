@@ -16,11 +16,7 @@
  */
 
 
-// Please Remove below 4 lines as this is use in Datatatables test environment for your local or live environment please remove it or else it will not work
-$file = $_SERVER['DOCUMENT_ROOT'].'/datatables/pdo.php';
-if ( is_file( $file ) ) {
-	include( $file );
-}
+
 
 
 class SSP {
@@ -43,20 +39,10 @@ class SSP {
 
 				// Is there a formatter?
 				if ( isset( $column['formatter'] ) ) {
-                    if(empty($column['db'])){
-                        $row[ $column['dt'] ] = $column['formatter']( $data[$i] );
-                    }
-                    else{
-                        $row[ $column['dt'] ] = $column['formatter']( $data[$i][ $column['db'] ], $data[$i] );
-                    }
+					$row[ $column['dt'] ] = $column['formatter']( $data[$i][ $column['db'] ], $data[$i] );
 				}
 				else {
-                    if(!empty($column['db'])){
-                        $row[ $column['dt'] ] = $data[$i][ $columns[$j]['db'] ];
-                    }
-                    else{
-                        $row[ $column['dt'] ] = "";
-                    }
+					$row[ $column['dt'] ] = $data[$i][ $columns[$j]['db'] ];
 				}
 			}
 
@@ -64,29 +50,6 @@ class SSP {
 		}
 
 		return $out;
-	}
-
-
-	/**
-	 * Database connection
-	 *
-	 * Obtain an PHP PDO connection from a connection details array
-	 *
-	 *  @param  array $conn SQL connection details. The array should have
-	 *    the following properties
-	 *     * host - host name
-	 *     * db   - database name
-	 *     * user - user name
-	 *     * pass - user password
-	 *  @return resource PDO connection
-	 */
-	static function db ( $conn )
-	{
-		if ( is_array( $conn ) ) {
-			return self::sql_connect( $conn );
-		}
-
-		return $conn;
 	}
 
 
@@ -145,9 +108,7 @@ class SSP {
 				}
 			}
 
-			if ( count( $orderBy ) ) {
-				$order = 'ORDER BY '.implode(', ', $orderBy);
-			}
+			$order = 'ORDER BY '.implode(', ', $orderBy);
 		}
 
 		return $order;
@@ -169,7 +130,7 @@ class SSP {
 	 *    sql_exec() function
 	 *  @return string SQL where clause
 	 */
-	static function filter ( $request, $columns, &$bindings )
+	static function filter ( $request, $columns, &$bindings,$default = false )
 	{
 		$globalSearch = array();
 		$columnSearch = array();
@@ -184,30 +145,24 @@ class SSP {
 				$column = $columns[ $columnIdx ];
 
 				if ( $requestColumn['searchable'] == 'true' ) {
-					if(!empty($column['db'])){
-						$binding = self::bind( $bindings, '%'.$str.'%', PDO::PARAM_STR );
-						$globalSearch[] = "`".$column['db']."` LIKE ".$binding;
-					}
+					$binding = self::bind( $bindings, '%'.$str.'%', PDO::PARAM_STR );
+					$globalSearch[] = "`".$column['db']."` LIKE ".$binding;
 				}
 			}
 		}
 
 		// Individual column filtering
-		if ( isset( $request['columns'] ) ) {
-			for ( $i=0, $ien=count($request['columns']) ; $i<$ien ; $i++ ) {
-				$requestColumn = $request['columns'][$i];
-				$columnIdx = array_search( $requestColumn['data'], $dtColumns );
-				$column = $columns[ $columnIdx ];
+		for ( $i=0, $ien=count($request['columns']) ; $i<$ien ; $i++ ) {
+			$requestColumn = $request['columns'][$i];
+			$columnIdx = array_search( $requestColumn['data'], $dtColumns );
+			$column = $columns[ $columnIdx ];
 
-				$str = $requestColumn['search']['value'];
+			$str = $requestColumn['search']['value'];
 
-				if ( $requestColumn['searchable'] == 'true' &&
-				 $str != '' ) {
-					if(!empty($column['db'])){
-						$binding = self::bind( $bindings, '%'.$str.'%', PDO::PARAM_STR );
-						$columnSearch[] = "`".$column['db']."` LIKE ".$binding;
-					}
-				}
+			if ( $requestColumn['searchable'] == 'true' &&
+			 $str != '' ) {
+				$binding = self::bind( $bindings, '%'.$str.'%', PDO::PARAM_STR );
+				$columnSearch[] = "`".$column['db']."` LIKE ".$binding;
 			}
 		}
 
@@ -224,9 +179,16 @@ class SSP {
 				$where .' AND '. implode(' AND ', $columnSearch);
 		}
 
+		if($default !== false){
+			if($where !== '')
+				$where = $default . ' AND ' . $where;
+			else 
+				$where = $default; 
+		}
 		if ( $where !== '' ) {
 			$where = 'WHERE '.$where;
 		}
+		
 
 		return $where;
 	}
@@ -240,25 +202,26 @@ class SSP {
 	 * sending back to the client.
 	 *
 	 *  @param  array $request Data sent to server by DataTables
-	 *  @param  array|PDO $conn PDO connection resource or connection parameters array
+	 *  @param  array $sql_details SQL connection details - see sql_connect()
 	 *  @param  string $table SQL table to query
 	 *  @param  string $primaryKey Primary key of the table
 	 *  @param  array $columns Column information array
+	 *  @param  string $default Default Where clause string 
 	 *  @return array          Server-side processing response array
 	 */
-	static function simple ( $request, $conn, $table, $primaryKey, $columns )
+	static function simple ( $request, $sql_details, $table, $primaryKey, $columns,$default = false )
 	{
 		$bindings = array();
-		$db = self::db( $conn );
+		$db = self::sql_connect( $sql_details );
 
 		// Build the SQL query string from the request
 		$limit = self::limit( $request, $columns );
 		$order = self::order( $request, $columns );
-		$where = self::filter( $request, $columns, $bindings );
+		$where = self::filter( $request, $columns, $bindings,$default );
 
 		// Main query to actually get the data
 		$data = self::sql_exec( $db, $bindings,
-			"SELECT `".implode("`, `", self::pluck($columns, 'db'))."`
+			"SELECT SQL_CALC_FOUND_ROWS `".implode("`, `", self::pluck($columns, 'db'))."`
 			 FROM `$table`
 			 $where
 			 $order
@@ -266,119 +229,24 @@ class SSP {
 		);
 
 		// Data set length after filtering
-		$resFilterLength = self::sql_exec( $db, $bindings,
-			"SELECT COUNT(`{$primaryKey}`)
-			 FROM   `$table`
-			 $where"
+		$resFilterLength = self::sql_exec( $db,
+			"SELECT FOUND_ROWS()"
 		);
 		$recordsFiltered = $resFilterLength[0][0];
 
 		// Total data set length
 		$resTotalLength = self::sql_exec( $db,
 			"SELECT COUNT(`{$primaryKey}`)
-			 FROM   `$table`"
+			 FROM   `$table`".($default !== false ? ' WHERE '.$default : '')
 		);
 		$recordsTotal = $resTotalLength[0][0];
+
 
 		/*
 		 * Output
 		 */
 		return array(
-			"draw"            => isset ( $request['draw'] ) ?
-				intval( $request['draw'] ) :
-				0,
-			"recordsTotal"    => intval( $recordsTotal ),
-			"recordsFiltered" => intval( $recordsFiltered ),
-			"data"            => self::data_output( $columns, $data )
-		);
-	}
-
-
-	/**
-	 * The difference between this method and the `simple` one, is that you can
-	 * apply additional `where` conditions to the SQL queries. These can be in
-	 * one of two forms:
-	 *
-	 * * 'Result condition' - This is applied to the result set, but not the
-	 *   overall paging information query - i.e. it will not effect the number
-	 *   of records that a user sees they can have access to. This should be
-	 *   used when you want apply a filtering condition that the user has sent.
-	 * * 'All condition' - This is applied to all queries that are made and
-	 *   reduces the number of records that the user can access. This should be
-	 *   used in conditions where you don't want the user to ever have access to
-	 *   particular records (for example, restricting by a login id).
-	 *
-	 *  @param  array $request Data sent to server by DataTables
-	 *  @param  array|PDO $conn PDO connection resource or connection parameters array
-	 *  @param  string $table SQL table to query
-	 *  @param  string $primaryKey Primary key of the table
-	 *  @param  array $columns Column information array
-	 *  @param  string $whereResult WHERE condition to apply to the result set
-	 *  @param  string $whereAll WHERE condition to apply to all queries
-	 *  @return array          Server-side processing response array
-	 */
-	static function complex ( $request, $conn, $table, $primaryKey, $columns, $whereResult=null, $whereAll=null )
-	{
-		$bindings = array();
-		$db = self::db( $conn );
-		$localWhereResult = array();
-		$localWhereAll = array();
-		$whereAllSql = '';
-
-		// Build the SQL query string from the request
-		$limit = self::limit( $request, $columns );
-		$order = self::order( $request, $columns );
-		$where = self::filter( $request, $columns, $bindings );
-
-		$whereResult = self::_flatten( $whereResult );
-		$whereAll = self::_flatten( $whereAll );
-
-		if ( $whereResult ) {
-			$where = $where ?
-				$where .' AND '.$whereResult :
-				'WHERE '.$whereResult;
-		}
-
-		if ( $whereAll ) {
-			$where = $where ?
-				$where .' AND '.$whereAll :
-				'WHERE '.$whereAll;
-
-			$whereAllSql = 'WHERE '.$whereAll;
-		}
-
-		// Main query to actually get the data
-		$data = self::sql_exec( $db, $bindings,
-			"SELECT `".implode("`, `", self::pluck($columns, 'db'))."`
-			 FROM `$table`
-			 $where
-			 $order
-			 $limit"
-		);
-
-		// Data set length after filtering
-		$resFilterLength = self::sql_exec( $db, $bindings,
-			"SELECT COUNT(`{$primaryKey}`)
-			 FROM   `$table`
-			 $where"
-		);
-		$recordsFiltered = $resFilterLength[0][0];
-
-		// Total data set length
-		$resTotalLength = self::sql_exec( $db, $bindings,
-			"SELECT COUNT(`{$primaryKey}`)
-			 FROM   `$table` ".
-			$whereAllSql
-		);
-		$recordsTotal = $resTotalLength[0][0];
-
-		/*
-		 * Output
-		 */
-		return array(
-			"draw"            => isset ( $request['draw'] ) ?
-				intval( $request['draw'] ) :
-				0,
+			"draw"            => intval( $request['draw'] ),
 			"recordsTotal"    => intval( $recordsTotal ),
 			"recordsFiltered" => intval( $recordsFiltered ),
 			"data"            => self::data_output( $columns, $data )
@@ -455,7 +323,7 @@ class SSP {
 		}
 
 		// Return all
-		return $stmt->fetchAll( PDO::FETCH_BOTH );
+		return $stmt->fetchAll();
 	}
 
 
@@ -517,33 +385,9 @@ class SSP {
 		$out = array();
 
 		for ( $i=0, $len=count($a) ; $i<$len ; $i++ ) {
-            if(empty($a[$i][$prop])){
-                continue;
-			}
-			//removing the $out array index confuses the filter method in doing proper binding,
-			//adding it ensures that the array data are mapped correctly
-			$out[$i] = $a[$i][$prop];
+			$out[] = $a[$i][$prop];
 		}
 
 		return $out;
-	}
-
-
-	/**
-	 * Return a string from an array or a string
-	 *
-	 * @param  array|string $a Array to join
-	 * @param  string $join Glue for the concatenation
-	 * @return string Joined string
-	 */
-	static function _flatten ( $a, $join = ' AND ' )
-	{
-		if ( ! $a ) {
-			return '';
-		}
-		else if ( $a && is_array($a) ) {
-			return implode( $join, $a );
-		}
-		return $a;
 	}
 }
