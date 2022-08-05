@@ -4,7 +4,7 @@ const doc = new jsPDF();
 logo = data_logo.replace(/[\s"\\]/gm, "");
 icon_checked= data_checked.replace(/[\s"\\]/gm, "");
 icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
-doc.addImage(logo, "JPEG", 8, 5, 40, 12);
+doc.addImage(logo, "JPEG", 8, 5, 40, 17);
 
 let id_orden = getParameterByName("id_orden")  
 
@@ -17,13 +17,13 @@ $.ajax({
         console.log(response);
 
 doc.setFont("helvetica"); // set font
-doc.setFontType("bold"); // set font
+doc.setFontType("bolditalic"); // set font
 
-doc.text("Cotización", 140, 10);
+doc.text("Cotización C"+response.folio , 140, 10);
 
 doc.setFontSize(12);
-doc.text("868348398", 140, 17);
-doc.text("C" + response.folio, 170, 17);
+doc.text(`(868)817-5256
+(868)813-8071`, 140, 17);
 
 doc.setDrawColor(255,0,0); // draw red lines
 doc.line(8, 30, 200, 30); //Line
@@ -42,9 +42,9 @@ doc.line(145, 47, 145, 62); // vertical line
 
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
+doc.setFontSize(7);
+doc.text("Calle Diesciseis Buena Vista, 87350 Heroica Matamoros, Tamps. ventas@aireexpress.com", 80, 28);
 doc.setFontSize(10);
-doc.text("Calle Diesciseis Buena Vista, 87350 Heroica Matamoros, Tamps.", 80, 27);
-
 //Datos cliente
 doc.setFontType("bold"); // set font
 doc.text("Nombre", 10, 38);
@@ -82,12 +82,15 @@ doc.text(response.datos_cliente.telefono, 170, 53)
 if(response.tipo == "1" || response.tipo == "3"){
    comentario = 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes'
 }else if(response.tipo == "2"){
-   comentario = `Incluye instalación basica de 4 metros de distancia entre evaporador y 
-   condensador, se requiere caja y breaker a menos de 1 metro`
+   comentario = `Instalacion Mecanica Basica de Aire Acondicionado, Tipo
+   Mini Split, Instalacion Incluye: montaje de condensador,
+   montaje de evaporador, y instalacion de kit de tuberias de
+   refrigeracion de 4 metros, cable de señal y poder. Se
+   requiere luz electrica al pie del equipo`
 }
 
 let bodyTable = response.detalle_orden;
-let metodo = { precio_unit: 'Metodo', importe:response.metodo_pago };
+let metodo = { precio_unit: '', importe:response.metodo_pago };
 let importe_total = { descripcion: comentario, precio_unit: 'Total', importe: response.total}
 
 bodyTable.push(metodo, importe_total)
@@ -126,7 +129,7 @@ doc.autoTable(({
      3 item = 109 puntos en Y
      4 item = 116.5 puntos en Y */
      let alturaPartidas = 8.5 * (bodyTable.length)   
-     let startY = 85 + alturaPartidas;
+     let startY = 95 + alturaPartidas;
 
 
 
@@ -141,7 +144,7 @@ doc.autoTable(({
         headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
         startY:startY,
         margin: { left: 8 },
-        tableWidth: 193,
+        tableWidth: 186,
         columns: [
             { header: 'Esta es una nota de presupuesto o cotización', dataKey: null }
           ],
@@ -161,14 +164,60 @@ doc.autoTable(({
       doc.text("Nombre:", 60, startYfooter);
       doc.text("Fecha:", 160, startYfooter);
     
-    
+    if(response.tipo =="1"){
+      
       doc.setFontType("bold");
-    doc.text("Comentarios:", 10, startYfooter + 10);
-    doc.setFontType("normal");
-    doc.setFontSize(9);
-    let incluye = `  Precios Sujetos a cambio sin previo aviso. Se requiere deposito y/o pago para realizar los servicios de esta cotización. 
-    Productos sujetos a disponibilidad, confirmar existencias con agente de ventas.`
-    doc.text(incluye, 10, startYfooter + 15);
+      doc.text("Garantia de Fabricante Mini Split Nuevo :", 10, startYfooter + 10);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let garantia =  `Cobretura limitada a refacciones. Usuario cubre costos de revisiones, mano de obra y fletes 
+      por reemplazo de refacciones. Para hacer valida su GARANTIA, fabricante requiere factura de compra y requiere que realize 
+      MANTENIMIENTO PREVENTIVO cada Año. Con Aire Express o tecnico certificado, como tener comprobantes correspondientes.`
+      doc.text(garantia, 10, startYfooter + 15);
+
+
+      doc.setFontType("bold");
+      doc.setFontSize(11);
+      doc.text("Minisplit incluye:", 10, startYfooter + 32);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let incluye = `  Precios Sujetos a cambio sin previo aviso. Se requiere deposito y/o pago para realizar los servicios de esta cotización. 
+      Productos sujetos a disponibilidad, confirmar existencias con agente de ventas.`
+      doc.text(incluye, 10, startYfooter + 37);
+
+      
+    }else if(response.tipo =="2"){
+      
+      doc.setFontType("bold");
+      doc.text("Nota :", 10, startYfooter + 10);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let garantia =  `      En dado caso de requerir instalacion especial, perforaciones adicionales, juego de escuadras, tuberia
+      extra,tuberias de desague adicionales, instalacion electrica, trabajos de albañileria como ranurado, ocultacion de tuberías, 
+      acabados, y/o pinturas o cualquier otro tipo de material que no incluya la instalacion mecanica basica genera un costo adicional.`
+      doc.text(garantia, 10, startYfooter + 15);
+
+      doc.setFontType("bold");
+      doc.setFontSize(11);
+      doc.text("Observaciones:", 10, startYfooter + 32);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let incluye = `      Precios Sujetos a Cambio sin Previo Aviso, Se requiere deposito en firme al autorizar los servicios de esta cotizacion. 
+      Precios validos solamente para conceptos de esta cotizacion. 30 dias de Garantia en servicios de reparaciones y Mantenimientos preventivos.`
+      doc.text(incluye, 10, startYfooter + 37);
+      
+    }else if(response.tipo =="3"){
+
+      doc.setFontType("bold");
+      doc.text("Observaciones :", 10, startYfooter + 10);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let garantia =  `      Precios Sujetos a Cambio sin Previo Aviso, Se requiere deposito en firme al autorizar los servicios de esta cotizacion. 
+      Precios validos solamente para conceptos de esta cotizacion. 30 dias de Garantia en servicios de reparaciones y Mantenimientos preventivos.`
+      doc.text(garantia, 10, startYfooter + 15);
+
+    }
+      
 
      
   

@@ -4,7 +4,7 @@ const doc = new jsPDF();
 logo = data_logo.replace(/[\s"\\]/gm, "");
 icon_checked= data_checked.replace(/[\s"\\]/gm, "");
 icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
-doc.addImage(logo, "JPEG", 8, 5, 40, 13);
+doc.addImage(logo, "JPEG", 8, 5, 40, 17);
 
 let id_orden = getParameterByName("id_orden")  
 
@@ -17,13 +17,13 @@ $.ajax({
         console.log(response);
 
 doc.setFont("helvetica"); // set font
-doc.setFontType("bold"); // set font
+doc.setFontType("bolditalic"); // set font
 
-doc.text("Orden de servicio", 140, 10);
+doc.text("Orden de servicio F" + response.folio, 140, 10);
 
 doc.setFontSize(12);
-doc.text("868348398", 140, 17);
-doc.text("F" + response.folio, 170, 17);
+doc.text(`(868)817-5256
+(868)813-8071`, 140, 17);
 
 doc.setDrawColor(255,0,0); // draw red lines
 doc.line(8, 30, 200, 30); //Line
@@ -42,9 +42,10 @@ doc.line(145, 47, 145, 62); // vertical line
 
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
-doc.setFontSize(10);
-doc.text("Calle Diesciseis Buena Vista, 87350 Heroica Matamoros, Tamps.", 80, 27);
+doc.setFontSize(7);
+doc.text("Calle Diesciseis Buena Vista, 87350 Heroica Matamoros, Tamps. ventas@aireexpress.com", 80, 28);
 
+doc.setFontSize(10);
 //Datos cliente
 doc.setFontType("bold"); // set font
 doc.text("Nombre", 10, 38);
