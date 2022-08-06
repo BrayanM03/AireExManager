@@ -24,7 +24,7 @@ $table = 'vista_gastos';
 // Table's primary key
 $primaryKey = 'id';
 $sucursal_id = $_GET['sucursal_id'];
-
+$where = "sucursal_id = " . $sucursal_id;
 
 // Array of database columns which should be read and sent back to DataTables.
 // The `db` parameter represents the column name in the database, while the `dt`
@@ -71,7 +71,7 @@ $sql_details = array(
 require( '../database/ssp.class.php' );
 
 echo json_encode(
-	SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, null, "sucursal_id = '$sucursal_id'")
+	SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $where)
 );
 
 

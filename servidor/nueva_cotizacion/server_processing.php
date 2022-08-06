@@ -25,6 +25,7 @@ require( '../database/ssp.class.php' );
 // Table's primary key
 $primaryKey = 'id';
 $user_id = $_GET['user_id'];
+$where = "user_id = " . $user_id;
 
 
 // Array of database columns which should be read and sent back to DataTables.
@@ -74,6 +75,6 @@ $sql_details = array(
 
 
 echo json_encode(
-	SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, null, "user_id = '$user_id'")
+	SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $where)
 );
 
