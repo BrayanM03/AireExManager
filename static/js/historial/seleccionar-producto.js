@@ -55,7 +55,7 @@ producto.on('select2:select', function(selection){
 
   let repo = selection.params.data
   
-      console.log(repo);
+      
       formatSelectionP(repo)
    
 
@@ -80,12 +80,17 @@ function formatResultProducto(repo){
         return repo.text;
       }
 
+ 
       let tipo = $("#tipo").val();
+    
       if(tipo == "1"){
         price = repo.precio
       }else if(tipo == "2"){
         price = repo.precio_con_inst
+      }else if(tipo == "3"){
+        price = repo.precio
       }
+    
 
       if(repo.id !== ""){
 
@@ -152,7 +157,24 @@ function formatSelectionP(repo) {
   
   if(sucursal_usuario == repo.sucursal){
 
-  setPantallaCargando()  
+    if(repo.stock == 0){
+
+      Toast.fire({
+        icon: 'error',
+        title: 'Este producto no ya no tiene stock'
+      });
+      
+      $("#lista-series").empty().append(`
+                      <div class="list-group-item list-group-item-action" aria-current="true">
+                          <div class="row">
+                              <div class="col-12 col-md-12 text-center">Sin datos</div>
+                          </div>
+                      </div>
+              `)
+
+    }else{
+
+      setPantallaCargando()  
   let tipo = $("#tipo").val()
   if(tipo == "1"){
     price = repo.precio
@@ -170,6 +192,7 @@ function formatSelectionP(repo) {
 
   quitarLoad()
 
+    }
 
   }else{
 
@@ -181,7 +204,7 @@ function formatSelectionP(repo) {
     $("#lista-series").empty().append(`
                     <div class="list-group-item list-group-item-action" aria-current="true">
                         <div class="row">
-                            <div class="col-12 col-md-12">Sin datos</div>
+                            <div class="col-12 col-md-12 text-center">Sin datos</div>
                         </div>
                     </div>
             `)

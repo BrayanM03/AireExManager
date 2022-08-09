@@ -58,7 +58,7 @@ function cambiarSeleccionarProducto() {
                         </div>
                     </a>
                     <div id="lista-series">
-                        <a href="#" class="list-group-item list-group-item-action">Sin datos</a>
+                        <a href="#" class="list-group-item list-group-item-action text-center">Sin datos</a>
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@ function cambiarSeleccionarProducto() {
 
             <div class="row mt-3 justify-content-center">
                 <div class="col-12 col-md-3">
-                     <div id="datos-btn" class="btn btn-info" onclick="agregarProductoAPreventa()">Agregar a la lista</div>
+                     <div id="datos-btn" class="btn btn-info" onclick="agregarProductoAOrden()">Agregar a la orden</div>
                 </div>
             </div>
 
@@ -170,7 +170,7 @@ producto.on('select2:select', function(selection){
 
             <div class="row mt-3 justify-content-center">
                 <div class="col-12 col-md-3">
-                     <div id="datos-btn" class="btn btn-info" onclick="agregarRefaccionAPreventa()">Agregar a la lista</div>
+                     <div id="datos-btn" class="btn btn-info" onclick="agregarRefaccionAOrden()">Agregar a la orden</div>
                 </div>
             </div>
 
@@ -237,7 +237,7 @@ refacciones.select2({
     if(repo.stock == 0){
       Toast.fire({
         icon: 'error',
-        title: "Este produto esta sin stock"
+        title: "Este producto esta sin stock"
       });
     }else{
       if(sucursal_usuario == repo.sucursal){
@@ -324,7 +324,7 @@ refacciones.select2({
   
               <div class="row mt-3 justify-content-center">
                   <div class="col-12 col-md-3">
-                       <div id="datos-btn" class="btn btn-info" onclick="agregarServicioAPreventa()">Agregar a la lista</div>
+                       <div id="datos-btn" class="btn btn-info" onclick="agregarServicioAOrden()">Agregar a la orden</div>
                   </div>
               </div>
   

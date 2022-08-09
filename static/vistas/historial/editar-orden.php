@@ -88,7 +88,7 @@
 
             <div class="row mt-3 justify-content-center">
                 <div class="col-12 col-md-3">
-                     <div id="datos-btn" class="btn btn-info" onclick="agregarProductoAPreventa()">Agregar a la lista</div>
+                     <div id="datos-btn" class="btn btn-info" onclick="agregarProductoAOrden()">Agregar a la orden</div>
                 </div>
             </div>
 

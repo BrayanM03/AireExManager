@@ -152,24 +152,42 @@ function formatSelectionP(repo) {
   
   if(sucursal_usuario == repo.sucursal){
 
-  setPantallaCargando()  
-  let tipo = $("#tipo").val()
-  if(tipo == "1"){
-    price = repo.precio
-  }else if(tipo == "2"){
-    price = repo.precio_con_inst
-  }
-  
-  setearSeries(repo.id);
-  $("#precio").val(price)
-  $("#datos-btn").attr("id_producto", repo.id)
-  $("#datos-btn").attr("producto_id", repo.producto_id)
-  $("#datos-btn").attr("serie_condensador", repo.serie_condensador)
-  $("#datos-btn").attr("serie_evaporizador", repo.serie_evaporizador)
-  $("#datos-btn").attr("fecha_compra", repo.fecha_compra)
+    if(repo.stock == 0){
 
-  quitarLoad()
+      Toast.fire({
+        icon: 'error',
+        title: 'Este producto no ya no tiene stock'
+      });
+      
+      $("#lista-series").empty().append(`
+                      <div class="list-group-item list-group-item-action" aria-current="true">
+                          <div class="row">
+                              <div class="col-12 col-md-12 text-center">Sin datos</div>
+                          </div>
+                      </div>
+              `)
 
+    }else{
+
+      setPantallaCargando()  
+      let tipo = $("#tipo").val()
+      if(tipo == "1"){
+        price = repo.precio
+      }else if(tipo == "2"){
+        price = repo.precio_con_inst
+      }
+      
+      setearSeries(repo.id);
+      $("#precio").val(price)
+      $("#datos-btn").attr("id_producto", repo.id)
+      $("#datos-btn").attr("producto_id", repo.producto_id)
+      $("#datos-btn").attr("serie_condensador", repo.serie_condensador)
+      $("#datos-btn").attr("serie_evaporizador", repo.serie_evaporizador)
+      $("#datos-btn").attr("fecha_compra", repo.fecha_compra)
+    
+      quitarLoad()
+
+    }
 
   }else{
 

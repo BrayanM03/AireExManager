@@ -8,7 +8,6 @@ $.ajax({
       
        $("#nombre").val(response["data"].cliente)
        $("#fecha").val(response["data"].fecha_inicio)
-       console.log(response["data"].tipo);
        $("#tipo").val(response["data"].tipo)
        
        $("#folio").text(response["data"].id)

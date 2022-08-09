@@ -184,8 +184,8 @@ animation: dot 2s infinite step-start both;
     <!-- Mis scripts -->
     <script src="js/historial/editar-orden.js"></script>
     <script src="js/historial/seleccionar-producto.js"></script>
-    <script src="js/nueva-orden/preventa.js"></script>
-    <script src="js/nueva-orden/registro-ordenes.js"></script>
+    <script src="js/historial/insertando-detalles.js"></script>
+    <!-- <script src="js/nueva-orden/registro-ordenes.js"></script> -->
     
     <script src="js/historial/alternar-producto.js"></script>
     <script src="js/nueva-orden/cambiar-tipo-orden.js"></script>
