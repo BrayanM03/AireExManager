@@ -459,7 +459,12 @@ refacciones.select2({
   
             
             tabla.ajax.reload(null, false)  
+            comision = getPercentage(response.importe);
+            total_neto = response.importe + comision;
+            $("#comision").val(comision)
             $("#neto").val(response.importe)
+            $("#total").val(total_neto)
+            //$("#neto").val(response.importe)
           }else if(response.status == false) {
             Toast.fire({
               icon: 'error',
@@ -501,7 +506,13 @@ refacciones.select2({
   
             
             tabla.ajax.reload(null, false)  
+            comision = getPercentage(response.importe);
+         
+            total_neto = response.importe + comision;
+            $("#comision").val(comision)
             $("#neto").val(response.importe)
+            $("#total").val(total_neto)
+            //$("#neto").val(response.importe)
           }else if(response.status == false) {
             Toast.fire({
               icon: 'error',

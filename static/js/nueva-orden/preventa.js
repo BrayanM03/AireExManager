@@ -69,7 +69,11 @@ function eliminarItem(id) {
         }
         
         tabla.ajax.reload(null, false);
+        comision = getPercentage(response.importe);
+        total_neto = response.importe + comision;
+        $("#comision").val(comision)
         $("#neto").val(response.importe)
+        $("#total").val(total_neto)
       }
     }
   });

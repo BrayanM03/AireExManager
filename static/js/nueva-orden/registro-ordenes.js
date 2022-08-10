@@ -112,8 +112,8 @@ function registrarOrden(type){
                         if($(this).val() == "2") {
                             $("#area-mas-metodos").empty().append(`
                             <div class="row mb-3">
-                                <div class="col-md-6 col-12">
-                                    Metodo de pago
+                                <div class="col-md-4 col-12">
+                                <span style="font-size:10px">Metodo de pago</span>
                                     <select class="form-control" id="metodo-1">
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Transferencia">Transferencia</option>
@@ -122,13 +122,19 @@ function registrarOrden(type){
                                         <option value="Sin definir">Sin definir</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
+                                    Tipo tarjeta
+                                    <select id="tipo-1" class="form-control"> 
+                                        <option value="NA">No aplica</option>  
+                                    </select>  
+                                </div>
+                                <div class="col-md-4 col-12">
                                     Monto
                                     <input type="number" id="monto-1" class="form-control" placeholder="monto 1">    
                                 </div>
                             </div> 
                             <div class="row">
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
                                     <select class="form-control" id="metodo-2">
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Transferencia">Transferencia</option>
@@ -137,7 +143,14 @@ function registrarOrden(type){
                                         <option value="Sin definir">Sin definir</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6 col-12">
+
+                                <div class="col-md-4 col-12">
+                                    <select id="tipo-2" class="form-control"> 
+                                        <option value="NA">No aplica</option>  
+                                    </select>  
+                                </div>
+                                
+                                <div class="col-md-4 col-12">
                                     <input type="number" id="monto-2" class="form-control" placeholder="monto 2">    
                                 </div>
                             </div>   
@@ -147,8 +160,8 @@ function registrarOrden(type){
 
                             $("#area-mas-metodos").empty().append(`
                             <div class="row mb-3">
-                                <div class="col-md-6 col-12">
-                                    Metodo de pago
+                                <div class="col-md-4 col-12">
+                                    <span style="font-size:10px">Metodo de pago</span>
                                     <select class="form-control" id="metodo-1">
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Transferencia">Transferencia</option>
@@ -157,13 +170,19 @@ function registrarOrden(type){
                                         <option value="Sin definir">Sin definir</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
+                                    Tipo tarjeta
+                                    <select id="tipo-1" class="form-control"> 
+                                        <option value="NA">No aplica</option>  
+                                    </select>  
+                                </div>
+                                <div class="col-md-4 col-12">
                                     Monto
                                     <input type="number" id="monto-1" class="form-control" placeholder="monto 1">    
                                 </div>
                             </div> 
                             <div class="row mb-3">
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
                                     
                                     <select class="form-control" id="metodo-2">
                                         <option value="Efectivo">Efectivo</option>
@@ -173,13 +192,18 @@ function registrarOrden(type){
                                         <option value="Sin definir">Sin definir</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
+                                    <select id="tipo-2" class="form-control"> 
+                                        <option value="NA">No aplica</option>  
+                                    </select>  
+                                </div>
+                                <div class="col-md-4 col-12">
                                     
                                     <input type="number" id="monto-2" class="form-control" placeholder="monto 2">    
                                 </div>
                             </div>  
                             <div class="row">
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
                                    
                                     <select class="form-control" id="metodo-3">
                                         <option value="Efectivo">Efectivo</option>
@@ -189,7 +213,12 @@ function registrarOrden(type){
                                         <option value="Sin definir">Sin definir</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
+                                    <select id="tipo-2" class="form-control"> 
+                                        <option value="NA">No aplica</option>  
+                                    </select>  
+                                </div>
+                                <div class="col-md-4 col-12">
                                     
                                     <input type="number" id="monto-3" class="form-control" placeholder="monto 3">    
                                 </div>
@@ -471,7 +500,7 @@ function registrarOrden(type){
                 
             })
 
-        }else{
+        }else{ 
             data["multi_metodo"] = []
             console.log(data);
             sendData(data)

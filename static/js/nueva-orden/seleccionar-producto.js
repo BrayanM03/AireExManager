@@ -333,7 +333,11 @@ console.log(valoresSeries);
 
           setearSeries(id_producto)
           tabla.ajax.reload(null, false)  
+          comision = getPercentage(response.importe);
+          total_neto = response.importe + comision;
+          $("#comision").val(comision)
           $("#neto").val(response.importe)
+          $("#total").val(total_neto)
         }
       }
     
@@ -368,6 +372,75 @@ function setPantallaCargando(){
   </div>
 </div>
   `)
+}
+
+function getPercentage(number) {
+  let tipo_tarjeta = $("#metodo-pago").attr("tipo-tarjeta");
+  if(tipo_tarjeta == "credito"){
+    percentage = 3
+  }else if(tipo_tarjeta == "debito"){
+    percentage = 1.60
+  }else{
+    percentage = 0
+  };
+
+  return (number * percentage) / 100;
+}
+ actual_metodo = $("#metodo-pago").val();
+$("#metodo-pago").change(function(){
+    if($(this).val() == "Tarjeta"){
+        Swal.fire({
+          icon: "question",
+          text: "Elige el tipo de tarjeta",
+          showCancelButton: false,
+          showDenyButton: true,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Debito",
+          denyButtonText: "Credito",
+          reverseButtons: true
+        }).then((result) => {
+          if(result.isConfirmed){
+            $("#metodo-pago").attr("tipo-tarjeta", "debito");
+            $("#label-comision").text("de debito");
+            $("#metodo-pago").val($(this).val());
+            comision = getPercentage($("#neto").val());
+            console.log(comision.toFixed(2));
+            total_neto = parseFloat($("#neto").val()) + parseFloat(comision.toFixed(2));
+            $("#total").val(total_neto)
+            $("#comision").val(comision.toFixed(2));
+
+          }else if(result.isDenied){
+            $("#metodo-pago").val($(this).val());
+            $("#metodo-pago").attr("tipo-tarjeta", "credito");
+            $("#label-comision").text("de credito");
+            comision = getPercentage($("#neto").val());
+            total_neto = parseFloat($("#neto").val()) + parseFloat(comision.toFixed(2));
+            $("#total").val(total_neto);
+            $("#comision").val(comision.toFixed(2));
+
+          }else{
+            $("#metodo-pago").val(actual_metodo);
+            $("#label-comision").text("");
+            $("#comision").val(0);
+            $("#total").val($("#neto").val())
+          }
+
+        }) 
+    }else{
+      $("#comision").val(0);
+      $("#total").val($("#neto").val());
+      $("#metodo-pago").attr("tipo-tarjeta", "");
+      $("#label-comision").text("");
+       actual_metodo = $("#metodo-pago").val();
+    }
+})
+
+function trunc (x, posiciones = 0) {
+  var s = x.toString()
+  var l = s.length
+  var decimalLength = s.indexOf('.') + 1
+  var numStr = s.substr(0, decimalLength + posiciones)
+  return Number(numStr)
 }
 
 
