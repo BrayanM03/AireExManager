@@ -19,8 +19,11 @@ if ($_POST) {
         while ($row = $resp->fetch()) {
 
             $detalle = traerDetalle($con, $row["id"]);
+            $cliente_id = $row["cliente_id"];
+            $direccion = traerDireccion($con, $cliente_id);
             
             $row["detalle"] = $detalle;
+            $row["direccion"] = $direccion;
             $data = $row;
             
         }
@@ -56,6 +59,34 @@ function traerDetalle($con, $id){
         $response = array();
     }
     return $response;
+}
+
+function traerDireccion($con, $cliente_id){
+
+    $select = "SELECT COUNT(*) FROM detalle_direccion WHERE id_usuario = ?";
+    $resp = $con->prepare($select);
+    $resp->execute([$cliente_id]);
+    $total = $resp->fetchColumn();
+
+    if($total > 0){
+        $consultar = "SELECT * FROM detalle_direccion WHERE id_usuario = ?";
+        $resp = $con->prepare($consultar);
+        $resp->execute([$cliente_id]);
+        while ($row = $resp->fetch()) {
+            if($row["numero_ext"] == 0){
+                $ext = "";
+            }else{
+                $ext = "ext. " .$row["numero_ext"];
+            }
+            $direccion = $row['calle'] . " " . $row["numero_int"]. " " . $ext . " " . $row["colonia"] . " ". $row["cp"] ." " . $row["municipio"] . " " . $row["estado"] . " " . $row["pais"];
+           
+        }
+        $response = $direccion;
+    }else{
+        $response = "No aplica";
+    }
+    return $response;
+
 }
 
 ?>

@@ -34,7 +34,7 @@
                         <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="fecha">Fecha</label>
-                                <input type="date" class="form-control" id="fecha" placeholder="Fecha">
+                                <input type="date" class="form-control" id="fecha" placeholder="Fecha" disabled>
                             </div>
                         </div>
                     </div>
@@ -127,6 +127,21 @@
                     </div>
                 </div>
 
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 col-md-6">
+                   <!--  <div class="form-group">
+                        <label for="total">Total</label>
+                        <input type="number" class="form-control" id="total" placeholder="0" disabled>
+                    </div> -->
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label for="total_orden">Total orden</label>
+                        <input type="number" class="form-control" id="total_orden" placeholder="0" disabled>
+                    </div>
+                </div>
             </div>
 
 

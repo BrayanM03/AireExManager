@@ -2,10 +2,147 @@ id_orden = getParameterByName("id");
 console.log(id_orden);
 function agregarServicioAOrden(){
 
+  Swal.fire({
+    icon: 'info',
+    title: '¿Agregar servicio a la orden?',
+    text: "Se agregará el servicio a la orden, y se actualizara el importe de la orden.",
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Agregar',
+    cancelButtonText: "Cancelar"
+    }).then((result) => {
+    if (result.isConfirmed) {
+        
+
+        let cantidad = $("#cantidad").val();
+        let id_producto = $("#datos-btn").attr("id_producto");
+        let precio = $("#precio").val();
+        let valoresSeries = [];
+
+        if(id_producto == ""){
+        Toast.fire({
+          icon: 'error',
+          title: 'Selecciona un servicio'
+        })
+          
+        }else{
+
+          if(cantidad == 0){
+            Toast.fire({
+              icon: 'error',
+              title: 'Agrega una cantidad'
+            })
+        }else{
+      
+          setPantallaCargando() 
+      
+          
+          let categoria = $("#buscador-select").val();
+      
+          $.ajax({
+            type: "POST",
+            url: "../servidor/historial/editar-detalle.php",
+            data: { id: id_producto, precio: precio, tabla: "servicios", series: valoresSeries, categoria: categoria, id_orden: id_orden, cantidad: cantidad},
+            dataType: "JSON",
+            success: function (response) {
+              if(response.status == true){
+                Toast.fire({
+                  icon: 'success',
+                  title: response.mensj
+                });
+      
+                
+                setTablaDetalles()                    
+                
+              }
+            }
+          
+          })
+      
+        }
+        }
+          quitarLoad()
+
+
+    }   
+})
+
 }
 
 function agregarRefaccionAOrden(){
 
+  Swal.fire({
+    icon: 'info',
+    title: '¿Agregar refacción a la orden?',
+    text: "Se agregará la refacción a la orden, y se actualizara el importe de la orden.",
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Agregar',
+    cancelButtonText: "Cancelar"
+    }).then((result) => {
+    if (result.isConfirmed) {
+        
+
+        let cantidad = $("#cantidad").val();
+        let id_producto = $("#datos-btn").attr("id_producto");
+        let precio = $("#precio").val();
+        let valoresSeries = [];
+
+        if(id_producto == ""){
+        Toast.fire({
+          icon: 'error',
+          title: 'Selecciona una refacción'
+        })
+          
+        }else{
+
+          if(cantidad == 0){
+            Toast.fire({
+              icon: 'error',
+              title: 'Agrega una cantidad'
+            })
+        }else{
+      
+          
+      
+          
+          let categoria = $("#buscador-select").val();
+      
+          $.ajax({
+            type: "POST",
+            url: "../servidor/historial/editar-detalle.php",
+            data: { id: id_producto, precio: precio, tabla: "refacciones", series: valoresSeries, categoria: categoria, id_orden: id_orden, cantidad: cantidad},
+            dataType: "JSON",
+            success: function (response) {
+              setPantallaCargando() 
+              if(response.status == true){
+                Toast.fire({
+                  icon: 'success',
+                  title: response.mensj
+                });
+      
+                
+                setTablaDetalles()                    
+                
+              }else if(response.status == false){
+                Toast.fire({
+                  icon: 'error',
+                  title: response.mensj
+                });
+              }
+            }
+          
+          })
+      
+        }
+        }
+          quitarLoad()
+
+
+    }   
+})
 }
 
 function agregarProductoAOrden(){
@@ -54,12 +191,12 @@ function agregarProductoAOrden(){
                     if(response.status == true){
                       Toast.fire({
                         icon: 'success',
-                        title: 'Agregado correctamente'
+                        title: response.mensj
                       });
             
-                      setearSeries(id_producto)
-                      tabla.ajax.reload(null, false)  
-                      $("#neto").val(response.importe)
+                      setearSeries(id_producto) 
+                      setTablaDetalles()                    
+                      
                     }
                   }
                 
@@ -82,6 +219,49 @@ function getParameterByName(name) {
     results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
+
+
+
+function eliminarDetalle(id){
+    Swal.fire({
+        icon: 'info',
+        title: '¿Eliminar detalle?',
+        text: "Se eliminará el detalle de la orden.",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: "Cancelar"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            
+            setPantallaCargando() 
+            
+            
+            
+            $.ajax({
+              type: "POST",
+              url: "../servidor/historial/eliminar-detalle.php",
+              data: { id_detalle: id},
+              dataType: "JSON",
+              success: function (response) {
+                if(response.status == true){
+                  Toast.fire({
+                    icon: 'success',
+                    title: response.mensj
+                  });
+            
+                  setTablaDetalles()                    
+                  
+                }
+              }
+            
+            })
+            
+            quitarLoad()
+        }   
+    })
+}  
 
 
   

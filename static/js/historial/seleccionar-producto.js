@@ -180,6 +180,8 @@ function formatSelectionP(repo) {
     price = repo.precio
   }else if(tipo == "2"){
     price = repo.precio_con_inst
+  }else if(tipo == "3"){
+    price = repo.precio
   }
   
   setearSeries(repo.id);

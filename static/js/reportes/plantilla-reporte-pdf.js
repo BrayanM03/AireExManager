@@ -328,7 +328,7 @@ doc.autoTable(({
     //----MINISPLIT INCLUYE
     let alturaGarantias = startYfooter + 60
     doc.setFontType("bold"); // set font
-    doc.setFontSize(11);
+    doc.setFontSize(8);
     
     doc.text("Observaciones", 10, alturaGarantias);
     doc.setFontType("normal");
@@ -458,7 +458,7 @@ doc.autoTable(({
     
     doc.text("Observaciones", 10, alturaGarantias);
     doc.setFontType("normal");
-    doc.setFontSize(9);
+    doc.setFontSize(8);
     let incluye = `Es obligacion del cliente despejar el area donde se llevara a cabo la ejecución del servicio ya que AIRE EXPRESS(Maria 
       Dolores Gonzalez Ramirez) no se hace responsable por la perdida, daños y/o pertenencias personales o de valor en el lugar del servicio.
       
