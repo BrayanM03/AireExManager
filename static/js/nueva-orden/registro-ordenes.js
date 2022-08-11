@@ -233,6 +233,17 @@ function registrarOrden(type){
                         }
 
 
+                        $("#metodo-1").change(function(){
+                            $(this).val() == "Tarjeta" ? $("#tipo-1").empty().append(
+                                `<option value="credito">Credito</option>
+                                <option value="debito">Debito</option>
+                                `
+                            ) : $("#tipo-1").empty().append(
+                                `<option value="NA">No aplica</option>
+                                `)
+                        })
+
+
                     })
 
                     function distribuirMontos(foo, limit){
