@@ -81,7 +81,7 @@ function registrarOrden(type){
                 <div class="row mb-3">
                     <div class="col-md-12 col-12">
                     <b>Agregar mas metodos de pago</b><br>
-                    Total neto: ${total} <br>
+                    Total neto: <span id="total-neto-swal">${total}</span><br>
 
                     Monto: <span id="acumulado" estatus="false" mensj="Ups, olvidaste seleccionar el un total de metodos de pago">0</span>
                     </div>
@@ -234,14 +234,94 @@ function registrarOrden(type){
 
 
                         $("#metodo-1").change(function(){
-                            $(this).val() == "Tarjeta" ? $("#tipo-1").empty().append(
-                                `<option value="credito">Credito</option>
-                                <option value="debito">Debito</option>
-                                `
-                            ) : $("#tipo-1").empty().append(
-                                `<option value="NA">No aplica</option>
-                                `)
+                            if($(this).val() == "Tarjeta" ){
+                                $("#tipo-1").empty().append(
+                                    `<option value="credito">Credito</option>
+                                    <option value="debito">Debito</option>
+                                    `
+                                ) 
+
+                            } else{
+                                $("#tipo-1").empty().append(
+                                    `<option value="NA">No aplica</option>
+                                    `)
+                                    let monto_1_ch = $("#monto-1").val()
+                                    let acumulado_ch = $("#acumulado").val()
+                                    let nuevo_acumulado = acumulado_ch - monto_1_ch
+                                    $("#acumulado").val(nuevo_acumulado)
+                                    $("#monto-1").val("")
+                            }
                         })
+
+                        $("#metodo-2").change(function(){
+                            if($(this).val() == "Tarjeta" ){
+                                $("#tipo-2").empty().append(
+                                    `<option value="credito">Credito</option>
+                                    <option value="debito">Debito</option>
+                                    `
+                                ) 
+                                
+
+
+                            } else{
+                                $("#tipo-2").empty().append(
+                                    `<option value="NA">No aplica</option>
+                                    `)
+                                    
+                                    let monto_2_ch = $("#monto-3").val()
+                                    let acumulado_ch= $("#acumulado").val()
+                                    let nuevo_acumulado = acumulado_ch - monto_2_ch
+                                    $("#acumulado").val(nuevo_acumulado)
+                                    $("#monto-2").val("")
+                            }
+                        })
+
+                        $("#metodo-3").change(function(){
+                            if($(this).val() == "Tarjeta" ){
+                                $("#tipo-3").empty().append(
+                                    `<option value="credito">Credito</option>
+                                    <option value="debito">Debito</option>
+                                    `
+                                ) 
+
+                            } else{
+                                $("#tipo-3").empty().append(
+                                    `<option value="NA">No aplica</option>
+                                    `)
+                                
+                                 let monto_2_ch = $("#monto-3").val()
+                                let acumulado_ch = $("#acumulado").val()
+                                let nuevo_acumulado = acumulado_ch - monto_2_ch
+                                $("#acumulado").val(nuevo_acumulado)
+                                $("#monto-3").val("")
+                            }
+                        })
+
+                        $("#tipo-1").change(function(){
+                            let monto_1_ch = $("#monto-1").val()
+                            let acumulado = $("#acumulado").val()
+                            let nuevo_acumulado = acumulado - monto_1_ch
+                            $("#acumulado").val(nuevo_acumulado)
+                            $("#monto-1").val("")
+                        })
+
+                        $("#tipo-2").change(function(){
+                            let monto_2_ch = $("#monto-2").val()
+                            let acumulado = $("#acumulado").val()
+                            let nuevo_acumulado = acumulado - monto_2_ch
+                            $("#acumulado").val(nuevo_acumulado)
+                            $("#monto-2").val("")
+                        })
+
+                        $("#tipo-3").change(function(){
+                            let monto_3_ch = $("#monto-3").val()
+                            let acumulado = $("#acumulado").val()
+                            let nuevo_acumulado = acumulado - monto_3_ch
+                            $("#acumulado").val(nuevo_acumulado)
+                            $("#monto-3").val("")
+                        })
+
+
 
 
                     })
@@ -263,10 +343,17 @@ function registrarOrden(type){
                                 if(Number.isNaN(valor)){
                                     valor = 0
                                 }
-                              
-                                let mont_total = valor + monto2
+
+                                //Calculando comision 
+                                if($("#tipo-1").val()=="credito"){comisi1 =((valor*3)/100)}else if($("#tipo-1").val()=="debito"){comisi1 =((valor*0.6)/100)}else{comisi1 =0}; 
+                                if($("#tipo-2").val()=="credito"){comisi2 =((monto2*3)/100)}else if($("#tipo-2").val()=="debito"){comisi2 =((monto2*0.6)/100)}else{comisi2 =0}; 
                                 
-                               if(mont_total == limit){
+                                monto2 = monto2 + comisi2;
+                                valor = valor + comisi1;
+
+                                let mont_total = valor + monto2;
+                                
+                              /*  if(mont_total == limit){
                                 $("#acumulado").css("color", "green")
                                 $("#acumulado").attr("estatus", true);
                                } else{
@@ -285,7 +372,7 @@ function registrarOrden(type){
                                 }
                                 $("#acumulado").css("color", "tomato")
                                 
-                               }
+                               } */
                                $("#acumulado").empty().append(mont_total);
                     
                     
@@ -302,9 +389,16 @@ function registrarOrden(type){
                                 if(Number.isNaN(valor)){
                                     valor = 0
                                 }
-                                let mont_total = valor + monto1
 
-                                if(mont_total == limit){
+                                //Calculando comision 
+                                if($("#tipo-2").val()=="credito"){comisi =((valor*3)/100)}else if($("#tipo-1").val()=="debito"){comisi =((valor*0.6)/100)}else{comisi =0}; 
+                                if($("#tipo-2").val()=="credito"){comisi2 =((monto1*3)/100)}else if($("#tipo-2").val()=="debito"){comis2 =((monto1*0.6)/100)}else{comis2 =0}; 
+                              
+                                valor = valor + comisi
+                                monto1 = monto1 + comisi2;
+                                let mont_total = valor + monto1 
+
+                                /* if(mont_total == limit){
                                 $("#acumulado").css("color", "green")
                                 $("#acumulado").attr("estatus", true);
                                } else{
@@ -324,7 +418,7 @@ function registrarOrden(type){
                                 
                                 $("#acumulado").css("color", "tomato")
                                 
-                               }
+                               } */
                                $("#acumulado").empty().append(mont_total);
                     
                             })
@@ -344,9 +438,17 @@ function registrarOrden(type){
                                     valor = 0
                                 }
 
+                                //Calculando comision 
+                                if($("#tipo-1").val()=="credito"){comisi =((valor*3)/100)}else if($("#tipo-1").val()=="debito"){comisi =((valor*0.6)/100)}else{comisi =0};
+                                if($("#tipo-2").val()=="credito"){monto2 =((monto2*3)/100)}else if($("#tipo-2").val()=="debito"){comisi2 =((monto2*0.6)/100)}else{comisi2 =0}; 
+                                if($("#tipo-3").val()=="credito"){monto3 =((monto3*3)/100)}else if($("#tipo-3").val()=="debito"){comisi3 =((monto3*0.6)/100)}else{comisi3 =0};  
+                              
+                                valor = valor + comisi
+                                monto2 = monto2 + comisi2;
+                                monto3 = monto3 + comisi3;
                                 let mont_total = valor + monto2  + monto3;
 
-                                if(mont_total == limit){
+                                /* if(mont_total == limit){
                                     $("#acumulado").css("color", "green")
                                     $("#acumulado").attr("estatus", true);
                                    } else{
@@ -366,7 +468,7 @@ function registrarOrden(type){
                                     $("#acumulado").css("color", "tomato")
                                   
                                     
-                                   }
+                                   } */
                                    $("#acumulado").empty().append(mont_total);
                     
                             })
@@ -384,9 +486,16 @@ function registrarOrden(type){
                                     valor = 0
                                 }
 
+                                if($("#tipo-1").val()=="credito"){comisi =((monto1*3)/100)}else if($("#tipo-1").val()=="debito"){comisi =((monto1*0.6)/100)}else{comisi =0};
+                                if($("#tipo-2").val()=="credito"){comisi2 =((valor*3)/100)}else if($("#tipo-2").val()=="debito"){comisi2 =((valor*0.6)/100)}else{comisi2 =0}; 
+                                if($("#tipo-3").val()=="credito"){comisi3 =((monto3*3)/100)}else if($("#tipo-3").val()=="debito"){comisi3 =((monto3*0.6)/100)}else{comisi3 =0};  
+
+                                valor = valor + comisi2
+                                monto1 = monto1 + comisi;
+                                monto3 = monto3 + comisi3;
                                 let mont_total = valor + monto1  + monto3;
 
-                                if(mont_total == limit){
+                                /* if(mont_total == limit){
                                     $("#acumulado").css("color", "green")
                                     $("#acumulado").attr("estatus", true);
                                    } else{
@@ -406,7 +515,7 @@ function registrarOrden(type){
                                     $("#acumulado").css("color", "tomato")
                                    
                                     
-                                   }
+                                   } */
                                    $("#acumulado").empty().append(mont_total);
                               
                             })
@@ -424,9 +533,17 @@ function registrarOrden(type){
                                     valor = 0
                                 }
 
+                                if($("#tipo-1").val()=="credito"){comisi =((monto1*3)/100)}else if($("#tipo-1").val()=="debito"){comisi =((monto1*0.6)/100)}else{comisi =0};
+                                if($("#tipo-2").val()=="credito"){comisi2 =((monto2*3)/100)}else if($("#tipo-2").val()=="debito"){comisi2 =((monto2*0.6)/100)}else{comisi2 =0}; 
+                                if($("#tipo-3").val()=="credito"){comisi3 =((valor*3)/100)}else if($("#tipo-3").val()=="debito"){comisi3 =((valor*0.6)/100)}else{comisi3 =0};  
+
+                                valor = valor + comisi3
+                                monto1 = monto1 + comisi;
+                                monto2 = monto2 + comisi2;
+
                                 let mont_total = valor + monto1  + monto2;
 
-                                if(mont_total == limit){
+                                /* if(mont_total == limit){
                                     $("#acumulado").css("color", "green")
                                     $("#acumulado").attr("estatus", true);
                                    } else{
@@ -446,7 +563,7 @@ function registrarOrden(type){
                                     $("#acumulado").css("color", "tomato")
                                     
                                     
-                                   }
+                                   } */
                                    $("#acumulado").empty().append(mont_total);
                     
                             })
