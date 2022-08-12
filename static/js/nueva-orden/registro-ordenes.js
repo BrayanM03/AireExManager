@@ -77,13 +77,14 @@ function registrarOrden(type){
 
             Swal.fire({
                 icon: "question",
-                html: `<div class="container">
+                html: `<div class="container" >
+                <div id="contenerdor-vista">
                 <div class="row mb-3">
                     <div class="col-md-12 col-12">
                     <b>Agregar mas metodos de pago</b><br>
-                    Total neto: <span id="total-neto-swal">${total}</span><br>
+                    Subtotal de la orden: <span id="total-neto-swal">${total}</span><br>
 
-                    Monto: <span id="acumulado" estatus="false" mensj="Ups, olvidaste seleccionar el un total de metodos de pago">0</span>
+                    ¿Cuantos metodos de pago desea agregar a esta orden? Despues de elegir eliga la forma de pago, si es por tarjeta elija el tipo (se aumentara 3% de comision en tarjetas de credito Y 1.6% en tarjetas de debito)<br>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -99,9 +100,19 @@ function registrarOrden(type){
                 <div class="row" id="area-mas-metodos">  
                     
                 </div>
+
+                </div>
+                <div class="row mt-3 justify-content-center">  
+                    <div class="col-12 col-md-3">
+                        <div class="btn btn-primary" onclick="procesarMulti()">Procesar</div>
+                    </div>
+                </div>
                 </div>
                 
                 `,
+                showCancelButton: false,
+                showConfirmButton: false,
+                showDenyButton: false,
                 didOpen: function() {
 
                     $("#total-metodos").on("change", function() {
@@ -245,11 +256,7 @@ function registrarOrden(type){
                                 $("#tipo-1").empty().append(
                                     `<option value="NA">No aplica</option>
                                     `)
-                                    let monto_1_ch = $("#monto-1").val()
-                                    let acumulado_ch = $("#acumulado").val()
-                                    let nuevo_acumulado = acumulado_ch - monto_1_ch
-                                    $("#acumulado").val(nuevo_acumulado)
-                                    $("#monto-1").val("")
+                                   
                             }
                         })
 
@@ -268,11 +275,7 @@ function registrarOrden(type){
                                     `<option value="NA">No aplica</option>
                                     `)
                                     
-                                    let monto_2_ch = $("#monto-3").val()
-                                    let acumulado_ch= $("#acumulado").val()
-                                    let nuevo_acumulado = acumulado_ch - monto_2_ch
-                                    $("#acumulado").val(nuevo_acumulado)
-                                    $("#monto-2").val("")
+                                   
                             }
                         })
 
@@ -289,15 +292,11 @@ function registrarOrden(type){
                                     `<option value="NA">No aplica</option>
                                     `)
                                 
-                                 let monto_2_ch = $("#monto-3").val()
-                                let acumulado_ch = $("#acumulado").val()
-                                let nuevo_acumulado = acumulado_ch - monto_2_ch
-                                $("#acumulado").val(nuevo_acumulado)
-                                $("#monto-3").val("")
+                                
                             }
                         })
 
-                        $("#tipo-1").change(function(){
+                        /* $("#tipo-1").change(function(){
                             let monto_1_ch = $("#monto-1").val()
                             let acumulado = $("#acumulado").val()
                             let nuevo_acumulado = acumulado - monto_1_ch
@@ -319,7 +318,7 @@ function registrarOrden(type){
                             let nuevo_acumulado = acumulado - monto_3_ch
                             $("#acumulado").val(nuevo_acumulado)
                             $("#monto-3").val("")
-                        })
+                        }) */
 
 
 
@@ -571,10 +570,11 @@ function registrarOrden(type){
                        
                     
                     }
+
+                    
+
+
                 },
-                confirmButtonText: "Aceptar",
-                showCancelButton: true,
-                cancelButtonText: "No",
                 preConfirm: function(){
                     let mensj = $("#acumulado").attr("mensj")
                     let stats = $("#acumulado").attr("estatus")
@@ -636,6 +636,16 @@ function registrarOrden(type){
 
         }
     })
+
+    function procesarMulti(){
+        $("#contenedor-vista").empty().append(`
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <img src="img/load.gif" alt="" style="width:80px;">
+            </div>
+        </div>`)
+    
+    } 
         
     }  
 
