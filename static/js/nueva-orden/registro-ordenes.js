@@ -571,6 +571,7 @@ function registrarOrden(type){
                     
                     }
 
+                     
                     
 
 
@@ -637,19 +638,21 @@ function registrarOrden(type){
         }
     })
 
-    function procesarMulti(){
-        $("#contenedor-vista").empty().append(`
-        <div class="row">
-            <div class="col-md-12 col-12">
-                <img src="img/load.gif" alt="" style="width:80px;">
-            </div>
-        </div>`)
     
-    } 
         
     }  
 
 }
+
+function procesarMulti(){
+    $("#contenedor-vista").empty().append(`
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <img src="img/load.gif" alt="" style="width:80px;">
+        </div>
+    </div>`)
+
+}   
 
 function sendData(data){
 
