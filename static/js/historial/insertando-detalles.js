@@ -39,11 +39,12 @@ function agregarServicioAOrden(){
       
           
           let categoria = $("#buscador-select").val();
+          let comision = $("#comision").val();
       
           $.ajax({
             type: "POST",
             url: "../servidor/historial/editar-detalle.php",
-            data: { id: id_producto, precio: precio, tabla: "servicios", series: valoresSeries, categoria: categoria, id_orden: id_orden, cantidad: cantidad},
+            data: { id: id_producto, precio: precio, comision: comision, tabla: "servicios", series: valoresSeries, categoria: categoria, id_orden: id_orden, cantidad: cantidad},
             dataType: "JSON",
             success: function (response) {
               if(response.status == true){
@@ -109,11 +110,12 @@ function agregarRefaccionAOrden(){
       
           
           let categoria = $("#buscador-select").val();
+          let comision = $("#comision").val();
       
           $.ajax({
             type: "POST",
             url: "../servidor/historial/editar-detalle.php",
-            data: { id: id_producto, precio: precio, tabla: "refacciones", series: valoresSeries, categoria: categoria, id_orden: id_orden, cantidad: cantidad},
+            data: { id: id_producto, precio: precio, comision: comision, tabla: "refacciones", series: valoresSeries, categoria: categoria, id_orden: id_orden, cantidad: cantidad},
             dataType: "JSON",
             success: function (response) {
               setPantallaCargando() 
@@ -181,11 +183,12 @@ function agregarProductoAOrden(){
                 let id_producto = $("#datos-btn").attr("id_producto");
                 let precio = $("#precio").val();
                 let categoria = $("#buscador-select").val();
+                let comision = $("#comision").val();
             
                 $.ajax({
                   type: "POST",
                   url: "../servidor/historial/editar-detalle.php",
-                  data: { id: id_producto, series: valoresSeries, precio: precio, tabla: "inventario", categoria: categoria, id_orden: id_orden},
+                  data: { id: id_producto, comision: comision, series: valoresSeries, precio: precio, tabla: "inventario", categoria: categoria, id_orden: id_orden},
                   dataType: "JSON",
                   success: function (response) {
                     if(response.status == true){

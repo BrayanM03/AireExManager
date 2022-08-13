@@ -100,7 +100,7 @@
 
             <div class="row mt-3 justify-content-center">
                 <div class="col-12 col-md-4">
-                     <div>Comisión</div>
+                     <div>Comisión <div id="label-comision"></div></div>
                     <div class="form-group" style="display:flex; flex-direction:row">
                         
                      <h3>$  </h3><input id="comision" class="form-control" placeholder="0.00">

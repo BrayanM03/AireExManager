@@ -147,6 +147,10 @@ producto.on('select2:select', function(selection){
   
   })
 
+
+  
+
+
  }
 
  function busquedaRefacciones() {
@@ -256,10 +260,11 @@ $("#cantidad").keyup(function(){
   let tipo_tarjeta = $("#metodo-pago").attr("tipo")
 
 
-if(tipo_tarjeta == "Credito"){
+if(tipo_tarjeta == "Credito"){ 
   comisi = ((monto_total*3)/100)
   console.log(comisi);
   $("#comision").val(comisi)
+
 }else if(tipo_tarjeta == "Debito"){
   comisi = ((monto_total*1.6)/100)
   console.log(comisi);

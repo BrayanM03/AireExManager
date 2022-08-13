@@ -53,6 +53,7 @@ function obtenerParametroGet(name) {
   function changeMetodoPago(){
    
  
+    
     if($("#metodo-pago").val() == "Tarjeta"){
       Swal.fire({
         icon: "question",
@@ -67,27 +68,50 @@ function obtenerParametroGet(name) {
       }).then((result) => {
         if(result.isConfirmed){
               $("#metodo-pago").attr("tipo","Debito");
+              $("#label-comision").text("tarjeta debito(1.6%):");
               price = $("#precio").val() == "" ? 0 : $("#precio").val();
               price =  parseFloat(price)
-              comisi = ((price*1.6)/100);
-             $("#comision").val(comisi);
+              if($("#buscador-select").val() != "inventario"){
+
+                cantidad = $("#cantidad").val()
+                net = cantidad * price;
+                comisi = ((net*1.6)/100);
+              $("#comision").val(comisi);
+              }else{
+                console.log("Hola");
+                setComision()
+              }
+              
         }else if(result.isDenied){
               $("#metodo-pago").attr("tipo","Credito");
+              $("#label-comision").text("tarjeta credito(3%):");
               price = $("#precio").val() == "" ? 0 : $("#precio").val();
               price = parseFloat(price)
-              comisi = ((price*3)/100);
-             $("#comision").val(comisi);
+              
+              if($("#buscador-select").val() != "inventario"){
+
+                cantidad = $("#cantidad").val()
+                net = cantidad * price;
+                comisi = ((net*3)/100);
+              $("#comision").val(comisi);
+              }else{
+                
+                setComision()
+              }
 
         }else{
           $("#metodo-pago").attr("tipo","");
-             
-             $("#comision").val(0);
+          $("#label-comision").text("");
+          $("#comision").val(0);
         }})
     }else{
       $("#metodo-pago").attr("tipo","");
+      $("#label-comision").text("");
+      $("#comision").val(0);
 
     }
-  }
+  
+}
 
 
   

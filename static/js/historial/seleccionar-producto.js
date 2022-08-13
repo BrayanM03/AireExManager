@@ -185,7 +185,7 @@ function formatSelectionP(repo) {
   }
   
   setearSeries(repo.id);
-  $("#precio").val(price)
+  $("#precio").val(price);
   let tipo_tarjeta = $("#metodo-pago").attr("tipo")
   if(tipo_tarjeta == "credito"){
     comisi = ((price*3)/100)
@@ -274,7 +274,7 @@ function setearSeries(id_producto){
                               <div class="col-12 col-md-3">${element[2]}</div>
                               <div class="col-12 col-md-3">${element[3]}</div>
                               <div class="col-12 col-md-3">
-                                  <input class="form-check-input" type="checkbox" value="${element[0]}" id="${element[0]}">
+                                  <input class="form-check-input" onchange="setComision()" type="checkbox" value="${element[0]}" id="${element[0]}">
                               </div>
                           </div>
                       </div>
@@ -288,7 +288,7 @@ function setearSeries(id_producto){
                               <div class="col-12 col-md-3">${element[2]}</div>
                               <div class="col-12 col-md-3">${element[3]}</div>
                               <div class="col-12 col-md-3">
-                                  <input class="form-check-input" type="checkbox" value="${element[0]}" id="${element[0]}">
+                                  <input class="form-check-input" onchange="setComision()" type="checkbox" value="${element[0]}" id="${element[0]}">
                               </div>
                           </div>
                       </div>
@@ -302,6 +302,8 @@ function setearSeries(id_producto){
                    
              counter++;
             });
+
+            
             /* tableDestroy();
             tableInit(array_dataset); */
           }
@@ -321,7 +323,9 @@ $(".list-group input[type=checkbox]:checked").each(function(){
     valoresSeries.push(this.value);
 });
 
-console.log(valoresSeries);
+
+
+
 
   if(valoresSeries.length == 0){
       Toast.fire({
@@ -387,5 +391,30 @@ function setPantallaCargando(){
   `)
 }
 
+function setComision(){
+   let cont = 1;
+   $("#comision").val(0);
+  $(".list-group input[type=checkbox]:checked").each(function(){
+ 
+    
+    let pric = $("#precio").val();
+    neto = pric * cont;
+
+    let tipo = $("#metodo-pago").attr("tipo")
+    console.log(tipo);
+    if(tipo == "Credito"){
+      comision = ((neto * 3)/100)
+    }else if(tipo == "Debito"){
+      comision = ((neto * 1.6)/100)
+    }else{
+      comision = 0
+    }
+    
+    console.log(neto);
+    $("#comision").val(comision);
+    cont++;
+    //valoresSeries.push(this.value);
+});
+}
 
 
