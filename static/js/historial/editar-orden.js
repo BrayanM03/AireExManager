@@ -51,8 +51,8 @@ function obtenerParametroGet(name) {
   }
 
   function changeMetodoPago(){
-    console.log("hola");
-    console.log($("#metodo-pago").val());
+   
+ 
     if($("#metodo-pago").val() == "Tarjeta"){
       Swal.fire({
         icon: "question",
@@ -89,18 +89,6 @@ function obtenerParametroGet(name) {
     }
   }
 
-  $("#cantidad").keyup(function(){
 
-    let tipo_tarjeta = $("#metodo-pago").attr("tipo")
-  if(tipo_tarjeta == "credito"){
-    comisi = ((price*3)/100)
-    $("#comision").val(comisi)
-  }else if(tipo_tarjeta == "debito"){
-    comisi = ((price*1.6)/100)
-    $("#comision").val(comisi)
-  }else{
-    $("#comision").val(0)
-  }
-  })
   
   

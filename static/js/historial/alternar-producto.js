@@ -248,6 +248,27 @@ refacciones.select2({
 
 });
 
+$("#cantidad").keyup(function(){
+  console.log($("#cantidad").val());
+  let price = $("#precio").val() == "" ? 0 : $("#precio").val();
+  let monto_total = $("#cantidad").val() * parseFloat(price);
+ 
+  let tipo_tarjeta = $("#metodo-pago").attr("tipo")
+
+
+if(tipo_tarjeta == "Credito"){
+  comisi = ((monto_total*3)/100)
+  console.log(comisi);
+  $("#comision").val(comisi)
+}else if(tipo_tarjeta == "Debito"){
+  comisi = ((monto_total*1.6)/100)
+  console.log(comisi);
+  $("#comision").val(comisi)
+}else{
+  $("#comision").val(0)
+}
+})
+
  }
 
  function formatsSelectionRefaccion(repo){
@@ -262,16 +283,7 @@ refacciones.select2({
       if(sucursal_usuario == repo.sucursal){
         let label =  repo.descripcion + " "+ repo.modelo + " " + repo.marca;
         $("#precio").val(repo.precio)
-        let tipo_tarjeta = $("#metodo-pago").attr("tipo")
-  if(tipo_tarjeta == "credito"){
-    comisi = ((price*3)/100)
-    $("#comision").val(comisi)
-  }else if(tipo_tarjeta == "debito"){
-    comisi = ((price*1.6)/100)
-    $("#comision").val(comisi)
-  }else{
-    $("#comision").val(0)
-  }
+        
         $("#datos-btn").attr("id_producto", repo.id)
         return label;
         }else{
@@ -420,6 +432,27 @@ refacciones.select2({
         templateSelection: formatsSelectionServicio
   
   });
+
+  $("#cantidad").keyup(function(){
+    console.log($("#cantidad").val());
+    let price = $("#precio").val() == "" ? 0 : $("#precio").val();
+    let monto_total = $("#cantidad").val() * parseFloat(price);
+   
+    let tipo_tarjeta = $("#metodo-pago").attr("tipo")
+  
+  
+  if(tipo_tarjeta == "Credito"){
+    comisi = ((monto_total*3)/100)
+    console.log(comisi);
+    $("#comision").val(comisi)
+  }else if(tipo_tarjeta == "Debito"){
+    comisi = ((monto_total*1.6)/100)
+    console.log(comisi);
+    $("#comision").val(comisi)
+  }else{
+    $("#comision").val(0)
+  }
+  })
   
    }
   

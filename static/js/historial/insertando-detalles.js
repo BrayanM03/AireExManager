@@ -1,5 +1,5 @@
 id_orden = getParameterByName("id");
-console.log(id_orden);
+
 function agregarServicioAOrden(){
 
   Swal.fire({
