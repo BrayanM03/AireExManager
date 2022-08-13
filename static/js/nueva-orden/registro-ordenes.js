@@ -57,7 +57,7 @@ function registrarOrden(type){
 
         if (response.isConfirmed){
 
-            let data = {
+            var data = {
                 "id_cliente": id_cliente,
                 "total": total,
                 "id_sucursal": id_sucursal,
@@ -77,8 +77,12 @@ function registrarOrden(type){
 
             Swal.fire({
                 icon: "question",
-                html: `<div class="container" >
-                <div id="contenerdor-vista">
+                html: `<div class="container" id="container" id_cliente="${id_cliente}" 
+                total="${total}" id_sucursal="${id_sucursal}" id_direccion="${direccion}" metodo_pago="${metodo_pago}"
+                tipo="${tipo}" pago_domicilio="${pago_domicilio}" pago_sucursal="${pago_sucursal}"
+                verificar_electrico="${verificar_electrico}" tiene_electrico="${tiene_electrico}" cantidad_personal="${cantidad_personal}"
+                tiempo_horas="${tiempo_horas}" nombre_personal="${nombre_personal}">
+                <div id="contenedor-vista">
                 <div class="row mb-3">
                     <div class="col-md-12 col-12">
                     <b>Agregar mas metodos de pago</b><br>
@@ -103,8 +107,8 @@ function registrarOrden(type){
 
                 </div>
                 <div class="row mt-3 justify-content-center">  
-                    <div class="col-12 col-md-3">
-                        <div class="btn btn-primary" onclick="procesarMulti()">Procesar</div>
+                    <div class="col-12 col-md-3" id="col-btn-procesar">
+                        <div class="btn btn-primary" onclick="procesarMulti()" id="btn-procesar">Procesar</div>
                     </div>
                 </div>
                 </div>
@@ -114,6 +118,7 @@ function registrarOrden(type){
                 showConfirmButton: false,
                 showDenyButton: false,
                 didOpen: function() {
+                    
 
                     $("#total-metodos").on("change", function() {
 
@@ -225,7 +230,7 @@ function registrarOrden(type){
                                     </select>   
                                 </div>
                                 <div class="col-md-4 col-12">
-                                    <select id="tipo-2" class="form-control"> 
+                                    <select id="tipo-3" class="form-control"> 
                                         <option value="NA">No aplica</option>  
                                     </select>  
                                 </div>
@@ -296,29 +301,7 @@ function registrarOrden(type){
                             }
                         })
 
-                        /* $("#tipo-1").change(function(){
-                            let monto_1_ch = $("#monto-1").val()
-                            let acumulado = $("#acumulado").val()
-                            let nuevo_acumulado = acumulado - monto_1_ch
-                            $("#acumulado").val(nuevo_acumulado)
-                            $("#monto-1").val("")
-                        })
-
-                        $("#tipo-2").change(function(){
-                            let monto_2_ch = $("#monto-2").val()
-                            let acumulado = $("#acumulado").val()
-                            let nuevo_acumulado = acumulado - monto_2_ch
-                            $("#acumulado").val(nuevo_acumulado)
-                            $("#monto-2").val("")
-                        })
-
-                        $("#tipo-3").change(function(){
-                            let monto_3_ch = $("#monto-3").val()
-                            let acumulado = $("#acumulado").val()
-                            let nuevo_acumulado = acumulado - monto_3_ch
-                            $("#acumulado").val(nuevo_acumulado)
-                            $("#monto-3").val("")
-                        }) */
+                        
 
 
 
@@ -439,8 +422,8 @@ function registrarOrden(type){
 
                                 //Calculando comision 
                                 if($("#tipo-1").val()=="credito"){comisi =((valor*3)/100)}else if($("#tipo-1").val()=="debito"){comisi =((valor*0.6)/100)}else{comisi =0};
-                                if($("#tipo-2").val()=="credito"){monto2 =((monto2*3)/100)}else if($("#tipo-2").val()=="debito"){comisi2 =((monto2*0.6)/100)}else{comisi2 =0}; 
-                                if($("#tipo-3").val()=="credito"){monto3 =((monto3*3)/100)}else if($("#tipo-3").val()=="debito"){comisi3 =((monto3*0.6)/100)}else{comisi3 =0};  
+                                if($("#tipo-2").val()=="credito"){comisi2 =((monto2*3)/100)}else if($("#tipo-2").val()=="debito"){comisi2 =((monto2*0.6)/100)}else{comisi2 =0}; 
+                                if($("#tipo-3").val()=="credito"){comisi3 =((monto3*3)/100)}else if($("#tipo-3").val()=="debito"){comisi3 =((monto3*0.6)/100)}else{comisi3 =0};  
                               
                                 valor = valor + comisi
                                 monto2 = monto2 + comisi2;
@@ -571,9 +554,6 @@ function registrarOrden(type){
                     
                     }
 
-                     
-                    
-
 
                 },
                 preConfirm: function(){
@@ -630,6 +610,10 @@ function registrarOrden(type){
             })
 
         }else{ 
+            comi = $("#comision").val()
+            neto = $("#total").val()
+            data["comision_total"] = comi;
+            data["neto_total"] = neto;
             data["multi_metodo"] = []
             console.log(data);
             sendData(data)
@@ -640,11 +624,127 @@ function registrarOrden(type){
 
     
         
-    }  
+    } 
+    
+   
 
 }
 
 function procesarMulti(){
+    console.log("Holaa");
+    let total_metodos = $("#total-metodos").val();
+
+    var data = {
+        "id_cliente": $("#container").attr("id_cliente"),	
+        "total": $("#container").attr("total"),
+        "id_sucursal": $("#container").attr("id_sucursal"),
+        "id_direccion": $("#container").attr("id_direccion"),
+        "metodo_pago": $("#container").attr("metodo_pago"),
+        "tipo": $("#container").attr("tipo"),
+        "pago_domicilio" : $("#container").attr("pago_domicilio"),
+        "pago_sucursal" : $("#container").attr("pago_sucursal"),
+        "verificar_electrico" : $("#container").attr("verificar_electrico"),
+        "tiene_electrico" : $("#container").attr("tiene_electrico"),
+        "cantidad_personal" : $("#container").attr("cantidad_personal"),
+        "tiempo_horas" : $("#container").attr("tiempo_horas"),
+        "nombre_personal" : $("#container").attr("nombre_personal")
+    };
+                 
+    if(total_metodos == 2){
+
+                    var metodo_1 = $("#metodo-1").val();
+                    var metodo_2 = $("#metodo-2").val();
+                    
+                    var monto_1 = $("#monto-1").val();
+                    var monto_2 = $("#monto-2").val();
+
+                    var tipo_1 = $("#tipo-1").val();
+                    var tipo_2 = $("#tipo-2").val();
+
+                    if(tipo_1 == "credito") {
+                        comision_1 = ((monto_1*3)/100) 
+                    }else if(tipo_1 == "debito"){
+                        comision_1 = ((monto_1*1.6)/100)
+                    }else{
+                        comision_1 = 0
+                    }
+
+                    if(tipo_2 == "credito") {
+                        comision_2 = ((monto_2*3)/100) 
+                    }else if(tipo_2 == "debito"){
+                        comision_2 = ((monto_2*1.6)/100)
+                    }else{
+                        comision_2 = 0
+                    }
+
+                    var comision_total =  parseFloat(comision_1) +  parseFloat(comision_2);
+                    var monto_total =  parseFloat(monto_1) +  parseFloat(monto_2)
+                    var neto_total =  parseFloat(monto_total) +  parseFloat(comision_total);
+
+                    
+
+                    data["multi_metodo"] = [
+                        [metodo_1, monto_1],
+                        [metodo_2, monto_2]
+                    ]
+                    
+
+                 }else if(total_metodos == 3){
+
+                    var  metodo_1 = $("#metodo-1").val();
+                    var  metodo_2 = $("#metodo-2").val();
+                    var  metodo_3 = $("#metodo-3").val();
+                    
+                    var  monto_1 = $("#monto-1").val();
+                    var  monto_2 = $("#monto-2").val();
+                    var  monto_3 = $("#monto-3").val();
+
+        
+                    var tipo_1 = $("#tipo-1").val();
+                    var tipo_2 = $("#tipo-2").val();
+                    var tipo_3 = $("#tipo-3").val();
+
+                    if(tipo_1 == "credito") {
+                        comision_1 = ((monto_1*3)/100) 
+                    }else if(tipo_1 == "debito"){
+                        comision_1 = ((monto_1*1.6)/100)
+                    }else{
+                        comision_1 = 0
+                    }
+
+                    if(tipo_2 == "credito") {
+                        comision_2 = ((monto_2*3)/100) 
+                    }else if(tipo_2 == "debito"){
+                        comision_2 = ((monto_2*1.6)/100)
+                    }else{
+                        comision_2 = 0
+                    }
+
+                    if(tipo_3 == "credito") {
+                        comision_3 = ((monto_3*3)/100)
+                    }else if(tipo_3 == "debito"){
+                        comision_3 = ((monto_3*1.6)/100)
+                    }else{
+                        comision_3 = 0
+                    }
+
+                    var comision_total = parseFloat(comision_1)+  parseFloat(comision_2) +  parseFloat(comision_3);
+                    var monto_total =  parseFloat(monto_1) +  parseFloat(monto_2) +  parseFloat(monto_3);
+                    var neto_total =  parseFloat(monto_total) +  parseFloat(comision_total);
+
+                    
+                    data["multi_metodo"] = [
+                        [metodo_1, monto_1],
+                        [metodo_2, monto_2],
+                        [metodo_3, monto_3]
+                    ]
+                 }
+
+                 data["comision_total"] = comision_total;
+                 data["neto_total"] = neto_total;	
+
+    $("#btn-procesar").attr("disabled", true);
+    $("#btn-procesar").empty().append("Procesando...");
     $("#contenedor-vista").empty().append(`
     <div class="row">
         <div class="col-md-12 col-12">
@@ -652,7 +752,36 @@ function procesarMulti(){
         </div>
     </div>`)
 
-}   
+    setTimeout(()=>{
+        $("#contenedor-vista").empty().append(`
+    <div class="row">
+        <div class="col-md-12 col-12">
+        <span>Subtotal: ${monto_total}</span><br>
+            <span>Comisión: ${comision_total}</span><br>
+            <h3>Neto: ${neto_total}</h3>
+        </div>
+    </div>`)
+
+    $("#btn-procesar").attr("disabled", true);
+    $("#btn-procesar").removeClass("btn-primary").addClass("btn-success");
+    $("#btn-procesar").attr("onclick", "");
+    $("#btn-procesar").empty().append("Realizar venta");
+
+    document.getElementById("btn-procesar").onclick = function(e){
+        sendData(data)
+    }
+    },3000)
+
+    
+
+    
+
+}  
+
+sendDataz = (data) => {
+    console.log(data);
+}
+ 
 
 function sendData(data){
 

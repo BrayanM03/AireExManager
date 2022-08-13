@@ -65,6 +65,16 @@ function cambiarSeleccionarProducto() {
             </div>
 
             <div class="row mt-3 justify-content-center">
+                <div class="col-12 col-md-4">
+                     <div>Comisión</div>
+                    <div class="form-group" style="display:flex; flex-direction:row">
+                        
+                     <h3>$  </h3><input id="comision" class="form-control" placeholder="0.00">
+                     </div>
+                </div>
+            </div>
+
+            <div class="row mt-3 justify-content-center">
                 <div class="col-12 col-md-3">
                      <div id="datos-btn" class="btn btn-info" onclick="agregarProductoAOrden()">Agregar a la orden</div>
                 </div>
@@ -167,6 +177,15 @@ producto.on('select2:select', function(selection){
 
         <div class="card-body" style="font-size:12px;">
 
+        <div class="row mt-3 justify-content-center">
+                <div class="col-12 col-md-4">
+                     <div>Comisión</div>
+                    <div class="form-group" style="display:flex; flex-direction:row">
+                        
+                     <h3>$  </h3><input id="comision" class="form-control" placeholder="0.00">
+                     </div>
+                </div>
+            </div>
 
             <div class="row mt-3 justify-content-center">
                 <div class="col-12 col-md-3">
@@ -243,6 +262,16 @@ refacciones.select2({
       if(sucursal_usuario == repo.sucursal){
         let label =  repo.descripcion + " "+ repo.modelo + " " + repo.marca;
         $("#precio").val(repo.precio)
+        let tipo_tarjeta = $("#metodo-pago").attr("tipo")
+  if(tipo_tarjeta == "credito"){
+    comisi = ((price*3)/100)
+    $("#comision").val(comisi)
+  }else if(tipo_tarjeta == "debito"){
+    comisi = ((price*1.6)/100)
+    $("#comision").val(comisi)
+  }else{
+    $("#comision").val(0)
+  }
         $("#datos-btn").attr("id_producto", repo.id)
         return label;
         }else{
@@ -321,6 +350,15 @@ refacciones.select2({
   
           <div class="card-body" style="font-size:12px;">
   
+          <div class="row mt-3 justify-content-center">
+                <div class="col-12 col-md-4">
+                     <div>Comisión</div>
+                    <div class="form-group" style="display:flex; flex-direction:row">
+                        
+                     <h3>$  </h3><input id="comision" class="form-control" placeholder="0.00">
+                     </div>
+                </div>
+            </div>
   
               <div class="row mt-3 justify-content-center">
                   <div class="col-12 col-md-3">
@@ -391,6 +429,7 @@ refacciones.select2({
       
       let label =  repo.descripcion
       $("#precio").val(repo.precio)
+     
       $("#datos-btn").attr("id_producto", repo.id)
       return label;
       

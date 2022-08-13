@@ -5,7 +5,7 @@ $.ajax({
     url: "../servidor/historial/traer-dato-orden.php",
     data: {"id_orden": id_orden},
     dataType: "JSON",
-    success: function (response) {
+    success: function (response) { 
       
        $("#nombre").val(response["data"].cliente)
        $("#fecha").val(response["data"].fecha_inicio)
@@ -49,4 +49,58 @@ function obtenerParametroGet(name) {
       ? ""
       : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
+
+  function changeMetodoPago(){
+    console.log("hola");
+    console.log($("#metodo-pago").val());
+    if($("#metodo-pago").val() == "Tarjeta"){
+      Swal.fire({
+        icon: "question",
+        text: "Elige el tipo de tarjeta",
+        showCancelButton: false,
+        showDenyButton: true,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Debito",
+        denyButtonText: "Credito",
+        reverseButtons: true,
+        allowOutsideClick: false,
+      }).then((result) => {
+        if(result.isConfirmed){
+              $("#metodo-pago").attr("tipo","Debito");
+              price = $("#precio").val() == "" ? 0 : $("#precio").val();
+              price =  parseFloat(price)
+              comisi = ((price*1.6)/100);
+             $("#comision").val(comisi);
+        }else if(result.isDenied){
+              $("#metodo-pago").attr("tipo","Credito");
+              price = $("#precio").val() == "" ? 0 : $("#precio").val();
+              price = parseFloat(price)
+              comisi = ((price*3)/100);
+             $("#comision").val(comisi);
+
+        }else{
+          $("#metodo-pago").attr("tipo","");
+             
+             $("#comision").val(0);
+        }})
+    }else{
+      $("#metodo-pago").attr("tipo","");
+
+    }
+  }
+
+  $("#cantidad").keyup(function(){
+
+    let tipo_tarjeta = $("#metodo-pago").attr("tipo")
+  if(tipo_tarjeta == "credito"){
+    comisi = ((price*3)/100)
+    $("#comision").val(comisi)
+  }else if(tipo_tarjeta == "debito"){
+    comisi = ((price*1.6)/100)
+    $("#comision").val(comisi)
+  }else{
+    $("#comision").val(0)
+  }
+  })
+  
   

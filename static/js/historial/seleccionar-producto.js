@@ -186,6 +186,16 @@ function formatSelectionP(repo) {
   
   setearSeries(repo.id);
   $("#precio").val(price)
+  let tipo_tarjeta = $("#metodo-pago").attr("tipo")
+  if(tipo_tarjeta == "credito"){
+    comisi = ((price*3)/100)
+    $("#comision").val(comisi)
+  }else if(tipo_tarjeta == "debito"){
+    comisi = ((price*1.6)/100)
+    $("#comision").val(comisi)
+  }else{
+    $("#comision").val(0)
+  }
   $("#datos-btn").attr("id_producto", repo.id)
   $("#datos-btn").attr("producto_id", repo.producto_id)
   $("#datos-btn").attr("serie_condensador", repo.serie_condensador)

@@ -31,12 +31,24 @@
                                 <option value="servicios">Servicio</option>
                             </select>
                         </div>
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-3">
                             <div class="form-group">
                                 <label for="fecha">Fecha</label>
                                 <input type="date" class="form-control" id="fecha" placeholder="Fecha" disabled>
                             </div>
                         </div>
+                        <div class="col-12 col-md-3">
+                            <label for="metodo-pago">Metodo pago</label>
+                            <select name="" id="metodo-pago" onchange="changeMetodoPago()" class="form-control">
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Transferencia">Transferencia</option>
+                            <option value="Tarjeta">Tarjeta</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="Sin definir">Sin definir</option>
+                            
+                            </select>
+                        </div>
+
                     </div>
 
                 </div>
@@ -84,6 +96,16 @@
                     </div>
                 </div>
 
+            </div>
+
+            <div class="row mt-3 justify-content-center">
+                <div class="col-12 col-md-4">
+                     <div>Comisión</div>
+                    <div class="form-group" style="display:flex; flex-direction:row">
+                        
+                     <h3>$  </h3><input id="comision" class="form-control" placeholder="0.00">
+                     </div>
+                </div>
             </div>
 
             <div class="row mt-3 justify-content-center">

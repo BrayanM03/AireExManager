@@ -26,6 +26,8 @@
     $total = $_POST['total'];
     $metodo_pago = $_POST['metodo_pago'];
     $id_sucursal = $_POST['id_sucursal'];
+    $comision = $_POST["comision_total"];
+    $neto = $_POST["neto_total"];
 
     $pago_domicilio = $_POST['pago_domicilio'];
     $pago_sucursal = $_POST['pago_sucursal'];
@@ -101,7 +103,7 @@
     $re = $con->prepare($insertar);
 
     $re->execute([$id_cliente, $id_direccion, $fecha_inicio, $hora_inicio, $fecha_cierre, $hora_cierre,
-                  $total, $estatus, $tipo, $metodo_pago, $_SESSION["id"], $id_sucursal, $estatus_multi_metodo,
+                  $neto, $estatus, $tipo, $metodo_pago, $_SESSION["id"], $id_sucursal, $estatus_multi_metodo,
                 $pago_domicilio, $pago_sucursal, $verificar_electrico, $tiene_electrico, $cantidad_personal, $tiempo_horas, $nombre_personal]);
 
     //Se finaliza la insercion de la orden
@@ -112,6 +114,21 @@
 
         $response = array("status"=> true, "mensj"=>"Venta generada con exito", "id_orden"=>$id_orden);
        
+
+
+        if($comision > 0){
+            $comision_desc = "Comision pago con tarjeta";
+            $insert = "INSERT INTO detalle_preventa_tmp(id,
+            descripcion,
+            cantidad,
+            precio_unitario,
+            importe,
+            producto_id,
+            user_id,
+            categoria) VALUES(null, ?,?,?,?,?,?,?)";
+            $resp = $con->prepare($insert);
+            $resp->execute([$comision_desc, 1, $comision, $comision, 0, $_SESSION["id"], "Costo extra"]);
+        }
 
         //Pasando los datos del detalle de prventa
         $consultar = "SELECT * FROM detalle_preventa_tmp WHERE user_id = ?";
@@ -128,6 +145,8 @@
             $response["partidas"] = $productos;
             //Obtenemos la utilidad de cada partida
             $tabla_origen = $row["categoria"];
+
+            
             
             if($tabla_origen == "inventario" || $tabla_origen == "refacciones"){
                 
@@ -159,7 +178,10 @@
             }else if($tabla_origen == "servicios"){
                 $utilidad_neta = $row["importe"];
                 $suma_utilidad += $utilidad_neta; 
-            }    
+            } else{
+                $utilidad_neta = $row["importe"];
+                $suma_utilidad += $utilidad_neta; 
+            }  
 
             //Insertando los datos
 
