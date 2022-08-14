@@ -661,8 +661,11 @@ function procesarMulti(){
                     var tipo_1 = $("#tipo-1").val();
                     var tipo_2 = $("#tipo-2").val();
 
+                    
+
                     if(tipo_1 == "credito") {
                         comision_1 = ((monto_1*3)/100) 
+                        
                     }else if(tipo_1 == "debito"){
                         comision_1 = ((monto_1*1.6)/100)
                     }else{
@@ -684,9 +687,12 @@ function procesarMulti(){
                     
 
                     data["multi_metodo"] = [
-                        [metodo_1, monto_1],
-                        [metodo_2, monto_2]
+                        [metodo_1, parseFloat(monto_1) + parseFloat(comision_1)],
+                        [metodo_2,parseFloat(monto_2) + parseFloat(comision_2)]
                     ]
+
+                    
+                    
                     
 
                  }else if(total_metodos == 3){
@@ -734,11 +740,12 @@ function procesarMulti(){
 
                     
                     data["multi_metodo"] = [
-                        [metodo_1, monto_1],
-                        [metodo_2, monto_2],
-                        [metodo_3, monto_3]
+                        [metodo_1, parseFloat(monto_1) + parseFloat(comision_1)],
+                        [metodo_2, parseFloat(monto_2) + parseFloat(comision_2)],
+                        [metodo_3, parseFloat(monto_3) + parseFloat(comision_3)]
                     ]
                  }
+
 
                  data["comision_total"] = comision_total;
                  data["neto_total"] = neto_total;	

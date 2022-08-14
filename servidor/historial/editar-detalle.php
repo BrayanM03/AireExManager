@@ -5,7 +5,7 @@ if ($_POST) {
     date_default_timezone_set('America/Matamoros');
 
  
-
+   
     $id = $_POST['id'];
     $id_orden = $_POST['id_orden'];
     $tabla = $_POST['tabla'];
@@ -143,25 +143,26 @@ function  comprobarStock($con, $id, $cantidad, $tabla){
         }
         $importe = $precio * $cantidad;
 
-        $select = "SELECT COUNT(*) FROM detalle_orden WHERE producto_id = ? AND categoria = ?";
+        $select = "SELECT COUNT(*) FROM detalle_orden WHERE producto_id = ? AND categoria = ? AND orden_id = ?";
         $resp = $con->prepare($select);
-        $resp->execute([$id, $tabla]);
+        $resp->execute([$id, $tabla, $id_orden]);
         $countDetalle = $resp->fetchColumn();
         $resp->closeCursor();
+        
         
         if($countDetalle > 0){
 
             if($tabla !== "servicios"){
                 $stockOK = comprobarStock($con, $id, $cantidad, $tabla);
-            }else{
+            }else{ 
                 $stockOK = true;
             }
 
             if($stockOK == true){
 
-                $select = "SELECT * FROM detalle_orden WHERE producto_id = ? AND categoria = ?";
+                $select = "SELECT * FROM detalle_orden WHERE producto_id = ? AND categoria = ? AND orden_id = ?";
             $resp = $con->prepare($select);
-            $resp->execute([$id, $tabla]);
+            $resp->execute([$id, $tabla, $id_orden]);
             $detalle = $resp->fetch();
             $resp->closeCursor();
 
@@ -210,6 +211,8 @@ function  comprobarStock($con, $id, $cantidad, $tabla){
                 $resp->closeCursor();
     
                 $response = array("status"=>true, "mensj"=>"Orden actualizada con exito");
+                $importe = $importe + floatval($_POST["comision"]);
+                /* print_r("importe: ".$importe); */
                 setearNuevosDatosdeOrden($con, $id_orden, $importe, $utilidad);
             }else{
                 $response = array("status"=>false, "mensj"=>"La cantidad supera el stock");
@@ -239,7 +242,8 @@ function  comprobarStock($con, $id, $cantidad, $tabla){
             $resp = $con->prepare($insertar);
             $resp->execute([$descripcion, $cantidad, $precio, $importe, $utilidad, $id, $_SESSION["id"], $id_orden, $tabla]);
             $resp->closeCursor();
-
+            $importe = $importe + floatval($_POST["comision"]);
+            /* print_r($importe); */
             setearNuevosDatosdeOrden($con, $id_orden, $importe, $utilidad);
             $response = array("status"=>true, "mensj"=>"Orden actualizada con exito");
 
@@ -269,6 +273,18 @@ function  comprobarStock($con, $id, $cantidad, $tabla){
 
             
         
+        }
+
+        if($_POST["comision"] != 0){
+            $insertar = "INSERT INTO detalle_orden (id, descripcion, cantidad, precio_unitario, importe, utilidad, producto_id, user_id, orden_id, categoria) VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $resp = $con->prepare($insertar);
+
+            $descripcion_comision = "Comision pago con tarjeta";
+            $comision = floatval($_POST["comision"]);
+            
+            $resp->execute([$descripcion_comision, '1', $comision, $comision, $comision, 0, $_SESSION["id"], $id_orden, 'Costo extra']);
+            $resp->closeCursor();
+
         }
 
 

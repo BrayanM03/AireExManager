@@ -248,7 +248,8 @@
                     
                 }
 
-                if($estatus_multi_metodo == "true") {
+                if($estatus_multi_metodo == "true") { 
+                    
                     foreach ($multi_metodo as $key => $value) {
                         $insert_multi_metodo = "INSERT INTO multi_metodo(id, metodo_pago, monto_pago, id_orden, id_sucursal)
                         VALUES(null, ?,?,?,?)";
