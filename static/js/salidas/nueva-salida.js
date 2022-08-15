@@ -2,7 +2,7 @@ $("#cantidad").keyup(function(e) {
     let cant = $(this).val()
    /*  cant = cant.replace(/ /g, "") */
    
-   codigo_da = $("#codigo-data").text()
+   codigo_da = $("#cantidad").attr("id_prod")
    if(codigo_da !== ""){
     
     if(cant.length <= 0){
@@ -14,7 +14,7 @@ $("#cantidad").keyup(function(e) {
 
         $.ajax({
             type: "POST",
-            url: "servidor/salidas/validar-codigo.php",
+            url: "../servidor/salidas/validar-codigo.php",
             data: {"cant":cant, "codigo":codigo_da},
             dataType: "JSON",
             success: function (response2) {
@@ -62,7 +62,7 @@ $("#cantidad").keyup(function(e) {
                 $('#feedback').addClass("invalid-feedback");
                 $('#feedback').text(response2.mensj);
                 validad_code_area = $("#cantidad").attr("valido", "no");
-    
+     
                }
             }
         });
@@ -128,7 +128,7 @@ $("#cantidad").keyup(function(e) {
 
     $.ajax({
         type: "POST",
-        url: "servidor/salidas/registrar-salida.php",
+        url: "../servidor/salidas/registrar-salida.php",
         data: data,
         dataType: "JSON",
         success: function (response2) {

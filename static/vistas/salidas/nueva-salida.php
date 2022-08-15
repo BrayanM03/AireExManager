@@ -23,10 +23,11 @@
 
 
                     <div class="col-12 col-md-6">
-                        <label for="sucursal">Planta</label>
+                        <label for="sucursal">Sucursal</label>
                         <!-- <select name="proveedor" class="form-control" id="proveedor"></select> -->
-                        <select name="sucursal" class="form-control" id="sucursal" disabled>
-                            <option value="1">Sliding de México</option>
+                        <select name="sucursal" class="form-control" id="sucursal">
+                            <option value="1">Aireexpress</option>
+                            <option value="2">Serviclima</option>
                         </select>
 
                     </div>

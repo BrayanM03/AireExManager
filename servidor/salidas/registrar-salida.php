@@ -15,7 +15,7 @@ if ($_POST) {
     $sucursal = $_POST["sucursal"];
 
     function stockActual($con, $id_producto){
-        $traer_stock = "SELECT * FROM inventario WHERE id = ?";
+        $traer_stock = "SELECT * FROM refacciones WHERE id = ?";
         $re = $con->prepare($traer_stock);
         $re->execute([$id_producto]);
     
@@ -54,7 +54,7 @@ if ($_POST) {
 
             $stock_actual = stockActual($con, $producto_id);
             $cantidad_restante = $stock_actual - $cant;
-            $update = "UPDATE inventario SET stock = ? WHERE id = ?";
+            $update = "UPDATE refacciones SET stock = ? WHERE id = ?";
             $resp = $con->prepare($update);
             $resp->execute([$cantidad_restante, $producto_id]);
             $resp->closeCursor();

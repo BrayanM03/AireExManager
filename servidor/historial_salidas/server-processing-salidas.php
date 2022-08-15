@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 /*
  * DataTables example server-side processing script.
  *
@@ -19,13 +19,12 @@ session_start();
  */
 
 // DB table to use
-$table = 'pre_salida';
-$session_id = $_SESSION['id'];
+$table = 'salidas';
 
 // Table's primary key
 $primaryKey = 'id';
-//$sucursal_id = $_GET['sucursal_id'];
-$where ="usuario_id =" . $session_id;
+$sucursal_id = $_GET['sucursal_id'];
+$where = "sucursal_id =" . $sucursal_id;
 
 
 // Array of database columns which should be read and sent back to DataTables.
@@ -34,11 +33,14 @@ $where ="usuario_id =" . $session_id;
 // indexes
 $columns = array(
 	array( 'db' => 'id', 'dt' => 0 ),
-	array( 'db' => 'codigo', 'dt' => 1 ),
-	array( 'db' => 'concepto', 'dt' => 2 ),
-	array( 'db' => 'cantidad', 'dt' => 4 ),
-	array( 'db' => 'usuario_id', 'dt' => 5 ),
-
+	array( 'db' => 'nombre',  'dt' => 1 ),
+	array( 'db' => 'no_empleado', 'dt' => 2 ),
+	array( 'db' => 'area', 'dt' => 3 ),
+	array( 'db' => 'fecha', 'dt' => 4 ),
+	array( 'db' => 'hora', 'dt' => 5 ),
+	array( 'db' => 'usuario_nombre',  'dt' => 6 ),
+	array( 'db' => 'usuario_id',   'dt' => 7 ),
+	array( 'db' => 'sucursal_id',   'dt' => 8 )
 /* 	array(
 		'db'        => 'start_date',
 		'dt'        => 4,

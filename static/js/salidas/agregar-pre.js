@@ -16,10 +16,13 @@ function agregarPreSalida(){
         toastr.error('La cantidad no puede ser mayor a la cantidad disponible', 'Error')
     } else{
 
+        
+        
+        
         data = {
-            "codigo": $("#codigo-data").text(),
-            "id_producto": $("#producto_id").val(),
-            "descripcion": $("#descripcion-data").text(),
+            "codigo": $("#cantidad").attr("modelo"),
+            "id_producto": $("#cantidad").attr("id_prod"),
+            "descripcion": $("#cantidad").attr("descripcion"),
             "cantidad_actual": $("#stock-data").text(),
             "cantidad": cantidad
         }
@@ -27,7 +30,7 @@ function agregarPreSalida(){
 
         $.ajax({
             type: "POST",
-            url: "servidor/salidas/agregar-pre.php",
+            url: "../servidor/salidas/agregar-pre.php",
             data: data,
             dataType: "JSON",
             success: function (response) {
@@ -71,7 +74,7 @@ toastr.options = {
 function restearTabla(id){
     $.ajax({
         type: "POST",
-        url: "servidor/salidas/reset-presalida.php",
+        url: "../servidor/salidas/reset-presalida.php",
         data: {id:id},
         dataType: "JSON",
         success: function (response2) { 

@@ -7,7 +7,7 @@ if ($_POST) {
         $codigo = $_POST['codigo'];
         $cantidad_entrante = $_POST['cant'];
    
-        $insert = "SELECT COUNT(*) FROM inventario WHERE codigo = ?";
+        $insert = "SELECT COUNT(*) FROM refacciones WHERE id = ?";
         $resp = $con->prepare($insert);
         $resp->execute([$codigo]);
         $total = $resp->fetchColumn();
@@ -15,7 +15,7 @@ if ($_POST) {
     
         if($total > 0) {
 
-            $select = "SELECT stock FROM inventario WHERE codigo = ?";
+            $select = "SELECT stock FROM refacciones WHERE id = ?";
             $resp = $con->prepare($select);
             $resp->execute([$codigo]);
             $cantidad_actual = $resp->fetchColumn();

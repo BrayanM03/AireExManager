@@ -12,7 +12,7 @@
 
     //-----------TRAYENDO EL STOCK ACTUAL DEL PRODUCTO-----------------
 
-    $traer_stock = "SELECT * FROM inventario WHERE id = ?";
+    $traer_stock = "SELECT * FROM refacciones WHERE id = ?";
     $re = $con->prepare($traer_stock);
     $re->execute([$id_producto]);
 
@@ -35,7 +35,7 @@
        
         $descripcion = $_POST["descripcion"];
         $cantidad_act = $_POST["cantidad_actual"];
-        $cantidad_restante = $cantidad_act - $cantidad;
+        $cantidad_restante = floatval($cantidad_act) - floatval($cantidad);
     
         $insert = "INSERT INTO pre_salida(id,
                                                 codigo,

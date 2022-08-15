@@ -205,10 +205,11 @@ animation: dot 2s infinite step-start both;
 
     <!-- Mis scripts -->
     <!-- <script src="js/inventario/agregar-item.js"></script> -->
-    <script src="js/busqueda/busqueda.js"></script>
+    <script src="js/salidas/busqueda.js"></script>
     <script src="js/salidas/agregar-pre.js"></script>
     <script src="js/salidas/nueva-salida.js"></script>
     <script src="js/salidas/tabla-presalida.js"></script>
+    <script src="js/configuracion/configuraciones.js"></script>
     <!-- <script src="js/clientes/traer-lista.js"></script>
     <script src="js/clientes/eliminar-cliente.js"></script>
     

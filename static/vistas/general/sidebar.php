@@ -1,6 +1,6 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="index.html">
+        <a class="sidebar-brand" href="index.php">
             <div style="margin-bottom:-8px"><span class="align-middle"><i>Aire</span><span style="color:tomato">Ex</span></i> <span>Manager</span></div>
             <small style="font-family:Arial">AireExpress</small>
         </a>
@@ -30,7 +30,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="nueva-salida.php">
-                    <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Nueva salida</span>
+                    <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Nueva salida</span>
                 </a>
             </li>
 
@@ -60,6 +60,12 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" href="gastos.php">
                                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Gastos</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="historial-salidas.php">
+                                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Salida de material</span>
                                 </a>
                             </li>
                         </div>
