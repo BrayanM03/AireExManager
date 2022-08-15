@@ -28,6 +28,12 @@
                 </a>
             </li>
 
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="nueva-salida.php">
+                    <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Nueva salida</span>
+                </a>
+            </li>
+
 
 
             <div class="accordion" id="accordionExample2">
