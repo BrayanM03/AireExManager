@@ -68,6 +68,13 @@
                     /* $tabla_origen = 'inventario'; */
                     break;
 
+                    case 4:
+                        $estatus = "Cerrada";
+                        $fecha_cierre = $fecha_inicio;
+                        $hora_cierre = $hora_inicio;
+                        /* $tabla_origen = 'inventario'; */
+                        break;
+
         
         default:
             # code...

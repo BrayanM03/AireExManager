@@ -11,6 +11,7 @@
             <option value="1">Venta sin instalación</option>
             <option value="2">Venta con instalación</option>
             <option value="3">Servicio</option>
+            <option value="4">Refacción</option>
         </select>
     </div>
 </div>

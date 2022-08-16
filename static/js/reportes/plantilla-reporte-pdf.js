@@ -19,11 +19,11 @@ $.ajax({
 doc.setFont("helvetica"); // set font
 doc.setFontType("bolditalic"); // set font
 
-doc.text("Orden de servicio F" + response.folio, 140, 10);
+doc.text("Orden de servicio F" + response.folio, 162, 10);
 
 doc.setFontSize(12);
 doc.text(`(868)817-5256
-(868)813-8071`, 140, 17);
+(868)813-8071`, 170, 17);
 
 doc.setDrawColor(255,0,0); // draw red lines
 doc.line(8, 30, 200, 30); //Line
@@ -85,6 +85,10 @@ if(response.tipo == "1" || response.tipo == "3"){
 }else if(response.tipo == "2"){
    comentario = `Incluye instalación basica de 4 metros de distancia entre evaporador y 
    condensador, se requiere caja y breaker a menos de 1 metro`
+}else if(response.tipo == "4"){
+  comentario = ""
+}else{
+  comentario = ""
 }
 
 let bodyTable = response.detalle_orden;
@@ -475,10 +479,116 @@ doc.autoTable(({
       Toda cancelacion de servicio genera costo de revisión y/o visita del tecnico.`
     doc.text(incluye, 10, alturaGarantias + 5);
 
+     }else if (response.tipo ==4){
+      
+      
+      doc.autoTable(({
+        headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
+        startY:startY,
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: 'Reporte de refacción', dataKey: null }
+          ],
+      }))
+    
+    
+      let bodyDatosInstalacion = [{index: 1, cantidad_personal: response.cantidad_personal,
+                                  tiempo_horas: response.tiempo_horas,
+                                  nombre_personal: response.nombre_personal}] 
+      let startYSeries = startY + 7.5; 
+      doc.autoTable(({
+        headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+        startY:startYSeries,
+        body: bodyDatosInstalacion,
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: '#', dataKey: "index" },
+            { header: 'Cantidad de personal', dataKey: "cantidad_personal" },
+            { header: 'Tiempo en horas', dataKey: "tiempo_horas" },
+            { header: 'Nombre de personal', dataKey: "nombre_personal"}
+          ],
+      }))
+    
+      let alturaDatosInstalacion = 7.5 * (bodyDatosInstalacion.length)
+    
+      let startOptions = 30 + startY + alturaDatosInstalacion;
+
+      doc.setFontType("bold");
+      doc.text("Pago en domicilio:", 20, startOptions);
+      doc.text("pago en sucursal:", 80, startOptions);
+
+      if(response.pago_domicilio == "true"){
+        doc.addImage(icon_checked, "JPEG", 55, startOptions - 5, 5,  5);
+      }else{
+        doc.addImage(icon_unchecked, "JPEG", 55, startOptions - 5, 5,  5);
+      }
+
+      if(response.pago_sucursal == "true"){
+        doc.addImage(icon_checked, "JPEG", 113, startOptions -5,5,  5);
+      }else{
+        doc.addImage(icon_unchecked, "JPEG", 113, startOptions -5,5,  5);
+      }
+      
+    
+      
+    let startYfooter =  startY + alturaDatosInstalacion +25 +10 
+
+    doc.setFontType("normal");
+    
+      doc.text("Firma:", 10, startYfooter);
+      doc.text("Nombre:", 60, startYfooter);
+      doc.text("Fecha:", 160, startYfooter);
+    
+      doc.setFontSize(8);
+      doc.setFontType("normal");
+      let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
+      zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
+      Rev. 11 2022`
+      doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+    
+    
+      //--------GARANTIA-------
+     /*  let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
+    Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
+    y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
+    
+    doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+     */
+    let bodyGarantia = [
+      {index: "30", desc: "dias de garantia en servicios de reparación y mantenimiento preventivo."},
+     ];
+    doc.autoTable(({
+      headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+      startY:startYfooter + 18,
+      body: bodyGarantia,
+      margin: { left: 8 },
+      tableWidth: 193,
+      columns: [{header: null, dataKey: 'index'},
+      {header: null, dataKey: 'desc'},]
+    }))
+    
+    //----MINISPLIT INCLUYE
+    let alturaGarantias = startYfooter + 30
+    doc.setFontType("bold"); // set font
+    doc.setFontSize(11);
+    
+    doc.text("Observaciones", 10, alturaGarantias);
+    doc.setFontType("normal");
+    doc.setFontSize(8);
+    let incluye = `Precios Sujetos a cambio sin previo aviso. Se requiere deposito y/o pago para realizar el pedido de esta cotización. Productos sujetos a disponibilidad, confirmar existencias con agente de ventas.
+
+    Si necesita factura favor de solicitarla al momento de la compra y/o servicio.
+    
+    Favor de revisar su mercancía antes de salir, ya que no habrá cambio ni devoluciones..`
+    doc.text(incluye, 10, alturaGarantias + 5);
+
      }
 
+
   
-doc.save("Orden de servicio F"+ response.folio+".pdf");
+doc.save("Orden de refacción F"+ response.folio+".pdf");
 
 
 

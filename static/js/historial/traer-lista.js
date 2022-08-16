@@ -31,7 +31,8 @@ $(document).ready(function () {
               switch(data[10]){
                 case '1': type = 'Venta <b style="color: tomato;">sin</b> instalación'; break;
                 case '2': type = 'Venta <b style="color: #009c8c;">con</b> instalación'; break;
-                case '3': type = 'Servicio'; break;
+                case '3': type = 'Servicio';
+                case '4': type = 'Refacción'; break;
               }
               return type;
             } },

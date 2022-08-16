@@ -19,11 +19,11 @@ $.ajax({
 doc.setFont("helvetica"); // set font
 doc.setFontType("bolditalic"); // set font
 
-doc.text("Cotización C"+response.folio , 140, 10);
+doc.text("Cotización C"+response.folio , 162, 10);
 
 doc.setFontSize(12);
 doc.text(`(868)817-5256
-(868)813-8071`, 140, 17);
+(868)813-8071`, 170, 17);
 
 doc.setDrawColor(255,0,0); // draw red lines
 doc.line(8, 30, 200, 30); //Line
@@ -82,11 +82,11 @@ doc.text(response.datos_cliente.telefono, 170, 53)
 if(response.tipo == "1" || response.tipo == "3"){
    comentario = 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes'
 }else if(response.tipo == "2"){
-   comentario = `Instalacion Mecanica Basica de Aire Acondicionado, Tipo
-   Mini Split, Instalacion Incluye: montaje de condensador,
-   montaje de evaporador, y instalacion de kit de tuberias de
-   refrigeracion de 4 metros, cable de señal y poder. Se
-   requiere luz electrica al pie del equipo`
+   comentario = ``
+}else if(response.tipo == "4"){
+  comentario = ""
+}else{
+  comentario = ""
 }
 
 let bodyTable = response.detalle_orden;
@@ -159,18 +159,78 @@ doc.autoTable(({
     
       
     
-    
+      
       doc.text("Firma:", 10, startYfooter);
       doc.text("Nombre:", 60, startYfooter);
       doc.text("Fecha:", 160, startYfooter);
     
     if(response.tipo =="1"){
+
+      doc.autoTable(({
+      headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
+      startY:startY,
+      margin: { left: 8 },
+      tableWidth: 193,
+      columns: [
+          { header: 'Venta sin instalación', dataKey: null }
+        ],
+    }))
+  
+  
+    let bodySeries = [];
+    let startYSeries = startY + 7.5; 
+   
+  
+    let alturaSeries = 7.5 * (bodySeries.length)
+  
+    let startYfooter = 25 + startY + alturaSeries;
+  
+    
+  
+  
+    doc.text("Garantia:", 10, startYfooter);
+  
+  
+    //--------GARANTIA-------
+    let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
+  Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
+  y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
+  
+  doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+  
+  let bodyGarantia = [
+    {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
+    {index: "1", desc: "Año(s) de garantia en refacciones"},
+    {index: "3", desc: "meses de garantia en componentes electronicos"}];
+  doc.autoTable(({
+    headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+    startY:startYfooter + 25,
+    body: bodyGarantia,
+    margin: { left: 8 },
+    tableWidth: 193,
+    columns: [{header: null, dataKey: 'index'},
+    {header: null, dataKey: 'desc'},]
+  }))
+  
+  //----MINISPLIT INCLUYE
+  let alturaGarantias = startYfooter + 60
+  doc.setFontType("bold"); // set font
+  doc.setFontSize(11);
+  
+  doc.text("Mini Split incluye", 10, alturaGarantias);
+  doc.setFontType("normal");
+  doc.setFontSize(9);
+  let incluye = `Evaporador, Condensador, control remoto, kit de instalacion de 3 o 4 metros dependiendo de la marca de
+  y modelo de su equipo.
+  Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
+  Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
+  doc.text(incluye, 10, alturaGarantias + 5);
       
-      doc.setFontType("bold");
+      /* doc.setFontType("bold");
       doc.text("Garantia de Fabricante Mini Split Nuevo :", 10, startYfooter + 10);
       doc.setFontType("normal");
       doc.setFontSize(8);
-      let garantia =  `Cobretura limitada a refacciones. Usuario cubre costos de revisiones, mano de obra y fletes 
+      let garantia =  `Cobertura limitada a refacciones. Usuario cubre costos de revisiones, mano de obra y fletes 
       por reemplazo de refacciones. Para hacer valida su GARANTIA, fabricante requiere factura de compra y requiere que realize 
       MANTENIMIENTO PREVENTIVO cada Año. Con Aire Express o tecnico certificado, como tener comprobantes correspondientes.`
       doc.text(garantia, 10, startYfooter + 15);
@@ -183,7 +243,7 @@ doc.autoTable(({
       doc.setFontSize(8);
       let incluye = `  Precios Sujetos a cambio sin previo aviso. Se requiere deposito y/o pago para realizar los servicios de esta cotización. 
       Productos sujetos a disponibilidad, confirmar existencias con agente de ventas.`
-      doc.text(incluye, 10, startYfooter + 37);
+      doc.text(incluye, 10, startYfooter + 37); */
 
       
     }else if(response.tipo =="2"){
@@ -205,6 +265,17 @@ doc.autoTable(({
       let incluye = `      Precios Sujetos a Cambio sin Previo Aviso, Se requiere deposito en firme al autorizar los servicios de esta cotizacion. 
       Precios validos solamente para conceptos de esta cotizacion. 30 dias de Garantia en servicios de reparaciones y Mantenimientos preventivos.`
       doc.text(incluye, 10, startYfooter + 37);
+
+      doc.setFontType("bold");
+      doc.setFontSize(11);
+      doc.text("Incluye:", 10, startYfooter + 52);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let incluye2 = `
+      Instalacion Mecanica Basica de Aire Acondicionado, Tipo Mini Split, Instalacion Incluye: montaje de condensador,
+      montaje de evaporador, y instalacion de kit de tuberias de refrigeracion de 4 metros, cable de señal y poder. Se
+      requiere luz electrica al pie del equipo`
+      doc.text(incluye2, 10, startYfooter + 57);
       
     }else if(response.tipo =="3"){
 
@@ -216,6 +287,18 @@ doc.autoTable(({
       Precios validos solamente para conceptos de esta cotizacion. 30 dias de Garantia en servicios de reparaciones y Mantenimientos preventivos.`
       doc.text(garantia, 10, startYfooter + 15);
 
+    }else if(response.tipo == "4"){
+      doc.setFontType("bold");
+      doc.setFontSize(11);
+      doc.text("Observaciones:", 10, startYfooter + 32);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let incluye = `      Precios Sujetos a cambio sin previo aviso. Se requiere deposito y/o pago para realizar el pedido de esta cotización. Productos sujetos a disponibilidad, confirmar existencias con agente de ventas.
+
+      Si necesita factura favor de solicitarla al momento de la compra y/o servicio.
+      
+      Favor de revisar su mercancía antes de salir, ya que no habrá cambio ni devoluciones.`
+      doc.text(incluye, 10, startYfooter + 37);
     }
       
 
