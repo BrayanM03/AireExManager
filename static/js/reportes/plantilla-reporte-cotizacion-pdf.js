@@ -277,6 +277,8 @@ doc.autoTable(({
       montaje de evaporador, y instalacion de kit de tuberias de refrigeracion de 3 o 4 metros dependiendo el modelo, cable de señal y poder. Se
       requiere luz electrica al pie del equipo`
       doc.text(incluye2, 10, startYfooter + 57);
+
+      
       
     }else if(response.tipo =="3"){
 
