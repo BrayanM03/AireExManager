@@ -19,7 +19,7 @@ $.ajax({
 doc.setFont("helvetica"); // set font
 doc.setFontType("bolditalic"); // set font
 
-doc.text("Orden de servicio F" + response.folio, 162, 10);
+doc.text("Orden de servicio F" + response.folio, 137, 10);
 
 doc.setFontSize(12);
 doc.text(`(868)817-5256
@@ -43,7 +43,7 @@ doc.line(145, 47, 145, 62); // vertical line
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
 doc.setFontSize(7);
-doc.text("Calle Diesciseis Buena Vista, 87350 Heroica Matamoros, Tamps. ventas@aireexpress.com", 80, 28);
+doc.text("Calle Diesciseis Buena Vista, 87350 Heroica Matamoros, Tamps. ventas@aireexpress.com",99, 28);
 
 doc.setFontSize(10);
 //Datos cliente
@@ -112,12 +112,12 @@ doc.autoTable(({
     /* headStyles: { 0: { halign: 'left', fillColor: [211, 211, 211] } }, */
     headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79]},
     body: bodyTable,
-
+    columnStyles: { descripcion: { halign: 'center' } },
     columns: [
       { header: 'Cant', dataKey: 'cantidad' },
-      { header: 'Descripcion', dataKey: 'descripcion' },
+      { header: 'Descripcion', dataKey: 'descripcion'},
       { header: 'Precio Unit.', dataKey: 'precio_unit' },
-      { header: 'Importe', dataKey: 'importe' },
+      { header: 'Importe  ', dataKey: 'importe'},
     ],
     startY:64,
     margin: { left: 8 },
@@ -171,7 +171,7 @@ doc.autoTable(({
     
       let alturaSeries = 7.5 * (bodySeries.length)
     
-      let startYfooter = 25 + startY + alturaSeries;
+      let startYfooter = 28 + startY + alturaSeries;
     
       
     
@@ -189,11 +189,13 @@ doc.autoTable(({
     
     
       //--------GARANTIA-------
-      let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
-    Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
-    y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
-    
-    doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+      let garantia = `Para hacer valida su GARANTIA, fabricante requiere factura de compra y requiere que realize MANTENIMIENTO PREVENTIVO cada año. 
+Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.`
+      doc.setFontType("bold"); // set font
+      doc.text("Garantia de fabricante MiniSplit Nuevo:", 10, startYfooter+18);
+      doc.text("Cobertura limitada a refacciones. Usuario cubre costos de revisiones, mano de obra y fletes por remplazo de refacciones:", 10, startYfooter+ 23);
+      doc.setFontType("normal");
+      doc.text(garantia, 10, startYfooter + 28, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
     
     let bodyGarantia = [
       {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
@@ -201,7 +203,7 @@ doc.autoTable(({
       {index: "3", desc: "meses de garantia en componentes electronicos"}];
     doc.autoTable(({
       headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
-      startY:startYfooter + 25,
+      startY:startYfooter + 35,
       body: bodyGarantia,
       margin: { left: 8 },
       tableWidth: 193,
@@ -210,7 +212,7 @@ doc.autoTable(({
     }))
     
     //----MINISPLIT INCLUYE
-    let alturaGarantias = startYfooter + 60
+    let alturaGarantias = startYfooter + 70
     doc.setFontType("bold"); // set font
     doc.setFontSize(11);
     
@@ -292,7 +294,7 @@ doc.autoTable(({
       
     
       
-    let startYfooter =  startY + alturaDatosInstalacion +25 +16 
+    let startYfooter =  startY + alturaDatosInstalacion + 45 
 
     doc.setFontType("normal");
     
@@ -309,11 +311,13 @@ doc.autoTable(({
     
     
       //--------GARANTIA-------
-      let garantia = `Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones. 
-    Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA, fabricante requiere factura de compra
-    y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
-    
-    doc.text(garantia, 10, startYfooter + 15, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+      let garantia = `Para hacer valida su GARANTIA, fabricante requiere factura de compra y requiere que realize MANTENIMIENTO PREVENTIVO cada año. 
+Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
+    doc.setFontType("bold"); // set font
+      doc.text("Garantia de fabricante MiniSplit Nuevo:", 10, startYfooter+18);
+      doc.text("Cobertura limitada a refacciones. Usuario cubre costos de revisiones, mano de obra y fletes por remplazo de refacciones:", 10, startYfooter+ 21);
+      doc.setFontType("normal");
+    doc.text(garantia, 10, startYfooter + 26, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
     
     let bodyGarantia = [
       {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
@@ -321,7 +325,8 @@ doc.autoTable(({
       {index: "3", desc: "meses de garantia en componentes electronicos, control remoto y gas refrigerante."}];
     doc.autoTable(({
       headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
-      startY:startYfooter + 25,
+      startY:startYfooter + 33,
+      styles: { cellPadding: 1.5, fontSize: 8 },
       body: bodyGarantia,
       margin: { left: 8 },
       tableWidth: 193,
@@ -336,7 +341,7 @@ doc.autoTable(({
     
     doc.text("Observaciones", 10, alturaGarantias);
     doc.setFontType("normal");
-    doc.setFontSize(9);
+    doc.setFontSize(7);
     let incluye = `Es obligacion del cliente despejar el area donde se llevara a cabo la ejecución del servicio ya que AIRE EXPRESS(Maria 
       Dolores Gonzalez Ramirez) no se hace responsable por la perdida, daños y/o pertenencias personales o de valor en el lugar del servicio.
       
@@ -493,11 +498,11 @@ doc.autoTable(({
       }))
     
     
-      let bodyDatosInstalacion = [{index: 1, cantidad_personal: response.cantidad_personal,
+      /* let bodyDatosInstalacion = [{index: 1, cantidad_personal: response.cantidad_personal,
                                   tiempo_horas: response.tiempo_horas,
-                                  nombre_personal: response.nombre_personal}] 
-      let startYSeries = startY + 7.5; 
-      doc.autoTable(({
+                                  nombre_personal: response.nombre_personal}]  */
+      /* let startYSeries = startY + 7.5;  */
+      /* doc.autoTable(({
         headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
         startY:startYSeries,
         body: bodyDatosInstalacion,
@@ -509,17 +514,17 @@ doc.autoTable(({
             { header: 'Tiempo en horas', dataKey: "tiempo_horas" },
             { header: 'Nombre de personal', dataKey: "nombre_personal"}
           ],
-      }))
+      })) */
     
-      let alturaDatosInstalacion = 7.5 * (bodyDatosInstalacion.length)
+      /* let alturaDatosInstalacion =  bodyDatosInstalacion.length */
     
-      let startOptions = 30 + startY + alturaDatosInstalacion;
+      let startOptions = 3 + startY; /* alturaDatosInstalacion; */
 
-      doc.setFontType("bold");
+    /*   doc.setFontType("bold");
       doc.text("Pago en domicilio:", 20, startOptions);
-      doc.text("pago en sucursal:", 80, startOptions);
+      doc.text("pago en sucursal:", 80, startOptions); */
 
-      if(response.pago_domicilio == "true"){
+      /* if(response.pago_domicilio == "true"){
         doc.addImage(icon_checked, "JPEG", 55, startOptions - 5, 5,  5);
       }else{
         doc.addImage(icon_unchecked, "JPEG", 55, startOptions - 5, 5,  5);
@@ -529,11 +534,11 @@ doc.autoTable(({
         doc.addImage(icon_checked, "JPEG", 113, startOptions -5,5,  5);
       }else{
         doc.addImage(icon_unchecked, "JPEG", 113, startOptions -5,5,  5);
-      }
+      } */
       
     
       
-    let startYfooter =  startY + alturaDatosInstalacion +25 +10 
+    let startYfooter =  startY + 25
 
     doc.setFontType("normal");
     
@@ -570,25 +575,26 @@ doc.autoTable(({
     }))
     
     //----MINISPLIT INCLUYE
-    let alturaGarantias = startYfooter + 30
+    let alturaGarantias = startYfooter + 40
     doc.setFontType("bold"); // set font
     doc.setFontSize(11);
     
     doc.text("Observaciones", 10, alturaGarantias);
     doc.setFontType("normal");
     doc.setFontSize(8);
-    let incluye = `Precios Sujetos a cambio sin previo aviso. Se requiere deposito y/o pago para realizar el pedido de esta cotización. Productos sujetos a disponibilidad, confirmar existencias con agente de ventas.
+    let incluye = `Precios Sujetos a cambio sin previo aviso. Se requiere deposito y/o pago para realizar el pedido de esta cotización. Productos sujetos a disponibilidad, 
+confirmar existencias con agente de ventas.
 
-    Si necesita factura favor de solicitarla al momento de la compra y/o servicio.
+Si necesita factura favor de solicitarla al momento de la compra y/o servicio.
     
-    Favor de revisar su mercancía antes de salir, ya que no habrá cambio ni devoluciones..`
+Favor de revisar su mercancía antes de salir, ya que no habrá cambio ni devoluciones..`
     doc.text(incluye, 10, alturaGarantias + 5);
 
      }
 
 
   
-doc.save("Orden de refacción F"+ response.folio+".pdf");
+doc.save("Orden F"+ response.folio+".pdf");
 
 
 
