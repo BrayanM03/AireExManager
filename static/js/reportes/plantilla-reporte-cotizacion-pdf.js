@@ -43,7 +43,7 @@ doc.line(145, 47, 145, 62); // vertical line
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
 doc.setFontSize(7);
-doc.text("Calle Diesciseis Buena Vista, 87350 Heroica Matamoros, Tamps. ventas@aireexpress.com", 100, 28);
+doc.text("Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com", 98, 28);
 doc.setFontSize(10);
 //Datos cliente
 doc.setFontType("bold"); // set font
@@ -129,7 +129,7 @@ doc.autoTable(({
      3 item = 109 puntos en Y
      4 item = 116.5 puntos en Y */
      let alturaPartidas = 8.5 * (bodyTable.length)   
-     let startY = 95 + alturaPartidas;
+     let startY = 75 + alturaPartidas;
 
 
 
@@ -155,7 +155,7 @@ doc.autoTable(({
     
       let alturaSeries = 7.5 
     
-      let startYfooter = 7 + startY + alturaSeries;
+      let startYfooter = 25 + startY + alturaSeries;
     
       
     
@@ -183,7 +183,7 @@ doc.autoTable(({
   
     let alturaSeries = 7.5 * (bodySeries.length)
   
-    let startYfooter = 23 + startY + alturaSeries;
+    let startYfooter = 42 + startY + alturaSeries;
   
     
   
@@ -248,35 +248,70 @@ doc.autoTable(({
 
       
     }else if(response.tipo =="2"){
-      
-      doc.setFontType("bold");
-      doc.text("Nota :", 10, startYfooter + 10);
-      doc.setFontType("normal");
-      doc.setFontSize(8);
-      let garantia =  `      En dado caso de requerir instalacion especial, perforaciones adicionales, juego de escuadras, tuberia
-      extra,tuberias de desague adicionales, instalacion electrica, trabajos de albañileria como ranurado, ocultacion de tuberías, 
-      acabados, y/o pinturas o cualquier otro tipo de material que no incluya la instalacion mecanica basica genera un costo adicional.`
-      doc.text(garantia, 10, startYfooter + 15);
 
       doc.setFontType("bold");
-      doc.setFontSize(11);
-      doc.text("Observaciones:", 10, startYfooter + 32);
+      doc.text("Garantia :", 10, startYfooter + 10);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let garantia =  `      Garantia de fabricante MiniSplit Nuevo - Cobertura limitada a refacciones.
+      Usuario cubre costos de revisiones, mano de obra por remplazo de refacciones, para hacer valida su GARANTIA,
+      fabricante requiere factura de compra y requiere que realize MANTENIMIENTO PREVENTIVO cada año. Con AireExpress
+      o tecnico certiicado, como tener comprobantes correspondientes.`
+      doc.text(garantia, 10, startYfooter + 15);
+
+      let alturaGarantias = startYfooter + 53
+      let bodyGarantia = [
+        {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
+        {index: "1", desc: "Año(s) de garantia en refacciones"},
+        {index: "3", desc: "meses de garantia en componentes electronicos"}];
+      doc.autoTable(({
+        headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+        startY:startYfooter + 27,
+        body: bodyGarantia,
+        styles: { cellPadding: 1.5, fontSize: 8 },
+        margin: { left: 8 },
+        tableWidth: 193,
+        columns: [{header: null, dataKey: 'index'},
+        {header: null, dataKey: 'desc'},]
+      }))
+
+      doc.text("Mini Split incluye", 10, alturaGarantias);
+  doc.setFontType("normal");
+  doc.setFontSize(8);
+  let incluye1 = `Evaporador, Condensador, control remoto, kit de instalacion de 3 o 4 metros dependiendo de la marca de
+  y modelo de su equipo.
+  Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
+  Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
+  doc.text(incluye1, 10, alturaGarantias + 5);
+      
+      doc.setFontType("bold");
+      doc.text("Nota :", 10, alturaGarantias + 20);
+      doc.setFontType("normal");
+      doc.setFontSize(8);
+      let nota =  `      En dado caso de requerir instalacion especial, perforaciones adicionales, juego de escuadras, tuberia
+      extra,tuberias de desague adicionales, instalacion electrica, trabajos de albañileria como ranurado, ocultacion de tuberías, 
+      acabados, y/o pinturas o cualquier otro tipo de material que no incluya la instalacion mecanica basica genera un costo adicional.`
+      doc.text(nota, 10, alturaGarantias + 23);
+
+      doc.setFontType("bold");
+      doc.setFontSize(8);
+      doc.text("Observaciones:", 10, alturaGarantias + 35);
       doc.setFontType("normal");
       doc.setFontSize(8);
       let incluye = `      Precios Sujetos a Cambio sin Previo Aviso, Se requiere deposito en firme al autorizar los servicios de esta cotizacion. 
       Precios validos solamente para conceptos de esta cotizacion. 30 dias de Garantia en servicios de reparaciones y Mantenimientos preventivos.`
-      doc.text(incluye, 10, startYfooter + 37);
+      doc.text(incluye, 10,  alturaGarantias + 39);
 
       doc.setFontType("bold");
-      doc.setFontSize(11);
-      doc.text("Incluye:", 10, startYfooter + 52);
+      doc.setFontSize(8);
+      doc.text("Incluye:", 10, alturaGarantias + 47);
       doc.setFontType("normal");
       doc.setFontSize(8);
       let incluye2 = `
       Instalacion Mecanica Basica de Aire Acondicionado, Tipo Mini Split, Instalacion Incluye: montaje de condensador,
       montaje de evaporador, y instalacion de kit de tuberias de refrigeracion de 3 o 4 metros dependiendo el modelo, cable de señal y poder. Se
       requiere luz electrica al pie del equipo`
-      doc.text(incluye2, 10, startYfooter + 57);
+      doc.text(incluye2, 10, alturaGarantias + 49);
 
       
       

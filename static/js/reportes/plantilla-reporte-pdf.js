@@ -1,5 +1,6 @@
 // Landscape export, 2×4 inches
 const doc = new jsPDF();
+pageHeight= doc.internal.pageSize.height;
 
 logo = data_logo.replace(/[\s"\\]/gm, "");
 icon_checked= data_checked.replace(/[\s"\\]/gm, "");
@@ -43,7 +44,7 @@ doc.line(145, 47, 145, 62); // vertical line
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
 doc.setFontSize(7);
-doc.text("Calle Diesciseis Buena Vista, 87350 Heroica Matamoros, Tamps. ventas@aireexpress.com",99, 28);
+doc.text("Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com",97, 28);
 
 doc.setFontSize(10);
 //Datos cliente
@@ -112,6 +113,7 @@ doc.autoTable(({
     /* headStyles: { 0: { halign: 'left', fillColor: [211, 211, 211] } }, */
     headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79]},
     body: bodyTable,
+    styles: { cellPadding: 1.5, fontSize: 9 },
     columnStyles: { descripcion: { halign: 'center' } },
     columns: [
       { header: 'Cant', dataKey: 'cantidad' },
@@ -171,7 +173,7 @@ doc.autoTable(({
     
       let alturaSeries = 7.5 * (bodySeries.length)
     
-      let startYfooter = 28 + startY + alturaSeries;
+      let startYfooter = 35 + startY + alturaSeries;
     
       
     
@@ -226,6 +228,9 @@ Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.
     doc.text(incluye, 10, alturaGarantias + 5);
 
      }else if(response.tipo == 2){
+
+      
+
      
       doc.autoTable(({
         headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
@@ -236,17 +241,37 @@ Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.
             { header: 'Venta con instalación', dataKey: null }
           ],
       }))
+
+      let startYSeriess = startY + 7.5; 
+      doc.autoTable(({
+        headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
+        startY:startYSeriess,
+        body: bodySeries,
+        margin: { left: 8 },
+        styles: { cellPadding: 1.5, fontSize: 8 },
+        tableWidth: 193,
+        columns: [
+            { header: '#', dataKey: "index" },
+            { header: 'Serie condensador', dataKey: "condensador" },
+            { header: 'Serie evaporizador', dataKey: "evaporizador" },
+            { header: 'Equipo', dataKey: "desc"}
+          ],
+      }))
+    
+      let alturaSeries = 8 * (bodySeries.length);
     
     
       let bodyDatosInstalacion = [{index: 1, cantidad_personal: response.cantidad_personal,
                                   tiempo_horas: response.tiempo_horas,
                                   nombre_personal: response.nombre_personal}] 
-      let startYSeries = startY + 7.5; 
+
+      let startYpersonal = startYSeriess  + alturaSeries + 7.5;
       doc.autoTable(({
         headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
-        startY:startYSeries,
+        startY:startYpersonal,
         body: bodyDatosInstalacion,
         margin: { left: 8 },
+        styles: { cellPadding: 1.5, fontSize: 8 },
         tableWidth: 193,
         columns: [
             { header: '#', dataKey: "index" },
@@ -256,53 +281,63 @@ Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.
           ],
       }))
     
-      let alturaDatosInstalacion = 7.5 * (bodyDatosInstalacion.length)
+      let alturaDatosInstalacion = 8 * (bodyDatosInstalacion.length)
     
-      let startOptions = 30 + startY + alturaDatosInstalacion;
+      let startOptions = 12 + startYpersonal + alturaDatosInstalacion;
 
       doc.setFontType("bold");
-      doc.text("Pago en domicilio:", 20, startOptions);
-      doc.text("pago en sucursal:", 80, startOptions);
-      doc.text("Verificar electrico:", 20, startOptions +7 );
-      doc.text("Cliente ya cuenta con electrico:", 80, startOptions +7);
+      doc.setFontSize(8);
+      doc.text("Pago en domicilio:", 8, startOptions);
+      doc.text("pago en sucursal:", 40, startOptions);
+      doc.text("Verificar electrico:", 75, startOptions );
+      doc.text("Cliente ya cuenta con electrico:", 120, startOptions);
 
       if(response.pago_domicilio == "true"){
-        doc.addImage(icon_checked, "JPEG", 55, startOptions - 5, 5,  5);
+        doc.addImage(icon_checked, "JPEG", 35, startOptions-2.5, 3,  3);
       }else{
-        doc.addImage(icon_unchecked, "JPEG", 55, startOptions - 5, 5,  5);
+        doc.addImage(icon_unchecked, "JPEG", 35, startOptions-2.5, 3,  3);
       }
 
       if(response.pago_sucursal == "true"){
-        doc.addImage(icon_checked, "JPEG", 113, startOptions -5,5,  5);
+        doc.addImage(icon_checked, "JPEG", 66, startOptions-2.5,3,  3);
       }else{
-        doc.addImage(icon_unchecked, "JPEG", 113, startOptions -5,5,  5);
+        doc.addImage(icon_unchecked, "JPEG", 66, startOptions-2.5,3,  3);
       }
 
       
       if(response.verificar_electrico == "true"){
-        doc.addImage(icon_checked, "JPEG", 55, startOptions+2 ,5,  5);
+        doc.addImage(icon_checked, "JPEG", 102, startOptions-2.5 ,3,  3);
       }else{
-        doc.addImage(icon_unchecked, "JPEG", 55, startOptions +2 ,5,  5);
+        doc.addImage(icon_unchecked, "JPEG", 102, startOptions-2.5,3,  3);
       }
 
       
       if(response.tiene_electrico == "true"){
-        doc.addImage(icon_checked, "JPEG", 136, startOptions+2 ,5,  5);
+        doc.addImage(icon_checked, "JPEG", 165, startOptions-2.5 ,3,  3);
       }else{
-        doc.addImage(icon_unchecked, "JPEG", 136, startOptions+2 ,5,  5);
+        doc.addImage(icon_unchecked, "JPEG", 165, startOptions-2.5 ,3,  3);
       }
       
     
       
-    let startYfooter =  startY + alturaDatosInstalacion + 45 
+    let startYfooter =  startOptions +25
 
     doc.setFontType("normal");
     
-      doc.text("Firma:", 10, startYfooter);
-      doc.text("Nombre:", 60, startYfooter);
-      doc.text("Fecha:", 160, startYfooter);
+      doc.text("Firma", 10, startYfooter);
+      doc.text("Nombre", 60, startYfooter);
+      doc.text("Fecha", 160, startYfooter);
+
+      
+
+      
+      if (startYfooter >= pageHeight)
+      {
+        doc.addPage();
+       // y = 0 // Restart height position
+      }
     
-      doc.setFontSize(8);
+      doc.setFontSize(7);
       doc.setFontType("normal");
       let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
       zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
@@ -326,7 +361,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
     doc.autoTable(({
       headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79], halign: 'center'},
       startY:startYfooter + 33,
-      styles: { cellPadding: 1.5, fontSize: 8 },
+      styles: { cellPadding: 1.5, fontSize: 7 },
       body: bodyGarantia,
       margin: { left: 8 },
       tableWidth: 193,
@@ -335,18 +370,27 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
     }))
     
     //----MINISPLIT INCLUYE
-    let alturaGarantias = startYfooter + 60
+    let alturaGarantias = startYfooter + 56
     doc.setFontType("bold"); // set font
-    doc.setFontSize(8);
+    doc.setFontSize(7);
     
-    doc.text("Observaciones", 10, alturaGarantias);
+    diferenciaAlturaTotalX = pageHeight - (alturaGarantias)
+    alturaLimite = alturaGarantias - diferenciaAlturaTotalX +89
+    js = alturaGarantias
+    if (alturaGarantias > 270)
+      {
+        doc.addPage();
+        js = alturaGarantias
+        alturaGarantias = 15
+       // y = 0 // Restart height position
+      }
+
+    doc.text("Observaciones altura " + pageHeight + " -"+ alturaLimite +" "+ js +" esta altura es: " + alturaGarantias, 10, alturaGarantias);
     doc.setFontType("normal");
     doc.setFontSize(7);
     let incluye = `Es obligacion del cliente despejar el area donde se llevara a cabo la ejecución del servicio ya que AIRE EXPRESS(Maria 
       Dolores Gonzalez Ramirez) no se hace responsable por la perdida, daños y/o pertenencias personales o de valor en el lugar del servicio.
-      
-      Se requier instalacion electrica al pie de MiniSplit
-
+      Se requiere instalacion electrica al pie de MiniSplit
       -Instalacion mecanica basica en Mini Split incluye:
       -Montaje y fijacion de evaporador Mini Split, motaje y anclaje de condensador Mini Split.
       -Tuberias de refrigeracion, Asilamiento termico, Cinta protectiva, cable de senal y poder entre evaprador y condensador
@@ -356,17 +400,12 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
       -Tuberias de refrigración adicionales, desmontajes de Mini Split, tuberia de desague adicionales, base metalica o de concreto para condensador,
       trabajos de albañileria como ranurado, ocultacion de tuberias, acabados y/o pinturas.
        
-      Para agendar cualquier servicio es necesario llamar a la oficina.
-
-      Favor de revisar su mercancia antes de salir, ya que no habra cambios ni devoluciones.
-      
-      Si necesita factura favor de solicitarla al momento de la compra y/o servicio.
-      
-      Para cualquier aclaración o correcion en su factura, tiene 5 dias habiles dentro del mismo mes para solicitarlo.
-      
-      Precios no incluyen IVA(16%)
-      
-      Toda cancelacion de servicio genera costo de revisión y/o visita del tecnico.`
+      *Para agendar cualquier servicio es necesario llamar a la oficina.
+      *Favor de revisar su mercancia antes de salir, ya que no habra cambios ni devoluciones.
+      *Si necesita factura favor de solicitarla al momento de la compra y/o servicio.
+      *Para cualquier aclaración o correcion en su factura, tiene 5 dias habiles dentro del mismo mes para solicitarlo.
+      *Precios no incluyen IVA(16%)
+      *Toda cancelacion de servicio genera costo de revisión y/o visita del tecnico.`
     doc.text(incluye, 10, alturaGarantias + 5);
 
 
@@ -379,7 +418,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
         margin: { left: 8 },
         tableWidth: 193,
         columns: [
-            { header: 'Reporte de servicio', dataKey: null }
+            { header: 'Venta de servicio', dataKey: null }
           ],
       }))
     
@@ -424,13 +463,13 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
       
     
       
-    let startYfooter =  startY + alturaDatosInstalacion +25 +10 
+    let startYfooter =  startY + alturaDatosInstalacion +45
 
     doc.setFontType("normal");
     
-      doc.text("Firma:", 10, startYfooter);
-      doc.text("Nombre:", 60, startYfooter);
-      doc.text("Fecha:", 160, startYfooter);
+      doc.text("Firma", 10, startYfooter);
+      doc.text("Nombre", 60, startYfooter);
+      doc.text("Fecha", 160, startYfooter);
     
       doc.setFontSize(8);
       doc.setFontType("normal");
@@ -493,7 +532,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
         margin: { left: 8 },
         tableWidth: 193,
         columns: [
-            { header: 'Reporte de refacción', dataKey: null }
+            { header: 'Venta de refacción', dataKey: null }
           ],
       }))
     
@@ -542,9 +581,9 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
 
     doc.setFontType("normal");
     
-      doc.text("Firma:", 10, startYfooter);
-      doc.text("Nombre:", 60, startYfooter);
-      doc.text("Fecha:", 160, startYfooter);
+      doc.text("Firma", 10, startYfooter);
+      doc.text("Nombre", 60, startYfooter);
+      doc.text("Fecha", 160, startYfooter);
     
       doc.setFontSize(8);
       doc.setFontType("normal");
