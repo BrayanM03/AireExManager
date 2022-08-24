@@ -29,7 +29,8 @@
                             <div class="col-12 col-md-2">Fecha compra</div>
                             <div class="col-12 col-md-3">Serie condensador</div>
                             <div class="col-12 col-md-3">Serie evaporizador</div>
-                            <div class="col-12 col-md-3">Seleccionar</div>
+                            <div class="col-12 col-md-2">Metodo</div>
+                            <div class="col-12 col-md-1">Select</div>
                         </div>
                     </a>
                     <div id="lista-series">

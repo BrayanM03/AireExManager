@@ -85,7 +85,8 @@ if(response.tipo == "1" || response.tipo == "3"){
    comentario = 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes'
 }else if(response.tipo == "2"){
    comentario = `Incluye instalación basica de 4 metros de distancia entre evaporador y 
-   condensador, se requiere caja y breaker a menos de 1 metro`
+   condensador, se requiere caja y breaker a menos de 1 metro.
+   Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes.`
 }else if(response.tipo == "4"){
   comentario = ""
 }else{
@@ -385,7 +386,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
        // y = 0 // Restart height position
       }
 
-    doc.text("Observaciones altura " + pageHeight + " -"+ alturaLimite +" "+ js +" esta altura es: " + alturaGarantias, 10, alturaGarantias);
+    doc.text("Observaciones:", 10, alturaGarantias);
     doc.setFontType("normal");
     doc.setFontSize(7);
     let incluye = `Es obligacion del cliente despejar el area donde se llevara a cabo la ejecución del servicio ya que AIRE EXPRESS(Maria 

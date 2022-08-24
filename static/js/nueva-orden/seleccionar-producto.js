@@ -256,7 +256,8 @@ function setearSeries(id_producto){
                               <div class="col-12 col-md-2">${element[1]}</div>
                               <div class="col-12 col-md-3">${element[2]}</div>
                               <div class="col-12 col-md-3">${element[3]}</div>
-                              <div class="col-12 col-md-3">
+                              <div class="col-12 col-md-2">${element[7]}</div>
+                              <div class="col-12 col-md-1">
                                   <input class="form-check-input" type="checkbox" value="${element[0]}" id="${element[0]}">
                               </div>
                           </div>
@@ -270,7 +271,8 @@ function setearSeries(id_producto){
                               <div class="col-12 col-md-2">${element[1]}</div>
                               <div class="col-12 col-md-3">${element[2]}</div>
                               <div class="col-12 col-md-3">${element[3]}</div>
-                              <div class="col-12 col-md-3">
+                              <div class="col-12 col-md-2">${element[7]}</div>
+                              <div class="col-12 col-md-1">
                                   <input class="form-check-input" type="checkbox" value="${element[0]}" id="${element[0]}">
                               </div>
                           </div>
