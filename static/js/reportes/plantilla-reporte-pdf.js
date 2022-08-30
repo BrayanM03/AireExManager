@@ -634,8 +634,13 @@ Favor de revisar su mercancía antes de salir, ya que no habrá cambio ni devolu
 
 
   
-doc.save("Orden F"+ response.folio+".pdf");
-
+//doc.save("Orden F"+ response.folio+".pdf");
+var string = doc.output('datauristring');
+var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
+var x = window.open();
+x.document.open();
+x.document.write(embed);
+x.document.close();
 
 
   }

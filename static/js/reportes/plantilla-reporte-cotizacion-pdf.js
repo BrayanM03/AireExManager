@@ -344,7 +344,13 @@ doc.autoTable(({
 
      
   
-doc.save("Reporte de cotización C"+ response.folio+".pdf");
+//doc.save("Reporte de cotización C"+ response.folio+".pdf");
+var string = doc.output("Reporte de cotización C"+ response.folio+".pdf");
+var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
+var x = window.open();
+x.document.open();
+x.document.write(embed);
+x.document.close();
 
 
 
