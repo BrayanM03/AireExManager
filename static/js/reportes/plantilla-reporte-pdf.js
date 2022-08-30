@@ -84,9 +84,7 @@ doc.text(response.datos_cliente.telefono, 170, 53)
 if(response.tipo == "1" || response.tipo == "3"){
    comentario = 'Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes'
 }else if(response.tipo == "2"){
-   comentario = `Incluye instalación basica de 4 metros de distancia entre evaporador y 
-   condensador, se requiere caja y breaker a menos de 1 metro.
-   Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes.`
+   comentario = `Recuerde hacer limpieza de filtros de Aire Acondicionado cada mes.`
 }else if(response.tipo == "4"){
   comentario = ""
 }else{
