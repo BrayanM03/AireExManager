@@ -1,3 +1,4 @@
+function descargarCotizacion(id){
 // Landscape export, 2×4 inches
 const doc = new jsPDF();
 
@@ -6,11 +7,11 @@ icon_checked= data_checked.replace(/[\s"\\]/gm, "");
 icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
 doc.addImage(logo, "JPEG", 8, 5, 40, 17);
 
-let id_orden = getParameterByName("id_orden")  
+let id_orden = id//getParameterByName("id_orden")  
 
 $.ajax({
     type: "POST",
-    url: "../reportes/traer-datos-de-cotizacion.php",
+    url: "../servidor/reportes/traer-datos-de-cotizacion.php",
     data: {id_orden: id_orden, tabla: "cotizaciones", indicador: "id"},
     dataType: "JSON",
     success: function (response) {
@@ -42,8 +43,8 @@ doc.line(145, 47, 145, 62); // vertical line
 
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
-doc.setFontSize(7);
-doc.text("Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com", 98, 28);
+doc.setFontSize(9);
+doc.text("Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com", 68, 28);
 doc.setFontSize(10);
 //Datos cliente
 doc.setFontType("bold"); // set font
@@ -53,7 +54,7 @@ doc.text("Contacto", 10, 45);
 doc.text("RFC", 147, 45);
 doc.text("Domicilio", 10, 53);
 doc.text("Telefono", 147, 53);
-doc.text("Colonia", 10, 60);
+
 doc.text("Correo", 147, 60);
 
 doc.setFontType("normal"); // set font
@@ -64,17 +65,17 @@ doc.text(response.datos_cliente.rfc, 165, 45)
 doc.text(response.datos_cliente.direccion, 28, 53)
 doc.text(response.datos_cliente.telefono, 170, 53)
 
- //---------Cuerpo de seires ---//
-/*  let bodySeries = [];
- let contador = 1;
+ //---------Formateando importes ---//
+
  response.detalle_orden.forEach(element => {
-    if(element["series"]){
-      element["series"].forEach(serie => {
-        bodySeries.push({index: contador, condensador: serie.serie_condensador, evaporizador: serie.serie_evaporador, desc: serie.descripcion})
-        contador++;
-      });
-    }
-}); */
+  importe_do = element["importe"];
+  precio_unit_do = element["precio_unit"];
+  importe_formateado = currency(importe_do);
+  precio_unit_formateado = currency(precio_unit_do);
+
+  element["importe"] = importe_formateado;
+  element["precio_unit"] = precio_unit_formateado;
+}); 
 
 
 //-----------Cuerpo de items -----//
@@ -91,7 +92,8 @@ if(response.tipo == "1" || response.tipo == "3"){
 
 let bodyTable = response.detalle_orden;
 let metodo = { precio_unit: '', importe:response.metodo_pago };
-let importe_total = { descripcion: comentario, precio_unit: 'Total', importe: response.total}
+importe_total_formateado = currency(response.total)
+let importe_total = { descripcion: comentario, precio_unit: 'Total', importe: importe_total_formateado}
 
 bodyTable.push(metodo, importe_total)
 /* [
@@ -110,7 +112,7 @@ doc.autoTable(({
     /* headStyles: { 0: { halign: 'left', fillColor: [211, 211, 211] } }, */
     headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79]},
     body: bodyTable,
-
+    styles: {halign: 'center'},
     columns: [
       { header: 'Cant', dataKey: 'cantidad' },
       { header: 'Descripcion', dataKey: 'descripcion' },
@@ -345,7 +347,7 @@ doc.autoTable(({
      
   
 //doc.save("Reporte de cotización C"+ response.folio+".pdf");
-var string = doc.output("Reporte de cotización C"+ response.folio+".pdf");
+var string = doc.output('datauristring');
 var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
 var x = window.open();
 x.document.open();
@@ -356,7 +358,7 @@ x.document.close();
 
   }
 });
-
+}
 
 /* 
 console.log(doc.getFontList()); */
@@ -375,3 +377,7 @@ function getParameterByName(name) {
     window.open('','_parent',''); 
     window.close(); 
  } 
+
+ const currency = function(number) {
+  return new Intl.NumberFormat('es-MX', {style: 'currency', currency: 'MXN', minimunFractionDigits: 2}).format(number);
+ }

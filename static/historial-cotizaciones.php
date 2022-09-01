@@ -142,6 +142,9 @@ if (empty($_SESSION["id"])) {
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.22/dist/jspdf.plugin.autotable.js"></script>
+
     <!-- Mis scripts -->
     <script src="js/historial/traer-lista-cotizaciones.js"></script>
     <script src="js/historial/descargar-orden.js"></script>
@@ -150,6 +153,12 @@ if (empty($_SESSION["id"])) {
     <script src="js/historial/eliminar-cotizacion.js"></script>
     <script src="js/historial/ver-por-sucursal.js"></script>
     <script src="js/configuracion/configuraciones.js"></script>
+
+    <script src="js/reportes/logo.js"></script>
+<script src="js/reportes/checked.js"></script>
+<script src="js/reportes/unchecked.js"></script>
+<script src="js/reportes/fuente.js"></script>
+<script src="js/reportes/plantilla-reporte-cotizacion-pdf.js"></script>
 </body>
 
 </html>

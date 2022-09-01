@@ -15,7 +15,7 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut" 
   }
-
+/* 
 
   function descargarOrden(id){
     window.open('../servidor/reportes/nota-de-venta.php?id_orden=' + id, '_blank');
@@ -24,7 +24,7 @@ toastr.options = {
   function descargarCotizacion(id){
     
     window.open('../servidor/reportes/nota-de-cotizacion.php?id_orden=' + id, '_blank');
-  }
+  } */
 
 
 

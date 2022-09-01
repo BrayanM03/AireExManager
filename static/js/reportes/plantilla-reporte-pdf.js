@@ -1,3 +1,6 @@
+function descargarOrden(id){
+
+
 // Landscape export, 2×4 inches
 const doc = new jsPDF();
 pageHeight= doc.internal.pageSize.height;
@@ -7,11 +10,11 @@ icon_checked= data_checked.replace(/[\s"\\]/gm, "");
 icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
 doc.addImage(logo, "JPEG", 8, 5, 40, 17);
 
-let id_orden = getParameterByName("id_orden")  
+let id_orden =id// getParameterByName("id_orden")  
 
 $.ajax({
     type: "POST",
-    url: "../reportes/traer-datos-de-orden.php",
+    url: "../servidor/reportes/traer-datos-de-orden.php",
     data: {id_orden: id_orden, tabla: "ordenes", indicador: "id"},
     dataType: "JSON",
     success: function (response) {
@@ -43,8 +46,8 @@ doc.line(145, 47, 145, 62); // vertical line
 
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
-doc.setFontSize(7);
-doc.text("Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com",97, 28);
+doc.setFontSize(9);
+doc.text("Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com",68, 28);
 
 doc.setFontSize(10);
 //Datos cliente
@@ -55,7 +58,7 @@ doc.text("Contacto", 10, 45);
 doc.text("RFC", 147, 45);
 doc.text("Domicilio", 10, 53);
 doc.text("Telefono", 147, 53);
-doc.text("Colonia", 10, 60);
+doc.text("Forma de pago", 10, 60);
 doc.text("Correo", 147, 60);
 
 doc.setFontType("normal"); // set font
@@ -65,14 +68,25 @@ doc.text(response.datos_cliente.contacto, 28, 45)
 doc.text(response.datos_cliente.rfc, 165, 45)
 doc.text(response.datos_cliente.direccion, 28, 53)
 doc.text(response.datos_cliente.telefono, 170, 53)
+doc.text(response.metodo_pago, 40, 60)
+
 
  //---------Cuerpo de seires ---//
  let bodySeries = [];
  let contador = 1;
  response.detalle_orden.forEach(element => {
+
+    importe_do = element["importe"];
+    precio_unit_do = element["precio_unit"];
+    importe_formateado = currency(importe_do);
+    precio_unit_formateado = currency(precio_unit_do);
+
+    element["importe"] = importe_formateado;
+    element["precio_unit"] = precio_unit_formateado;
+
     if(element["series"]){
       element["series"].forEach(serie => {
-        bodySeries.push({index: contador, condensador: serie.serie_condensador, evaporizador: serie.serie_evaporador, desc: serie.descripcion})
+        bodySeries.push({index: contador, condensador: serie.serie_condensador, evaporador: serie.serie_evaporador, desc: serie.descripcion})
         contador++;
       });
     }
@@ -92,10 +106,11 @@ if(response.tipo == "1" || response.tipo == "3"){
 }
 
 let bodyTable = response.detalle_orden;
-let metodo = { precio_unit: 'Metodo', importe:response.metodo_pago };
-let importe_total = { descripcion: comentario, precio_unit: 'Total', importe: response.total}
+//let metodo = { precio_unit: 'Metodo', importe:response.metodo_pago };
+importe_total_formateado = currency(response.total)
+let importe_total = { descripcion: comentario, precio_unit: 'Total', importe: importe_total_formateado}
 
-bodyTable.push(metodo, importe_total)
+bodyTable.push(importe_total)
 /* [
     { cantidad: '2', descripcion: 'Toshiba T-15300 2 TON 220V', precio_unit: '9,500.00', importe:'19,000.00' },
     { precio_unit: 'Metodo', importe:'Tarjeta' },
@@ -112,7 +127,7 @@ doc.autoTable(({
     /* headStyles: { 0: { halign: 'left', fillColor: [211, 211, 211] } }, */
     headStyles: { fillColor: [211, 211, 211], textColor: [54, 69, 79]},
     body: bodyTable,
-    styles: { cellPadding: 1.5, fontSize: 9 },
+    styles: { cellPadding: 1.5, fontSize: 9, halign: 'center'},
     columnStyles: { descripcion: { halign: 'center' } },
     columns: [
       { header: 'Cant', dataKey: 'cantidad' },
@@ -120,7 +135,7 @@ doc.autoTable(({
       { header: 'Precio Unit.', dataKey: 'precio_unit' },
       { header: 'Importe  ', dataKey: 'importe'},
     ],
-    startY:64,
+    startY:72.5,
     margin: { left: 8 },
     tableWidth: 193
   }))
@@ -145,7 +160,7 @@ doc.autoTable(({
 
       doc.autoTable(({
         headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
-        startY:startY,
+        startY:65,
         margin: { left: 8 },
         tableWidth: 193,
         columns: [
@@ -165,7 +180,7 @@ doc.autoTable(({
         columns: [
             { header: '#', dataKey: "index" },
             { header: 'Serie condensador', dataKey: "condensador" },
-            { header: 'Serie evaporizador', dataKey: "evaporizador" },
+            { header: 'Serie evaporador', dataKey: "evaporador" },
             { header: 'Equipo', dataKey: "desc"}
           ],
       }))
@@ -185,7 +200,7 @@ doc.autoTable(({
       doc.setFontType("normal");
       let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
       zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
-      Rev. 11 2015`
+      Rev. 1 2022`
       doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
     
     
@@ -221,9 +236,9 @@ Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.
     doc.setFontType("normal");
     doc.setFontSize(9);
     let incluye = `Evaporador, Condensador, control remoto, kit de instalacion de 3 o 4 metros dependiendo de la marca de
-    y modelo de su equipo.
-    Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
-    Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
+y modelo de su equipo.
+Favor de revisar su mercancia, ya que no habra cambios ni devoluciones.
+Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
     doc.text(incluye, 10, alturaGarantias + 5);
 
      }else if(response.tipo == 2){
@@ -233,7 +248,7 @@ Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.
      
       doc.autoTable(({
         headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
-        startY:startY,
+        startY:65,
         margin: { left: 8 },
         tableWidth: 193,
         columns: [
@@ -247,12 +262,12 @@ Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.
         startY:startYSeriess,
         body: bodySeries,
         margin: { left: 8 },
-        styles: { cellPadding: 1.5, fontSize: 8 },
+        styles: { cellPadding: 1.5, fontSize: 8, haling:'center'},
         tableWidth: 193,
         columns: [
             { header: '#', dataKey: "index" },
             { header: 'Serie condensador', dataKey: "condensador" },
-            { header: 'Serie evaporizador', dataKey: "evaporizador" },
+            { header: 'Serie evaporador', dataKey: "evaporador" },
             { header: 'Equipo', dataKey: "desc"}
           ],
       }))
@@ -270,8 +285,9 @@ Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.
         startY:startYpersonal,
         body: bodyDatosInstalacion,
         margin: { left: 8 },
-        styles: { cellPadding: 1.5, fontSize: 8 },
+        styles: { cellPadding: 1.5, fontSize: 8, haling: 'center'},
         tableWidth: 193,
+        columnStyles: {index: {haling: 'center'}, cantidad_personal: { halign: 'center' }, tiempo_horas: { halign: 'center'}, nombre_personal: { halign: 'center'} },
         columns: [
             { header: '#', dataKey: "index" },
             { header: 'Cantidad de personal', dataKey: "cantidad_personal" },
@@ -340,7 +356,7 @@ Con AireExpress o tecnico certificado, como tener comprobantes correspondientes.
       doc.setFontType("normal");
       let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
       zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
-      Rev. 11 2022`
+      Rev. 1 2022`
       doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
     
     
@@ -383,6 +399,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
         alturaGarantias = 15
        // y = 0 // Restart height position
       }
+     
 
     doc.text("Observaciones:", 10, alturaGarantias);
     doc.setFontType("normal");
@@ -413,7 +430,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
       
       doc.autoTable(({
         headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
-        startY:startY,
+        startY:65,
         margin: { left: 8 },
         tableWidth: 193,
         columns: [
@@ -527,7 +544,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
       
       doc.autoTable(({
         headStyles: { fillColor: [255, 195, 0], textColor: [0, 0, 0], halign: 'center'},
-        startY:startY,
+        startY:65,
         margin: { left: 8 },
         tableWidth: 193,
         columns: [
@@ -588,7 +605,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
       doc.setFontType("normal");
       let contrato = `Recibi(mos) de conformidad los equipos, materiales y trabajos mencionados debo y pagare(mos) incondicionalmente a la orden de Maria Dolores Gon-
       zalez Ramirez, el total descrito en esta orden. De no ser cubierto el importe de la misma de 8 dias, causara el 10% de interes moratorio mensual. 
-      Rev. 11 2022`
+      Rev. 1 2022`
       doc.text(contrato, 10, startYfooter + 5, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
     
     
@@ -634,17 +651,22 @@ Favor de revisar su mercancía antes de salir, ya que no habrá cambio ni devolu
   
 //doc.save("Orden F"+ response.folio+".pdf");
 var string = doc.output('datauristring');
-var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
+var embed = "<embed width='100%' height='100%' src='" + string + "' style='margin:0px; padding:0px;'/>"
 var x = window.open();
+
 x.document.open();
 x.document.write(embed);
 x.document.close();
+x.document.body.id = 'embed';
+doc = document.getElementById("embed")
+doc.style.margin = "0px 0px 0px 0px";
+doc.style.padding = "0px 0px 0px 0px";
 
 
   }
 });
 
-
+}
 /* 
 console.log(doc.getFontList()); */
 
@@ -662,3 +684,7 @@ function getParameterByName(name) {
     window.open('','_parent',''); 
     window.close(); 
  } 
+
+ const currency = function(number) {
+  return new Intl.NumberFormat('es-MX', {style: 'currency', currency: 'MXN', minimunFractionDigits: 2}).format(number);
+ }

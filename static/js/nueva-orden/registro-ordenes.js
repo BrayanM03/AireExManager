@@ -818,7 +818,8 @@ function sendData(data){
                     
                   }).then(function(resp) {
                     if(resp.isConfirmed){
-                        window.open('../servidor/reportes/nota-de-venta.php?id_orden=' + response.id_orden, '_blank');
+                        descargarOrden(response.id_orden);
+                       // window.open('../servidor/reportes/nota-de-venta.php?id_orden=' + response.id_orden, '_blank');
 
                         setTimeout(window.location.reload(), 500);
                     
