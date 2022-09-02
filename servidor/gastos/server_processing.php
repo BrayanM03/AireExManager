@@ -34,10 +34,11 @@ $columns = array(
 	array( 'db' => 'id', 'dt' => 0 ),
 	array( 'db' => 'descripcion', 'dt' => 1 ),
 	array( 'db' => 'importe',   'dt' => 2 ),
-	array( 'db' => 'fecha',   'dt' => 5 ),
-	array( 'db' => 'hora',   'dt' => 6 ),
-	array( 'db' => 'sucursal',   'dt' => 7 ),
-	array( 'db' => 'usuario',   'dt' => 8 )
+	array( 'db' => 'fecha',   'dt' => 3 ),
+	array( 'db' => 'hora',   'dt' => 4 ),
+	array( 'db' => 'sucursal',   'dt' => 5 ),
+	array( 'db' => 'usuario',   'dt' => 6 ),
+	array( 'db' => 'forma_gasto',   'dt' => 7 )
 /* 	array(
 		'db'        => 'start_date',
 		'dt'        => 4,

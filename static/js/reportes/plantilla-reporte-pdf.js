@@ -688,3 +688,10 @@ function getParameterByName(name) {
  const currency = function(number) {
   return new Intl.NumberFormat('es-MX', {style: 'currency', currency: 'MXN', minimunFractionDigits: 2}).format(number);
  }
+
+ function addFooters() {
+  const pageCount = doc.internal.getNumberOfPages();
+  for(var i = 1; i <= pageCount; i++) {
+      doc.text(String(i), 196, 285);
+  }
+}

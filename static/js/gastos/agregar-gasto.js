@@ -29,8 +29,20 @@ function agregarGasto(){
                       <input class="form-control" type="datetime-local" id="fecha" />
                   </div>
                   <div class="col-md-7 col-12">
+                      <label>Forma de gasto</label>
+                      <select class="form-control" id="forma_gasto">
+                         <option id="Efectivo">Efectivo</option>
+                         <option id="Tarjeta">Tarjeta</option>
+                         <option id="Transferencia">Transferencia</option>
+                         <option id="Cheque">Cheque</option>
+                         <option id="Sin definir">Sin definir</option>
+                      </select>
+                  </div>
+                  </div>
+                  <div class="row mb-3">
+                  <div class="col-md-7 col-12">
                       <label>Importe</label>
-                      <input class="form-control" type="number" id="importe" />
+                      <input class="form-control" type="number" id="importe" placeholder="0.00"/>
                   </div>
                </div>
                <div class="row">
@@ -67,7 +79,7 @@ function agregarGasto(){
             
 
             let fecha = $("#fecha").val();
-
+            let forma_gasto = $("#forma_gasto").val();
             let importe = $("#importe").val();
             let descripcion = $("#descripcion").val();
             let sucursal= $("#user-data").attr("id_sucursal");
@@ -76,7 +88,8 @@ function agregarGasto(){
                 fecha: fecha,
                 importe: importe,
                 descripcion: descripcion,
-                sucursal: sucursal
+                sucursal: sucursal,
+                forma_gasto : forma_gasto
             } 
 
             $.ajax({

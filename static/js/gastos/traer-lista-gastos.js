@@ -14,10 +14,11 @@ $(document).ready(function () {
               { data:0, title:'#' },
               { data:1, title:'Descripcion' },
               { data:2, title:'Importe' },
-              { data:7, title:'Sucursal' },
-              { data:8, title:'Usuario' },
-              { data:5, title:'Fecha' },
-              { data:6, title:'Hora' },
+              { data:3, title:'Fecha' },
+              { data:4, title:'Hora' },
+              { data:5, title:'Sucursal' },
+              { data:6, title:'Usuario' },
+              { data:7, title:'Forma de gasto' },
               { data:null, title:'Opciones', render: function(row){
                   return `
                   <div class='row'>

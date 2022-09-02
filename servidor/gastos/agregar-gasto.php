@@ -12,6 +12,7 @@ if ($_POST) {
     $fecha = $separar[0];
     $hora = $separar[1];
     $importe = $_POST['importe'];
+    $forma_pago = $_POST['forma_gasto'];
 
 
     $insert = "INSERT INTO gastos(id,
@@ -20,10 +21,11 @@ if ($_POST) {
                                        sucursal_id,
                                        user_id,
                                        fecha,
-                                       hora
-                                      )VALUES(null,?,?,?,?,?,?)";
+                                       hora,
+                                       forma_gasto
+                                      )VALUES(null,?,?,?,?,?,?,?)";
     $resp = $con->prepare($insert);
-    $resp->execute([$descripcion, $importe, $sucursal, $_SESSION["id"], $fecha, $hora]);
+    $resp->execute([$descripcion, $importe, $sucursal, $_SESSION["id"], $fecha, $hora, $forma_pago]);
     $resp->closeCursor();
 
     $response = array("status"=>true, "mensj"=>"El gasto se registró correctamente");

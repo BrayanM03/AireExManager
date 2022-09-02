@@ -254,9 +254,9 @@ $apertura = $_GET["apertura"];
         /* $mensaje_error = "No se econtro nada.";
         $datos = array("mensaje"=>$mensaje_error, "status"=>false);  */
 
-        $hoja_activa->mergeCells("I2:L2");
-        $hoja_activa->getStyle('I2:L2')->getAlignment()->setHorizontal('center');
-           $hoja_activa->getStyle('I2:L2')->getAlignment()->setVertical('center');
+        $hoja_activa->mergeCells("I2:M2");
+        $hoja_activa->getStyle('I2:M2')->getAlignment()->setHorizontal('center');
+           $hoja_activa->getStyle('I2:M2')->getAlignment()->setVertical('center');
           $hoja_activa->setCellValue('I2', 'Gastos');
           /*  $drawing->getShadow()->setVisible(true);
            $drawing->getShadow()->setDirection(45); */
@@ -272,22 +272,24 @@ $apertura = $_GET["apertura"];
            $hoja_activa->setCellValue('K3', 'Importe');
            $hoja_activa->getColumnDimension('L')->setWidth(20);
            $hoja_activa->setCellValue('L3', 'Usuario');
-           $hoja_activa->getStyle('I3:L3')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('ff581a');
-           $hoja_activa->getStyle('I3:L3')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+           $hoja_activa->getColumnDimension('M')->setWidth(20);
+           $hoja_activa->setCellValue('M3', 'Forma de gasto');
+           $hoja_activa->getStyle('I3:M3')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('ff581a');
+           $hoja_activa->getStyle('I3:M3')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
            $hoja_activa->getStyle('I3:D3')->getFont()->setBold(true);
            $hoja_activa->getRowDimension('3')->setRowHeight(20);
            $hoja_activa->getRowDimension('4')->setRowHeight(28);
-           $hoja_activa->getStyle('I3:L3')->getAlignment()->setHorizontal('center');
-           $hoja_activa->getStyle('I3:L3')->getAlignment()->setVertical('center');
+           $hoja_activa->getStyle('I3:M3')->getAlignment()->setHorizontal('center');
+           $hoja_activa->getStyle('I3:M3')->getAlignment()->setVertical('center');
            $fila = 2;
         
-           $hoja_activa->mergeCells("I4:L4");
+           $hoja_activa->mergeCells("I4:M4");
            
-        $hoja_activa->getStyle('I4:L4')->getAlignment()->setHorizontal('center');
-        $hoja_activa->getStyle('I4:L4')->getAlignment()->setVertical('center');
+        $hoja_activa->getStyle('I4:M4')->getAlignment()->setHorizontal('center');
+        $hoja_activa->getStyle('I4:M4')->getAlignment()->setVertical('center');
         $hoja_activa->setCellValue('I4', 'Al parecer no hubo gastos');
-        $hoja_activa->setCellValue('K5', 'Total gastos');
-        $hoja_activa->setCellValue('L5', '0');
+        $hoja_activa->setCellValue('L5', 'Total gastos');
+        $hoja_activa->setCellValue('M5', '0');
         $indice = 5;
         /* $count++; */ 
        
@@ -296,13 +298,13 @@ $apertura = $_GET["apertura"];
 
       
 
-    $hoja_activa->mergeCells("I2:L2");
-    $hoja_activa->getStyle('I2:L2')->getAlignment()->setHorizontal('center');
-       $hoja_activa->getStyle('I2:L2')->getAlignment()->setVertical('center');
+    $hoja_activa->mergeCells("I2:M2");
+    $hoja_activa->getStyle('I2:M2')->getAlignment()->setHorizontal('center');
+       $hoja_activa->getStyle('I2:M2')->getAlignment()->setVertical('center');
       $hoja_activa->setCellValue('I2', 'Gastos');
       /*  $drawing->getShadow()->setVisible(true);
        $drawing->getShadow()->setDirection(45); */
-       $hoja_activa->setAutoFilter('I3:L3');
+       $hoja_activa->setAutoFilter('I3:M3');
       // $autofilter = $hoja_activa->getAutofilter();
        
 
@@ -314,12 +316,14 @@ $apertura = $_GET["apertura"];
        $hoja_activa->setCellValue('K3', 'Importe');
        $hoja_activa->getColumnDimension('L')->setWidth(20);
        $hoja_activa->setCellValue('L3', 'Usuario');
-       $hoja_activa->getStyle('I3:L3')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('ff581a');
-       $hoja_activa->getStyle('I3:L3')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+       $hoja_activa->getColumnDimension('M')->setWidth(20);
+           $hoja_activa->setCellValue('M3', 'Forma de gasto');
+       $hoja_activa->getStyle('I3:M3')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('ff581a');
+       $hoja_activa->getStyle('I3:M3')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
        $hoja_activa->getStyle('I3:D3')->getFont()->setBold(true);
        $hoja_activa->getRowDimension('3')->setRowHeight(20);
-       $hoja_activa->getStyle('I3:L3')->getAlignment()->setHorizontal('center');
-       $hoja_activa->getStyle('I3:L3')->getAlignment()->setVertical('center');
+       $hoja_activa->getStyle('I3:M3')->getAlignment()->setHorizontal('center');
+       $hoja_activa->getStyle('I3:M3')->getAlignment()->setVertical('center');
        $fila = 3;
 
        //Estilos de las filas intercaladas
@@ -349,8 +353,15 @@ $apertura = $_GET["apertura"];
            $id= $row["id"];
            $descripcion= $row["descripcion"];
            $vendedor= $row["usuario"];
-           $total_gastos += $row["importe"];
+           $forma_gasto = $row["forma_gasto"];
+           if($forma_gasto == "Efectivo"){
+            $total_gastos += $row["importe"];
+           }else{
+
+           }
+          
            $importe = $row["importe"];
+         
 
             $indice = $fila + 1;
             $indicador = $fila - 1;
@@ -358,15 +369,16 @@ $apertura = $_GET["apertura"];
             $hoja_activa->setCellValue('J' . $indice, $descripcion);
             $hoja_activa->setCellValue('K' . $indice, $importe);
             $hoja_activa->setCellValue('L' . $indice, $vendedor);
+            $hoja_activa->setCellValue('M' . $indice, $forma_gasto);
 
-            $hoja_activa->getStyle('I' .$indice . ':L' .$indice)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN)->setColor(new Color('6495ed'));
+            $hoja_activa->getStyle('I' .$indice . ':M' .$indice)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN)->setColor(new Color('6495ed'));
             $fila++;
         
           
        }
 
        $indice++;
-       $hoja_activa->setCellValue('K' . $indice, "Total");
+       $hoja_activa->setCellValue('K' . $indice, "Total gasto efectivo");
        $hoja_activa->setCellValue('L' . $indice, $total_gastos);
 
        
