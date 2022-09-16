@@ -20,6 +20,11 @@ $(document).ready(function () {
             { data:6, title:'Precio' },
             { data:12, title:'Precio inst.' },
             { data:7, title:'Stock' },
+            { data:null, title:'Imagen', render: function(row){ 
+              console.log(row);
+              return `
+                  <img src="img/productos/climas/${row[13]}.jpg" style="width:60px; border-radius:8px; border:1px solid gray; cursor: pointer;" onclick="cambiarImagen('${row[13]}', ${row[0]}, 'climas');">
+              ` }},
             { data:8, title:'Estatus' },
             { data:null, title:'Opciones', render: function(row){
                 return `

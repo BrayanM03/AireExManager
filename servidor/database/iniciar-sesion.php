@@ -26,7 +26,7 @@ if($_POST){
 
             if($row['estatus'] == "Activo"){
 
-                $hash = $row['contraseña'];
+                $hash = $row['pass'];
 
                 if(password_verify($pass, $hash)){
                     

@@ -24,6 +24,8 @@ function clickNuevoProducto(){
         precio : "",
         precio_con_inst : "",
       descripcion: ""});
+
+    
 }
 
 function clickEditarProducto(e) {

@@ -43,6 +43,7 @@ $columns = array(
 	array( 'db' => 'stock',   'dt' => 7 ),
 	array( 'db' => 'estatus',   'dt' => 8 ),
 	array( 'db' => 'sucursal',   'dt' => 9 ),
+	array( 'db' => 'img',   'dt' => 13)
 /* 	array(
 		'db'        => 'start_date',
 		'dt'        => 4,
@@ -60,12 +61,10 @@ $columns = array(
 );
 
 // SQL server connection information
-$sql_details = array(
-	'user' => 'root',
-	'pass' => '',
-	'db'   => 'aire_express',
-	'host' => 'localhost'
-);
+include_once '../database/credenciales.php';
+
+$sql_details = $credenciales_db;
+
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

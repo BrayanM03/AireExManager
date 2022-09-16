@@ -29,6 +29,7 @@ if ($_POST) {
 
             $pago_domicilio = $row['pago_domicilio'];
             $pago_sucursal = $row['pago_sucursal'];
+            $sucursal_id= $row['sucursal_id'];
             $verificar_electrico = $row['verificar_electrico'];
             $tiene_electrico = $row['tiene_electrico'];
             $cantidad_personal = $row['cantidad_personal'];
@@ -98,11 +99,15 @@ if ($_POST) {
             /* $data['data'] = array(""); */
         }
 
+        $datos_sucursal = obtenerDatosSucursal($con, $sucursal_id); //
+
         $response["folio"] = $key;
         $response["fecha"] =     $fecha;
         $response["total"] =     $total;
         $response["estatus"] =   $estatus;
         $response["usuario"] =   $usuario;
+        $response["datos_sucursal"] = $datos_sucursal;
+        $response["id_sucursal"] = $sucursal_id;
         $response["metodo_pago"] = $metodo_pago;
         $response["tipo"] = $tipo;
         $response['status'] =    true;
@@ -186,6 +191,27 @@ if ($_POST) {
 
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
+
+}
+
+function obtenerDatosSucursal($con, $sucursal_id){
+
+    $queryCount = "SELECT count(*) FROM sucursal WHERE id = ?";
+    $resp = $con->prepare($queryCount);
+    $resp->execute([$sucursal_id]);
+    $total = $resp->fetchColumn();
+
+    if($total > 0){
+        $selectStore = "SELECT * FROM sucursal WHERE id = ?";
+        $resp = $con->prepare($selectStore);
+        $resp->execute([$sucursal_id]);
+        while ($row = $resp->fetch()) {
+            $data = $row;
+        }
+        return $data;
+    }else{
+        return "No se encontro una sucursal coincidente";
+    }
 
 }
 

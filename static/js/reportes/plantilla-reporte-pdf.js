@@ -5,10 +5,7 @@ function descargarOrden(id){
 const doc = new jsPDF();
 pageHeight= doc.internal.pageSize.height;
 
-logo = data_logo.replace(/[\s"\\]/gm, "");
-icon_checked= data_checked.replace(/[\s"\\]/gm, "");
-icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
-doc.addImage(logo, "JPEG", 8, 5, 40, 17);
+
 
 let id_orden =id// getParameterByName("id_orden")  
 
@@ -19,6 +16,13 @@ $.ajax({
     dataType: "JSON",
     success: function (response) {
         console.log(response);
+
+response.id_sucursal == "1" ? data_logo = data_logo_aireexpress : data_logo = data_logo_serviclima
+logo = data_logo.replace(/[\s"\\]/gm, "");
+icon_checked= data_checked.replace(/[\s"\\]/gm, "");
+icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
+doc.addImage(logo, "JPEG", 8, 5, 40, 17);
+
 
 doc.setFont("helvetica"); // set font
 doc.setFontType("bolditalic"); // set font
@@ -47,9 +51,19 @@ doc.line(145, 47, 145, 62); // vertical line
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
 doc.setFontSize(9);
-doc.text("Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com",68, 28);
+if(response.id_sucursal == "1"){
 
-doc.setFontSize(10);
+let direccion_sucursal = response.datos_sucursal.direccion;
+doc.text(direccion_sucursal,68, 28); //"Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com"
+doc.text(response.datos_sucursal.correo, 164,28); 
+
+}else if(response.id_sucursal == "2"){
+
+  let direccion_sucursal = response.datos_sucursal.direccion;
+  doc.text(direccion_sucursal,24, 28); //"Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com"
+  doc.text(response.datos_sucursal.correo, 158,28);
+}
+doc.setFontSize(10); 
 //Datos cliente
 doc.setFontType("bold"); // set font
 doc.text("Nombre", 10, 38);
@@ -334,10 +348,14 @@ Si necesita su factura favor de solitarla al momento de la compra y/o servicio.`
       }
       
     
+      // Black sqaure with rounded corners
+      doc.setFontType("normal");
+      doc.text("Extras u observaciones", 10, startOptions + 8);
+      doc.setDrawColor(0)
+      doc.setFillColor(255, 255, 255)
+      doc.roundedRect(8, startOptions + 10, 190, 14, 1, 1, 'FD')
       
-    let startYfooter =  startOptions +25
-
-    doc.setFontType("normal");
+    let startYfooter =  startOptions + 40;
     
       doc.text("Firma", 10, startYfooter);
       doc.text("Nombre", 60, startYfooter);
@@ -367,7 +385,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
       doc.text("Garantia de fabricante MiniSplit Nuevo:", 10, startYfooter+18);
       doc.text("Cobertura limitada a refacciones. Usuario cubre costos de revisiones, mano de obra y fletes por remplazo de refacciones:", 10, startYfooter+ 21);
       doc.setFontType("normal");
-    doc.text(garantia, 10, startYfooter + 26, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
+    doc.text(garantia, 10, startYfooter + 25, {align: 'justify',lineHeightFactor: 1.5,maxWidth:193});
     
     let bodyGarantia = [
       {index: "5", desc: "Año(s) de garantia en compresor. Compresor no debe estar quemado, aterrizado, cruzado o con los bordes botados o zafados"},
@@ -404,7 +422,7 @@ Con AireExpress o tecnico certiicado, como tener comprobantes correspondientes.`
     doc.text("Observaciones:", 10, alturaGarantias);
     doc.setFontType("normal");
     doc.setFontSize(7);
-    let incluye = `Es obligacion del cliente despejar el area donde se llevara a cabo la ejecución del servicio ya que AIRE EXPRESS(Maria 
+    let incluye = `  Es obligacion del cliente despejar el area donde se llevara a cabo la ejecución del servicio ya que AIRE EXPRESS(Maria 
       Dolores Gonzalez Ramirez) no se hace responsable por la perdida, daños y/o pertenencias personales o de valor en el lugar del servicio.
       Se requiere instalacion electrica al pie de MiniSplit
       -Instalacion mecanica basica en Mini Split incluye:
@@ -658,9 +676,9 @@ x.document.open();
 x.document.write(embed);
 x.document.close();
 x.document.body.id = 'embed';
-doc = document.getElementById("embed")
+/*doc = document.getElementById("embed")
 doc.style.margin = "0px 0px 0px 0px";
-doc.style.padding = "0px 0px 0px 0px";
+doc.style.padding = "0px 0px 0px 0px";*/
 
 
   }

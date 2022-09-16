@@ -131,6 +131,8 @@ if (empty($_SESSION["id"])) {
     <script src="js/refacciones/editar-refaccion.js"></script>
     <script src="js/refacciones/eliminar-refaccion.js"></script>
     <script src="js/configuracion/configuraciones.js"></script>
+    <script src="js/inventario/cambiar-imagen.js"></script>
+
 
 </body>
 

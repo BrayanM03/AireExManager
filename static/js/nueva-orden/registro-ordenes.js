@@ -814,14 +814,14 @@ function sendData(data){
                     showCancelButton: false,
                     showDenyButton: true,
                     denyButtonText: 'Realizar otra venta',
-                    allowOutsideClick: false
+                    allowOutsideClick: false 
                     
                   }).then(function(resp) {
                     if(resp.isConfirmed){
                         descargarOrden(response.id_orden);
                        // window.open('../servidor/reportes/nota-de-venta.php?id_orden=' + response.id_orden, '_blank');
 
-                        setTimeout(window.location.reload(), 500);
+                       // setTimeout(window.location.reload(), 500);
                     
                     }else if(resp.isDenied){
                         window.location.reload();

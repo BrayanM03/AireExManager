@@ -25,6 +25,8 @@ if ($_POST) {
             $estatus = $row['estatus'];
             $usuario = $row['usuario_id'];
             $tipo = $row['tipo'];
+            $sucursal_id = $row['sucursal_id'];
+
 
 
             $consulta_cliente = "SELECT COUNT(*) FROM clientes WHERE id = ?";
@@ -90,11 +92,15 @@ if ($_POST) {
             /* $data['data'] = array(""); */
         }
 
+        $datos_sucursal = obtenerDatosSucursal($con, $sucursal_id); //
+
         $response["folio"] = $key;
         $response["fecha"] =     $fecha;
         $response["total"] =     $total;
         $response["estatus"] =   $estatus;
         $response["usuario"] =   $usuario;
+        $response["id_sucursal"] = $sucursal_id;
+        $response["datos_sucursal"] = $datos_sucursal;
         $response["tipo"] = $tipo;
         $response['status'] =    true;
         $response['mensj'] =     "Se encontraron datos";
@@ -143,6 +149,27 @@ if ($_POST) {
 
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
+
+}
+
+function obtenerDatosSucursal($con, $sucursal_id){
+
+    $queryCount = "SELECT count(*) FROM sucursal WHERE id = ?";
+    $resp = $con->prepare($queryCount);
+    $resp->execute([$sucursal_id]);
+    $total = $resp->fetchColumn();
+
+    if($total > 0){
+        $selectStore = "SELECT * FROM sucursal WHERE id = ?";
+        $resp = $con->prepare($selectStore);
+        $resp->execute([$sucursal_id]);
+        while ($row = $resp->fetch()) {
+            $data = $row;
+        }
+        return $data;
+    }else{
+        return "No se encontro una sucursal coincidente";
+    }
 
 }
 

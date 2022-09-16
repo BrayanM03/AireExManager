@@ -76,11 +76,13 @@ function sendData(data){
                     denyButtonText: 'Realizar otra cotizacion',
                     allowOutsideClick: false
                     
-                  }).then(function(resp) {
+                  }).then(function(resp) { 
                     if(resp.isConfirmed){
-                        window.open('../servidor/reportes/nota-de-cotizacion.php?id_orden=' + response.id_orden, '_blank');
+                        descargarCotizacion(response.id_orden);
 
-                        setTimeout(window.location.reload(), 500);
+                        //window.open('../servidor/reportes/nota-de-cotizacion.php?id_orden=' + response.id_orden, '_blank');
+
+                        //setTimeout(window.location.reload(), 100);
                     
                     }else if(resp.isDenied){
                         window.location.reload();

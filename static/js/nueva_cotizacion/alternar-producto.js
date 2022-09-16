@@ -218,17 +218,24 @@ refacciones.select2({
 
  function formatsSelectionRefaccion(repo){
 
-  
-   
-      if(sucursal_usuario == repo.sucursal){
-        let label =  repo.descripcion + " "+ repo.modelo + " " + repo.marca;
-        $("#precio").val(repo.precio)
-        $("#datos-btn").attr("id_producto", repo.id)
-        return label;
-        }else{
-          
-        }
-    
+  console.log(repo);
+  if(repo.id != ""){
+
+    if($("#user-data").attr("id_sucursal") == repo.sucursal){
+      let label =  repo.descripcion + " "+ repo.modelo + " " + repo.marca;
+      $("#precio").val(repo.precio)
+      $("#datos-btn").attr("id_producto", repo.id)
+      return label;
+      }else{
+
+        Toast.fire({
+          icon: 'warning',
+          title: "Esta refaccion no corresponde a tu sucursal"
+        });
+
+        
+      }
+  }
 
   
   }

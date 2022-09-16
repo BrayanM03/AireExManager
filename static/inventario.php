@@ -27,7 +27,8 @@ if (empty($_SESSION["id"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
-
+    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
+<link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
 </head>
 
 <body>
@@ -125,7 +126,9 @@ if (empty($_SESSION["id"])) {
 
     <!-- Mis scripts -->
     <script src="js/inventario/traer-lista.js"></script>
+    <script src="js/inventario/cambiar-imagen.js"></script>
     <script src="js/configuracion/configuraciones.js"></script>
+   
     <!-- <script src="js/clientes/traer-lista.js"></script>
     <script src="js/clientes/eliminar-cliente.js"></script>
  -->

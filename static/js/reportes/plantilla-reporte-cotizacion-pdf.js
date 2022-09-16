@@ -2,10 +2,6 @@ function descargarCotizacion(id){
 // Landscape export, 2×4 inches
 const doc = new jsPDF();
 
-logo = data_logo.replace(/[\s"\\]/gm, "");
-icon_checked= data_checked.replace(/[\s"\\]/gm, "");
-icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
-doc.addImage(logo, "JPEG", 8, 5, 40, 17);
 
 let id_orden = id//getParameterByName("id_orden")  
 
@@ -16,6 +12,14 @@ $.ajax({
     dataType: "JSON",
     success: function (response) {
         console.log(response);
+
+        response.id_sucursal == "1" ? data_logo = data_logo_aireexpress : data_logo = data_logo_serviclima;
+
+logo = data_logo.replace(/[\s"\\]/gm, "");
+icon_checked= data_checked.replace(/[\s"\\]/gm, "");
+icon_unchecked = data_unchecked.replace(/[\s"\\]/gm, "");
+doc.addImage(logo, "JPEG", 8, 5, 40, 17);
+
 
 doc.setFont("helvetica"); // set font
 doc.setFontType("bolditalic"); // set font
@@ -44,7 +48,18 @@ doc.line(145, 47, 145, 62); // vertical line
 doc.setDrawColor(10,10,10); // draw black lines
 doc.setFontType("normal"); // set font
 doc.setFontSize(9);
-doc.text("Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com", 68, 28);
+if(response.id_sucursal == "1"){
+
+  let direccion_sucursal = response.datos_sucursal.direccion;
+  doc.text(direccion_sucursal,68, 28); //"Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com"
+  doc.text(response.datos_sucursal.correo, 164,28); 
+  
+  }else if(response.id_sucursal == "2"){
+  
+    let direccion_sucursal = response.datos_sucursal.direccion;
+    doc.text(direccion_sucursal,24, 28); //"Calle 16 No. 33 Col. Buena Vista, H. Matamoros, Tamp. CP.87350, ventas@aireexpress.com"
+    doc.text(response.datos_sucursal.correo, 158,28);
+  }
 doc.setFontSize(10);
 //Datos cliente
 doc.setFontType("bold"); // set font

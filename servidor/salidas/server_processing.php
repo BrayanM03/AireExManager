@@ -64,12 +64,10 @@ $columns = array(
 );
 
 // SQL server connection information
-$sql_details = array(
-	'user' => 'root',
-	'pass' => '',
-	'db'   => 'toolcrib_manager',
-	'host' => 'localhost'
-);
+include_once '../database/credenciales.php';
+
+$sql_details = $credenciales_db;
+
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

@@ -18,7 +18,6 @@ if ($_POST) {
     $response = array("status"=>true, "mensj"=>"El servicio se actualizó correctamente");
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
-
 }
 
 ?>

@@ -30,7 +30,6 @@ if (empty($_SESSION["id"])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
-	<link href="../vendor/nice-select/css/nice-select.css">
     <link href="../vendor/nice-select/css/style.css">
     <style>
        .select2-container .select2-selection--single {
@@ -179,7 +178,9 @@ animation: dot 2s infinite step-start both;
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="../vendor/nice-select/js/jquery.nice-select.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.22/dist/jspdf.plugin.autotable.js"></script>
 
     <!-- Mis scripts -->
     <script src="js/nueva_cotizacion/seleccionar-cliente.js"></script>
@@ -191,6 +192,14 @@ animation: dot 2s infinite step-start both;
     <script src="js/nueva_cotizacion/cambiar-tipo-orden.js"></script>
     <script src="js/configuracion/token.js"></script>
     <script src="js/configuracion/configuraciones.js"></script>
+
+
+    <script src="js/reportes/logo.js"></script>
+    <script src="js/reportes/logo-serviclima.js"></script>
+    <script src="js/reportes/checked.js"></script>
+    <script src="js/reportes/unchecked.js"></script>
+    <script src="js/reportes/fuente.js"></script>
+    <script src="js/reportes/plantilla-reporte-cotizacion-pdf.js"></script>
     <script>
 
 $(window).on("load", quitarLoad);

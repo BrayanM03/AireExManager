@@ -155,6 +155,7 @@ if (empty($_SESSION["id"])) {
     <script src="js/configuracion/configuraciones.js"></script>
 
     <script src="js/reportes/logo.js"></script>
+    <script src="js/reportes/logo-serviclima.js"></script>
 <script src="js/reportes/checked.js"></script>
 <script src="js/reportes/unchecked.js"></script>
 <script src="js/reportes/fuente.js"></script>
