@@ -40,7 +40,7 @@ if (empty($_SESSION["id"])) {
 
     .icon i{
         font-size: 3em;
-        text-align: center;
+        text-align: center; 
         color: #696767;
         background-color: #dfdddd;
         height: 100px;

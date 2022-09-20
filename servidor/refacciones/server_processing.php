@@ -43,6 +43,7 @@ $columns = array(
 	array( 'db' => 'estatus',   'dt' => 8 ),
 	array( 'db' => 'observaciones',   'dt' => 9 ),
 	array( 'db' => 'sucursal',   'dt' => 10 ),
+	array( 'db' => 'img',   'dt' => 11 ),
 /* 	array(
 		'db'        => 'start_date',
 		'dt'        => 4,

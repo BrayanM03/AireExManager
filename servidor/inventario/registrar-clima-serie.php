@@ -16,6 +16,8 @@ if ($_POST) {
     $categoria = "Producto";
     $precio_con_inst = $_POST["precio_con_inst"];
    
+    $NA = "NA";
+   
     $tipo = "Aire acondicionado";
     $has_series = $_POST["has_series"];
     
@@ -29,26 +31,31 @@ if ($_POST) {
                                          modelo, 
                                          costo,
                                          precio,
-                                         precio_con_inst,
                                          stock,
                                          estatus,
                                          sucursal,
                                          categoria,
-                                         descripcion) VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?)";
+                                         descripcion,
+                                         precio_con_inst,
+                                         img) VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $resp = $con->prepare($insercion);
-    $resp->bindParam(1, $proveedor);                                     
+    $resps= $resp->execute([$proveedor, $tonelaje, $marca, $modelo, $costo, $precio, $cantidad, $estatus, $sucursal, $categoria, $descripcion,
+     $precio_con_inst, $NA]);
+   /* $resp->bindParam(1, $proveedor);                                     
     $resp->bindParam(2, $tonelaje);
     $resp->bindParam(3, $marca);
     $resp->bindParam(4, $modelo);
     $resp->bindParam(5, $costo);
     $resp->bindParam(6, $precio);
-    $resp->bindParam(7, $precio_con_inst);
-    $resp->bindParam(8, $cantidad);
-    $resp->bindParam(9, $estatus);
-    $resp->bindParam(10, $sucursal);
-    $resp->bindParam(11, $categoria);
-    $resp->bindParam(12, $descripcion);
-    $resp->execute();
+    $resp->bindParam(7, $cantidad);
+    $resp->bindParam(8, $estatus);
+    $resp->bindParam(9, $sucursal);
+    $resp->bindParam(10, $categoria);
+    $resp->bindParam(11, $descripcion);
+    $resp->bindParam(12, $precio_con_inst);
+    $resp->bindParam(13, $NA); */
+  /*   $resp->execute(); */
+  
     $resp->closeCursor();
 
     $id_prod = $con->lastInsertId();
@@ -83,7 +90,7 @@ if ($_POST) {
 
     }
     
-
+    //echo json_encode ($_POST, JSON_UNESCAPED_UNICODE);
     print_r(1);
     
     

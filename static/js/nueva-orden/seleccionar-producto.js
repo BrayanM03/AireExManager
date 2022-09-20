@@ -176,6 +176,10 @@ function formatSelectionP(repo) {
       }else if(tipo == "2"){
         price = repo.precio_con_inst
       }
+
+      //let path = `img/productos/climas/P${repo.id}/P${repo.id}.jpg`;
+      imagenSplide(repo.id, "climas")
+      //$("#product-img").attr('src', path);
       
       setearSeries(repo.id);
       $("#precio").val(price)

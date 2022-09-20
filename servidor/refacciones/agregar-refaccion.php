@@ -13,6 +13,7 @@ if ($_POST) {
     $descripcion = $_POST['descripcion'];
     $sucursal = $_POST['sucursal'];
     $estatus = "Activo";
+    $img = "NA";
 
     $insert = "INSERT INTO refacciones(id,
                                        proveedor,
@@ -24,9 +25,10 @@ if ($_POST) {
                                        precio,
                                        estatus,
                                        observaciones,
-                                       sucursal)VALUES(null,?,?,?,?,?,?,?,?,?,?)";
+                                       sucursal,
+                                       img)VALUES(null,?,?,?,?,?,?,?,?,?,?,?)";
     $resp = $con->prepare($insert);
-    $resp->execute([$proveedor, $descripcion, $cantidad, $modelo, $marca, $costo, $precio, $estatus, $observacion,  $sucursal]);
+    $resp->execute([$proveedor, $descripcion, $cantidad, $modelo, $marca, $costo, $precio, $estatus, $observacion,  $sucursal, $img]);
     $resp->closeCursor();
 
     $response = array("status"=>true, "mensj"=>"La refacción se insertó correctamente");

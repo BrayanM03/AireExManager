@@ -26,6 +26,26 @@ function cambiarSeleccionarProducto() {
         <div class="card mt-3 mb-3 border">
         <div class="card-header" style="background-color:#eff5f3">
             <span>Conceptos</span>
+            <div class="row mt-2 justify-content-center">
+                <div class="col-12 col-md-8">
+                        <div class="splide" id="splide-nueva-orden">
+                                        <div class="splide__track">
+                                                    <ul class="splide__list" id="lista_splides">
+
+                                                       <img src="img/productos/climas/NA.jpg" id="product-img" alt="" style="width:8rem; border-radius:8px;">
+                                                        <!-- <li class="splide__slide"><div class="slide_credito">Hola</div></li>
+                                                        <li class="splide__slide"><div class="slide_credito">Hola</div></li> -->
+                                                    </ul>
+                                        </div>
+
+                                        <div class="splide__progress">
+                                                <div class="splide__progress__bar">
+                                                </div>
+                                        </div>
+                        </div>
+                </div>
+            </div>
+
             <div class="row mt-2">
                 <div class="col-12 col-md-12">
                     <label for="producto"><b>Selecciona un producto</b></label>
@@ -145,6 +165,25 @@ producto.on('select2:select', function(selection){
   $("#area-seleccion-producto").empty().append(`<div class="card mt-3 mb-3 border">
         <div class="card-header" style="background-color:#eff5f3">
             <span>Conceptos</span>
+            <div class="row mt-2 justify-content-center">
+                <div class="col-12 col-md-8">
+                        <div class="splide" id="splide-nueva-orden">
+                                        <div class="splide__track">
+                                                    <ul class="splide__list" id="lista_splides">
+
+                                                       <img src="img/productos/climas/NA.jpg" id="product-img" alt="" style="width:8rem; border-radius:8px;">
+                                                        <!-- <li class="splide__slide"><div class="slide_credito">Hola</div></li>
+                                                        <li class="splide__slide"><div class="slide_credito">Hola</div></li> -->
+                                                    </ul>
+                                        </div>
+
+                                        <div class="splide__progress">
+                                                <div class="splide__progress__bar">
+                                                </div>
+                                        </div>
+                        </div>
+                </div>
+            </div>
             <div class="row mt-2">
                 <div class="col-12 col-md-12">
                     <label for="producto"><b>Selecciona una refacción</b></label>
@@ -244,6 +283,7 @@ refacciones.select2({
       if(sucursal_usuario == repo.sucursal){
         let label =  repo.descripcion + " "+ repo.modelo + " " + repo.marca;
         $("#precio").val(repo.precio)
+        imagenSplide(repo.id, "refacciones")
         $("#datos-btn").attr("id_producto", repo.id)
         return label;
         }else{

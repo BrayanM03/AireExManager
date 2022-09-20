@@ -5,13 +5,20 @@
 
     $producto_id = $_GET['product_id'];
     $categoria = $_GET['categoria'];
+    if($categoria == "climas"){
+        $tabla = "inventario";
+    }else if($categoria == "refacciones"){
+        $tabla = "refacciones";
+    }
+
     $folder_product = "P" . $producto_id;
     $folder = "../../static/img/productos/$categoria/$folder_product";
 
     $countfiles = count($_FILES['file']['name']);
 
     $fi = new FilesystemIterator($folder, FilesystemIterator::SKIP_DOTS);
-    $total_imagenes_inicial = iterator_count($fi)-1;
+    $total_imagenes_inicial = iterator_count($fi);
+  
 
     if($total_imagenes_inicial == 5){
         $response = array("status"=>"error",
@@ -23,8 +30,7 @@
            
             
             $fi = new FilesystemIterator($folder, FilesystemIterator::SKIP_DOTS);
-            $total_imagenes = iterator_count($fi)-1;
-
+            $total_imagenes = iterator_count($fi);
 
            
     
@@ -35,12 +41,21 @@
             }else{
                 $arreglo_original = array("P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg");
 
-            $actual_files = array_values(array_diff(scandir($folder."/"), array('.', '..')));
-            array_shift($actual_files);
+          //  $escaneo = array_values(array_diff(scandir($folder), array('.', '..')));
+           
+
+            $actual_files = array_values(array_diff(scandir($folder), array('.', '..')));
+          
+          //  array_shift($actual_files);
+            
 
             $result = array_diff($arreglo_original, $actual_files);
+           
+
             if(count($result)!=0){
                 $nombre_nuevo = array_pop(array_reverse($result));
+            }else{
+                $nombre_nuevo = "No";
             }
 
             $_FILES['file']['name'][$i] = $nombre_nuevo;
@@ -48,7 +63,7 @@
 
                 if (move_uploaded_file($_FILES["file"]["tmp_name"][$i], "$folder/".$_FILES['file']['name'][$i])) {
 
-                    $update="UPDATE inventario SET img = ? WHERE id =?";
+                    $update="UPDATE $tabla SET img = ? WHERE id =?";
                     $resp = $con->prepare($update);
                     $carp = $folder_product . "/P1";
                     $resp->execute([$carp, $producto_id]);

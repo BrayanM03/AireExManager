@@ -4,6 +4,11 @@
 
 $producto_id = $_POST['id_producto'];
 $categoria = $_POST['categoria'];
+if($categoria == "climas"){
+    $tabla = "inventario";
+}else if($categoria == "refacciones"){
+    $tabla = "refacciones";
+}
 $nombre_archivo = $_POST['name_file'];
 
 
@@ -14,7 +19,7 @@ $folder = "../../static/img/productos/$categoria/$folder_product";
 if(unlink($folder. "/".$nombre_archivo .".jpg")){
 
     if($nombre_archivo == "P1"){
-        $update="UPDATE inventario SET img = ? WHERE id =?";
+        $update="UPDATE $tabla SET img = ? WHERE id =?";
         $resp = $con->prepare($update);
         $carp ="NA";
         $resp->execute([$carp, $producto_id]);

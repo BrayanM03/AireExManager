@@ -32,6 +32,8 @@ if (empty($_SESSION["id"])) {
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 	<link href="../vendor/nice-select/css/nice-select.css">
     <link href="../vendor/nice-select/css/style.css">
+    <link href="../vendor/splide/dist/css/splide.min.css" rel="stylesheet">
+
     <style>
        .select2-container .select2-selection--single {
         height: 20px !important;
@@ -181,17 +183,22 @@ animation: dot 2s infinite step-start both;
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
     <script src="https://unpkg.com/jspdf-autotable@3.5.22/dist/jspdf.plugin.autotable.js"></script>
+    <script src="../vendor/splide/dist/js/splide.min.js"></script>
+
 
     <!-- Mis scripts -->
+
     <script src="js/nueva-orden/seleccionar-cliente.js"></script>
     <script src="js/nueva-orden/seleccionar-producto.js"></script>
     <script src="js/nueva-orden/preventa.js"></script>
     <script src="js/nueva-orden/registro-ordenes.js"></script>
-    
+
     <script src="js/nueva-orden/alternar-producto.js"></script>
     <script src="js/nueva-orden/cambiar-tipo-orden.js"></script>
     <script src="js/configuracion/token.js"></script>
     <script src="js/configuracion/configuraciones.js"></script>
+
+    <script src="js/nueva-orden/imagenes-splide.js"></script>
 
     <script src="js/reportes/logo.js"></script>
     <script src="js/reportes/checked.js"></script>
