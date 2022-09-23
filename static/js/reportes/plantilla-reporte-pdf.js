@@ -2,7 +2,7 @@ function descargarOrden(id){
 
 
 // Landscape export, 2×4 inches
-const doc = new jsPDF();
+const doc = new jsPDF('p','mm','letter');
 pageHeight= doc.internal.pageSize.height;
 
 
