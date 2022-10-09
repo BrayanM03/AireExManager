@@ -209,7 +209,7 @@ class SSP {
 	 *  @param  string $default Default Where clause string 
 	 *  @return array          Server-side processing response array
 	 */
-	static function simple ( $request, $sql_details, $table, $primaryKey, $columns,$default = false )
+	static function simple ( $request, $sql_details, $table, $primaryKey, $columns, $default = false )
 	{
 		$bindings = array();
 		$db = self::sql_connect( $sql_details );
@@ -217,7 +217,7 @@ class SSP {
 		// Build the SQL query string from the request
 		$limit = self::limit( $request, $columns );
 		$order = self::order( $request, $columns );
-		$where = self::filter( $request, $columns, $bindings,$default );
+		$where = self::filter( $request, $columns, $bindings, $default );
 
 		// Main query to actually get the data
 		$data = self::sql_exec( $db, $bindings,
