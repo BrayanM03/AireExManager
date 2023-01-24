@@ -27,8 +27,25 @@ if (empty($_SESSION["id"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
-    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
-<link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <link rel="stylesheet" href="./css/splide-skyblue.min.css">
+   <style>
+    .splide__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.splide__slide {
+  opacity: 0.6;
+}
+
+
+.splide__slide.is-active {
+  opacity: 1;
+}
+   </style>
+
 </head>
 
 <body>
@@ -123,6 +140,7 @@ if (empty($_SESSION["id"])) {
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 
     <!-- Mis scripts -->
     <script src="js/inventario/traer-lista.js"></script>

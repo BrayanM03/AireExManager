@@ -13,7 +13,7 @@ $(document).ready(function () {
         columns:  [
             { data:0, title:'#' },
             { data:1, title:'Proveedor' },
-            { data:2, title:'Descripcion' },
+            { data:2, title:'Descripcion' }, 
             { data:null, title:'Stock', render:function(data,row){ 
              
               if(data[3] == 0){
@@ -27,11 +27,14 @@ $(document).ready(function () {
             { data:6, title:'Costo' },
             { data:7, title:'Precio' },
             { data:8, title:'Estatus' },
-            { data:9, title:'Observaciones' }, 
+            { data:9, title:'Observaciones' },  
             { data:null, title:'Imagen', render: function(row){ 
-              console.log(row);
+              let img_refaccion = row[11]
+              if(img_refaccion == null){
+                img_refaccion = "NA"
+              }
               return `
-                  <img src="img/productos/refacciones/${row[11]}.jpg" style="width:60px; border-radius:8px; border:1px solid gray; cursor: pointer;" onclick="cambiarImagen('${row[13]}', ${row[0]}, 'refacciones');">
+                  <img src="img/productos/refacciones/${img_refaccion}.jpg" style="width:60px; border-radius:8px; border:1px solid gray; cursor: pointer;" onclick="cambiarImagen('${row[11]}', ${row[0]}, 'refacciones');">
               ` }},
             { data:null, title:'Opciones', render: function(row){
                 return `

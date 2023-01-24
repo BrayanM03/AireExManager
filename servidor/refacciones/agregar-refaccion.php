@@ -26,9 +26,20 @@ if ($_POST) {
                                        estatus,
                                        observaciones,
                                        sucursal,
-                                       img)VALUES(null,?,?,?,?,?,?,?,?,?,?,?)";
+                                       img)VALUES(null,:prov,:descr,:cant,:mod,:marc,:cost,:prec,:est,:obsv,:suc,:img)";
     $resp = $con->prepare($insert);
-    $resp->execute([$proveedor, $descripcion, $cantidad, $modelo, $marca, $costo, $precio, $estatus, $observacion,  $sucursal, $img]);
+    $resp->bindValue(':prov', $proveedor, PDO::PARAM_STR);
+    $resp->bindValue(':descr', $descripcion, PDO::PARAM_STR);
+    $resp->bindValue(':cant', $cantidad, PDO::PARAM_STR);
+    $resp->bindValue(':mod', $modelo, PDO::PARAM_STR);
+    $resp->bindValue(':marc', $marca, PDO::PARAM_STR);
+    $resp->bindValue(':cost', $costo, PDO::PARAM_STR);
+    $resp->bindValue(':prec', $precio, PDO::PARAM_STR);
+    $resp->bindValue(':est', $estatus, PDO::PARAM_STR);
+    $resp->bindValue(':obsv', $observacion, PDO::PARAM_STR);
+    $resp->bindValue(':suc', $sucursal, PDO::PARAM_STR);
+    $resp->bindValue(':img', $img, PDO::PARAM_STR);
+    $resp->execute();
     $resp->closeCursor();
 
     $response = array("status"=>true, "mensj"=>"La refacción se insertó correctamente");

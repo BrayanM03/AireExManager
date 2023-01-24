@@ -19,12 +19,16 @@
  */
 
 // DB table to use
-$table = 'refacciones';
+
 
 // Table's primary key
 $primaryKey = 'id';
 $sucursal_id = $_GET['sucursal_id'];
-$where = "sucursal = " . $sucursal_id;
+if($sucursal_id == 1){
+	$table = 'inventario_refacciones_aireexpress';
+}else if($sucursal_id == 2){
+	$table = 'inventario_refacciones_serviclima';
+}
 
 
 // Array of database columns which should be read and sent back to DataTables.
@@ -75,7 +79,7 @@ $sql_details = $credenciales_db;
 require( '../database/ssp.class.php' );
 
 echo json_encode(
-	SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $where)
+	SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns)
 );
 
 

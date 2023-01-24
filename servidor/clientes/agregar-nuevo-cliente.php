@@ -42,6 +42,7 @@
 
              $resultado->execute();
              $id_cliente = $con->lastInsertId();
+             $resultado->closeCursor();
 
   
             
@@ -63,6 +64,7 @@
                 $result->bindParam(10,$id_cliente);
    
                 $result->execute();
+                
 
               }
 

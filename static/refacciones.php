@@ -125,7 +125,7 @@ if (empty($_SESSION["id"])) {
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-    <!-- Mis scripts -->
+    <!-- Mis scripts --> 
     <script src="js/refacciones/traer-lista.js"></script>
     <script src="js/refacciones/agregar-refaccion.js"></script>
     <script src="js/refacciones/editar-refaccion.js"></script>
