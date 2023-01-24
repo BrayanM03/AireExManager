@@ -15,6 +15,6 @@ $files = array_values(array_diff(scandir($path), array('.', '..')));
 $fi = new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS);
 $total_imagenes = iterator_count($fi);
 
-$resp=array("total_imagenes" => $total_imagenes, "folder"=>$folder, "files"=>$files);
+$resp=array("total_imagenes" => $total_imagenes, "folder"=>$folder, "files"=>$files, "post"=> $_POST);
 echo json_encode($resp, JSON_UNESCAPED_UNICODE);
 ?>

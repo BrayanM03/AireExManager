@@ -7,7 +7,7 @@ function cambiarImagen(image_name, id_producto, categoria){
         width: '600px',
        /*  imageUrl: urlImage,
         imageWidth: 200,
-        imageHeight: 200,
+        imageHeight: 200, 
         imageAlt: 'Imagen del producto', */
         didOpen: ()=>{
             $.ajax({

@@ -142,7 +142,7 @@ if (empty($_SESSION["id"])) {
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 
-    <!-- Mis scripts -->
+    <!-- Mis scripts --> 
     <script src="js/inventario/traer-lista.js"></script>
     <script src="js/inventario/cambiar-imagen.js"></script>
     <script src="js/configuracion/configuraciones.js"></script>

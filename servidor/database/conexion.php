@@ -1,6 +1,6 @@
 <?php
 $usuario = "root";
-$pass = "";
+$pass = "root";
 try {
     $con = new PDO('mysql:host=localhost;dbname=aire_express;charset=utf8mb4', $usuario, $pass);
    
