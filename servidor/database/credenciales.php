@@ -2,7 +2,7 @@
 
 $credenciales_db = array(
 	'user' => 'root',
-	'pass' => 'root',
+	'pass' => '',
 	'db'   => 'aire_express',
 	'host' => 'localhost'
 );
