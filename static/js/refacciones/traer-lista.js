@@ -9,7 +9,7 @@ $(document).ready(function () {
             dataType: 'json'
         },
         responsive: true,
-        order: [0, 'desc'],
+        order: [0, 'desc'], 
         columns:  [
             { data:0, title:'#' },
             { data:1, title:'Proveedor' },
